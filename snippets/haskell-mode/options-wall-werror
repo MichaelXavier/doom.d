@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: options-wall-werror
+# key: ghcw
+# --
+{-# OPTIONS_GHC -Wall -Werror #-}

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: typeapplications
+# key: lta
+# --
+{-# LANGUAGE TypeApplications #-}

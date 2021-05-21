@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: datamonoid
+# key: idm
+# binding: direct-keybinding
+# --
+import Data.Monoid

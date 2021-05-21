@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: deprecation pragma
+# key: dep
+# binding: direct-keybinding
+# --
+{-# DEPRECATED $1 "$2" #-}

@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: org title
+# key: +T
+# binding: direct-keybinding
+# --
+#+TITLE: $1
+$0

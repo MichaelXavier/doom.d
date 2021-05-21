@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: language multiparamtypeclasses
+# key: lmptc
+# binding: direct-keybinding
+# --
+{-# LANGUAGE MultiParamTypeClasses #-}

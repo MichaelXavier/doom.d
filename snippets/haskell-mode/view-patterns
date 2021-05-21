@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: view patterns
+# key: lvp
+# --
+{-# LANGUAGE ViewPatterns #-}

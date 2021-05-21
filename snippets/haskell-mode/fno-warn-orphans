@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: fno-warn-orphans annotation
+# key: fnwo
+# binding: direct-keybinding
+# --
+{-# OPTIONS_GHC -fno-warn-orphans #-}

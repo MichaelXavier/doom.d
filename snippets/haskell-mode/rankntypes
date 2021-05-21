@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: rankntypes
+# key: lrnt
+# binding: direct-keybinding
+# --
+{-# LANGUAGE RankNTypes #-}

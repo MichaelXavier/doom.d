@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: existentialquantification
+# key: leq
+# binding: direct-keybinding
+# --
+{-# LANGUAGE ExistentialQuantification #-}

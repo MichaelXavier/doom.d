@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: roleannotations
+# key: lra
+# --
+{-# LANGUAGE RoleAnnotations #-}

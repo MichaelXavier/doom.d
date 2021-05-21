@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: no-warn-unused-imports
+# key: fnwui
+# --
+{-# OPTIONS_GHC -fno-warn-unused-imports #-}

@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: language derivedatatypeable
+# key: lddt
+# binding: direct-keybinding
+# --
+{-# LANGUAGE DeriveDataTypeable #-}

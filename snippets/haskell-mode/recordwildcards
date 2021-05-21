@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: language recordwildcards
+# key: lrwc
+# binding: direct-keybinding
+# --
+{-# LANGUAGE RecordWildCards #-}

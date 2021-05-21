@@ -5,10 +5,15 @@
   (interactive)
   (shm-kill-node nil nil nil t))
 
+(after! haskell
+  (map! :map haskell-mode-map
+        "C-c C-f" #'haskell-mode-stylish-buffer
+        "C-c C-o" #'ormolu-format-buffer))
+
 (after! shm
   (map! :map shm-map
-      "C-w" #'shm/backward-kill-word
-      "C-M-w" #'shm/copy-node)
+        "C-w" #'shm/backward-kill-word
+        "C-M-w" #'shm/copy-node)
   ;; Make it easier to toggle shm when it shits the bed
   (defalias 'shm 'structured-haskell-mode))
 
@@ -26,6 +31,5 @@
 (setq haskell-auto-insert-module-format-string
       "module %s\n    ( \n    ) where")
 
-(map! :map haskell-mode-map
-      "C-c C-f" #'haskell-mode-stylish-buffer
-      "C-c C-o" #'ormolu-format)
+(setq ormolu-extra-args
+      '("--ghc-opt" "-XTypeApplications" "--ghc-opt" "-XBangPatterns"))

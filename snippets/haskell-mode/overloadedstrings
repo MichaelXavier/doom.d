@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: language overloadedstrings
+# key: los
+# binding: direct-keybinding
+# --
+{-# LANGUAGE OverloadedStrings #-}

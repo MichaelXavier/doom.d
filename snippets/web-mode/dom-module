@@ -1,0 +1,25 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: dom-module (polymer element)
+# key: dmod
+# binding: direct-keybinding
+# --
+<dom-module id="${1:`(f-base (buffer-file-name))`}">
+  <style>
+  </style>
+
+  <template>
+    $0
+  </template>
+
+  <script>
+    (function() {
+      Polymer({
+        is: "$1",
+
+        properties: {
+        }
+      });
+    })();
+  </script>
+
+</dom-module>

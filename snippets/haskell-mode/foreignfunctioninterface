@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: language foreign function interface
+# key: lffi
+# binding: direct-keybinding
+# --
+{-# LANGUAGE ForeignFunctionInterface #-}

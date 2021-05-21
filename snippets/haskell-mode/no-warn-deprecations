@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: no-warn-deprecations
+# key: fnwd
+# --
+{-# OPTIONS_GHC -fno-warn-deprecations #-}

@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: import control monad
+# key: icm
+# binding: direct-keybinding
+# --
+import Control.Monad

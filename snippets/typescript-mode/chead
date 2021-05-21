@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: typescript comment heading
+# key: chead
+# --
+/*
+ * $1
+ */
+$0

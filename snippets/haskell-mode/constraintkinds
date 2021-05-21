@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: constraintkinds
+# key: lck
+# binding: direct-keybinding
+# --
+{-# LANGUAGE ConstraintKinds #-}

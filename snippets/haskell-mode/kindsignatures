@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: kindsignatures
+# key: lks
+# binding: direct-keybinding
+# --
+{-# LANGUAGE KindSignatures #-}

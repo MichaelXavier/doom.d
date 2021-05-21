@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: typesynonyminstances
+# key: ltsi
+# binding: direct-keybinding
+# --
+{-# LANGUAGE TypeSynonymInstances #-}

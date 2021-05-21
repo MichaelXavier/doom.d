@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: functionaldependencies
+# key: lfd
+# binding: direct-keybinding
+# --
+{-# LANGUAGE FunctionalDependencies #-}

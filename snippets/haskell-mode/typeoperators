@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: typeoperators
+# key: lto
+# binding: direct-keybinding
+# --
+{-# LANGUAGE TypeOperators #-}

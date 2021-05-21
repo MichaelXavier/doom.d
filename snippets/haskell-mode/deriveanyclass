@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: deriveanyclass
+# key: ldac
+# --
+{-# LANGUAGE DeriveAnyClass #-}

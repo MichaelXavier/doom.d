@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: fake sha256
+# key: fs2
+# --
+pkgs.lib.fakeSha256

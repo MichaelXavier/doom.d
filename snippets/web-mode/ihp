@@ -1,0 +1,7 @@
+# Author: Michael Xavier <michael@michaelxavier.net>
+# name: ifHasPerm
+# key: ihp
+# --
+<ifHasPerm p="$1" args="\${${2:tenantId}}">
+  `yas-selected-text`$0
+</ifHasPerm>

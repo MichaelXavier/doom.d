@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: from
+# key: fr
+# binding: direct-keybinding
+# --
+FROM $1:$2
+$0

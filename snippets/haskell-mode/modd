@@ -1,0 +1,8 @@
+# Author: Michael Xavier <michael@michaelxavier.net>
+# name: module documentation
+# key: modd
+# --
+{-|
+Module      : $1
+Description : $2
+-}

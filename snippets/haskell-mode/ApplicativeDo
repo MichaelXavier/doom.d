@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: ApplicativeDo
+# key: lad
+# --
+{-# LANGUAGE ApplicativeDo #-}

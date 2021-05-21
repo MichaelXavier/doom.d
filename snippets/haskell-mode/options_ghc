@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: options_ghc pragma
+# key: oghc
+# binding: direct-keybinding
+# --
+{-# OPTIONS_GHC $1 #-}$0

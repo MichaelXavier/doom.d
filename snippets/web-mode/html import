@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: html import
+# key: imp
+# binding: direct-keybinding
+# --
+<link rel="import" href="$1">

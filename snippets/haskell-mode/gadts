@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: gadts
+# key: lg
+# binding: direct-keybinding
+# --
+{-# LANGUAGE GADTs #-}

@@ -1,0 +1,6 @@
+# Author: Michael Xavier <michael@michaelxavier.net>
+# name: emcas lisp heading
+# key: chead
+# --
+;;---- $1 -----------------------------------------------------------------
+$0

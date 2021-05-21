@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: minversion
+# key: minversion
+# --
+#if MIN_VERSION_$1($2)
+$0
+#endif

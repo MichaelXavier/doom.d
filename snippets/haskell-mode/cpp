@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: cpp
+# key: lcpp
+# binding: direct-keybinding
+# --
+{-# LANGUAGE CPP #-}

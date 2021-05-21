@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: defaultsignatures
+# key: lds
+# binding: direct-keybinding
+# --
+{-# LANGUAGE DefaultSignatures #-}

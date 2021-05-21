@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: controlapplicative
+# key: ica
+# binding: direct-keybinding
+# --
+import Control.Applicative

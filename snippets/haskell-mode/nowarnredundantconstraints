@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: nowarnredundantconstraints
+# key: fnwrc
+# --
+{-# OPTIONS_GHC -fno-warn-redundant-constraints #-}

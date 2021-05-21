@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: language-rebindable-syntax
+# key: lrs
+# --
+{-# LANGUAGE RebindableSyntax #-}

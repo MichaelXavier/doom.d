@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: language flexibleinstances
+# key: lfi
+# binding: direct-keybinding
+# --
+{-# LANGUAGE FlexibleInstances #-}

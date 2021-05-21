@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: packageimports
+# key: lpi
+# binding: direct-keybinding
+# --
+{-# LANGUAGE PackageImports #-}

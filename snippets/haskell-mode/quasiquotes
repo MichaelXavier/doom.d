@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: language quasiquotes
+# key: lqq
+# binding: direct-keybinding
+# --
+{-# LANGUAGE QuasiQuotes #-}

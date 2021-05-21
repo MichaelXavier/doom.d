@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: language standalonederiving
+# key: lsd
+# binding: direct-keybinding
+# --
+{-# LANGUAGE StandaloneDeriving #-}

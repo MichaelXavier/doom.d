@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: tuplesections
+# key: lts
+# binding: direct-keybinding
+# --
+{-# LANGUAGE TupleSections #-}

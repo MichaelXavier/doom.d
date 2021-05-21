@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: bangpatterns
+# key: lbp
+# binding: direct-keybinding
+# --
+{-# LANGUAGE BangPatterns #-}

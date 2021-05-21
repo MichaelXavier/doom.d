@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: empty-data-decls
+# key: ledd
+# binding: direct-keybinding
+# --
+{-# LANGUAGE EmptyDataDecls #-}

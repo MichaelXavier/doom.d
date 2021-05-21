@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: undecidableinstances
+# key: lui
+# binding: direct-keybinding
+# --
+{-# LANGUAGE UndecidableInstances #-}

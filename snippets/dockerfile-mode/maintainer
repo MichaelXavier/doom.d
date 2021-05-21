@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: maintainer
+# key: ma
+# binding: direct-keybinding
+# --
+MAINTAINER $1 <$2>
+$0

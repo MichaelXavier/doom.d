@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: no-warn-missing-local-sigs
+# key: fnwmls
+# --
+{-# OPTIONS_GHC -fno-warn-missing-local-sigs #-}

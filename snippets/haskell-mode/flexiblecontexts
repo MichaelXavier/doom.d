@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: flexiblecontexts
+# key: lfc
+# binding: direct-keybinding
+# --
+{-# LANGUAGE FlexibleContexts #-}

@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: language scopedtypevariables
+# key: lstv
+# binding: direct-keybinding
+# --
+{-# LANGUAGE ScopedTypeVariables #-}

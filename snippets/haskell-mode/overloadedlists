@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: overloadedlists
+# key: lol
+# --
+{-# LANGUAGE OverloadedLists #-}

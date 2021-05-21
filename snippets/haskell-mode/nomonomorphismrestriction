@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: language nomonomorphismrestriction
+# key: lnmr
+# binding: direct-keybinding
+# --
+{-# LANGUAGE NoMonomorphismRestriction #-}

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: duplicaterecordfields
+# key: ldrf
+# --
+{-# LANGUAGE DuplicateRecordFields #-}

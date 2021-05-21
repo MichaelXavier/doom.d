@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: derivefunctor
+# key: ldf
+# binding: direct-keybinding
+# --
+{-# LANGUAGE DeriveFunctor #-}

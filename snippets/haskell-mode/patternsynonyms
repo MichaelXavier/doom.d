@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: patternsynonyms
+# key: lps
+# binding: direct-keybinding
+# --
+{-# LANGUAGE PatternSynonyms #-}

@@ -1,12 +1,14 @@
 ;; custom keymapping
 (map!
-  "C-w" #'backward-kill-word
-  "C-s" #'swiper
-  "C-x C-m" #'execute-extended-command
-  "C-x C-k" #'kill-region
-  "C-S-p" #'previous-multiframe-window
-  "C-S-n" #'next-multiframe-window
-  "C-c s" #'counsel-tramp)
+ "C-w" #'backward-kill-word
+ "C-s" #'swiper
+ "C-x C-m" #'execute-extended-command
+ "C-x C-k" #'kill-region
+ "C-S-p" #'previous-multiframe-window
+ "C-S-n" #'next-multiframe-window
+ "C-c s" #'counsel-tramp
+ "C-S-k" #'kill-whole-line
+ "C-;" #'iedit-mode)
 
 ;; aliases
 (defalias 'qrr 'query-replace-regexp)
@@ -130,9 +132,12 @@
  "C-M-g" #'custom-dumb-jump-go)
 
 (map! :map dumb-jump-mode-map
-  ;; unbind dumb-jump-back which i always accidentally hit
-  "C-M-p" nil)
+      ;; unbind dumb-jump-back which i always accidentally hit
+      "C-M-p" nil)
 
 ;; configure auto formatters
 (setq +format-on-save-enabled-modes
       '(not haskell-mode))
+
+(after! smart-tab
+  (global-smart-tab-mode t))

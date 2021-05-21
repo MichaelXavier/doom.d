@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: polykinds
+# key: lpk
+# --
+{-# LANGUAGE PolyKinds #-}

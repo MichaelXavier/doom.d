@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: fwe
+# key: fwe
+# --
+{-# OPTIONS_GHC -Wall -Werror #-}

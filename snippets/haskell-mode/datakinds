@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: datakinds
+# key: ldk
+# binding: direct-keybinding
+# --
+{-# LANGUAGE DataKinds #-}
