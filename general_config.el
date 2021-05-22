@@ -141,3 +141,6 @@
 
 (after! smart-tab
   (global-smart-tab-mode t))
+
+;; toggle god mode with esc. ergos aren't great on laptop keyboard
+(global-set-key (kbd "<escape>") 'god-mode-all)
