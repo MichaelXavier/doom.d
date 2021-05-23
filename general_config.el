@@ -59,9 +59,9 @@
       "H-s j" #'sp-join-sexp
       "H-s s" #'sp-split-sexp
       "C-c SPC" #'ace-jump-mode
-      "C-+" #'zoom-frm-in
-      "C--" #'zoom-frm-out
-      "C-0" #'zoom-frm-unzoom)
+      "C-+" #'default-text-scale-increase
+      "C--" #'default-text-scale-decrease
+      "C-0" #'default-text-scale-reset)
 
 (map! :map emacs-lisp-mode-map
       ")" #'sp-up-sexp)

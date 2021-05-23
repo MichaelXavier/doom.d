@@ -6,10 +6,10 @@
 ;; use 'M-x doom/reload'.
 
 (package! ace-jump-mode)
-(package! zoom-frm)
 (package! shm)
 (package! counsel-tramp)
 (package! ormolu)
+(package! default-text-scale)
 ;; TODO not sure if this will conflict with company
 (package! smart-tab)
 ;; drop doom default snippets
