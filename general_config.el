@@ -8,7 +8,9 @@
  "C-S-n" #'next-multiframe-window
  "C-c s" #'counsel-tramp
  "C-S-k" #'kill-whole-line
- "C-;" #'iedit-mode)
+ "C-;" #'iedit-mode
+ "C-/" #'undo-fu-only-undo
+ "C-?" #'undo-fu-only-redo)
 
 ;; aliases
 (defalias 'qrr 'query-replace-regexp)
