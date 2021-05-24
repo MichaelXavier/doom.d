@@ -10,7 +10,9 @@
  "C-S-k" #'kill-whole-line
  "C-;" #'iedit-mode
  "C-/" #'undo-fu-only-undo
- "C-?" #'undo-fu-only-redo)
+ "C-?" #'undo-fu-only-redo
+ "C-c C-p s s" #'+ivy/project-search
+ "TAB" #'smart-tab)
 
 ;; aliases
 (defalias 'qrr 'query-replace-regexp)
@@ -143,9 +145,6 @@
 
 (after! smart-tab
   (global-smart-tab-mode t))
-
-;; toggle god mode with esc. ergos aren't great on laptop keyboard
-(global-set-key (kbd "<escape>") 'god-mode-all)
 
 ;; default to opening a project in dired
 (setq counsel-projectile-switch-project-action
