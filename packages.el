@@ -10,8 +10,6 @@
 (package! counsel-tramp)
 (package! ormolu)
 (package! default-text-scale)
-;; TODO not sure if this will conflict with company
-(package! smart-tab)
 (package! iedit)
 ;; drop doom default snippets
 (package! doom-snippets :ignore t)

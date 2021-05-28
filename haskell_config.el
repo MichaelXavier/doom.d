@@ -33,3 +33,6 @@
 
 (setq ormolu-extra-args
       '("--ghc-opt" "-XTypeApplications" "--ghc-opt" "-XBangPatterns"))
+
+;; Try snippets first, failing that, terms found in buffers, then fallback
+(set-company-backend! 'haskell-mode-hook '(company-yasnippet company-dabbrev-code company-capf))

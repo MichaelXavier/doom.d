@@ -11,8 +11,7 @@
  "C-;" #'iedit-mode
  "C-/" #'undo-fu-only-undo
  "C-?" #'undo-fu-only-redo
- "C-c C-p s s" #'+ivy/project-search
- "TAB" #'smart-tab)
+ "C-c C-p s s" #'+ivy/project-search)
 
 ;; aliases
 (defalias 'qrr 'query-replace-regexp)
@@ -172,3 +171,11 @@
         ("xv" counsel-projectile-switch-project-action-run-vterm "invoke vterm from project root")
         ("Oc" counsel-projectile-switch-project-action-org-capture "capture into project")
         ("Oa" counsel-projectile-switch-project-action-org-agenda "open project agenda")))
+
+;; company mode is really annoying in org mode
+(setq company-global-modes
+      '(not org-mode erc-mode message-mode help-mode gud-mode vterm-mode))
+
+;; spellchecking only used selectively
+(remove-hook 'text-mode-hook #'spell-fu-mode)
+(add-hook 'markdown-mode-hook #'spell-fu-mode)
