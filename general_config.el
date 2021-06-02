@@ -179,3 +179,6 @@
 ;; spellchecking only used selectively
 (remove-hook 'text-mode-hook #'spell-fu-mode)
 (add-hook 'markdown-mode-hook #'spell-fu-mode)
+
+;; suppress annoying TAGS prompt
+(setq tags-add-tables nil)
