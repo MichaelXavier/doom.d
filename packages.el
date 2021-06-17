@@ -11,6 +11,7 @@
 (package! ormolu)
 (package! default-text-scale)
 (package! iedit)
+(package! dhall-mode)
 ;; drop doom default snippets
 (package! doom-snippets :ignore t)
 
