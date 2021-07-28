@@ -11,7 +11,9 @@
  "C-;" #'iedit-mode
  "C-/" #'undo-fu-only-undo
  "C-?" #'undo-fu-only-redo
- "C-c C-p s s" #'+ivy/project-search)
+ "C-c C-p s s" #'+ivy/project-search
+ ;; unbind mail compose
+ "C-x m" nil)
 
 ;; aliases
 (defalias 'qrr 'query-replace-regexp)
