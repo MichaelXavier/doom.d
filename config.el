@@ -54,3 +54,5 @@
 (load! "org_config.el" doom-private-dir)
 (load! "haskell_config.el" doom-private-dir)
 (load! "purescript_config.el" doom-private-dir)
+
+(setq auto-save-default nil)
