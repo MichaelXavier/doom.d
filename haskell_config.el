@@ -41,3 +41,6 @@
 (add-hook! 'haskell-mode-hook
   (add-to-list 'flycheck-disabled-checkers 'haskell-ghc)
   (add-to-list 'flycheck-disabled-checkers 'haskell-stack-ghc))
+
+;; turn off lsp to avoid annoying error. might break LSP but i don't use it currently
+(remove-hook! 'haskell-mode-local-vars-hook #'lsp!)
