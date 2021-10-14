@@ -14,6 +14,7 @@
 (package! dhall-mode)
 ;; drop doom default snippets
 (package! doom-snippets :ignore t)
+(package! string-inflection)
 
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
                                         ;(package! some-package)
