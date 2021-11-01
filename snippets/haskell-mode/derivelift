@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: derivelift
+# key: ldl
+# --
+{-# LANGUAGE DeriveLift #-}
