@@ -40,7 +40,8 @@
 ;; these checkers are dog slow. not sure if this is the right way
 (add-hook! 'haskell-mode-hook
   (add-to-list 'flycheck-disabled-checkers 'haskell-ghc)
-  (add-to-list 'flycheck-disabled-checkers 'haskell-stack-ghc))
+  (add-to-list 'flycheck-disabled-checkers 'haskell-stack-ghc)
+  (add-to-list 'flycheck-disabled-checkers 'haskell-hlint))
 
 ;; turn off lsp to avoid annoying error. might break LSP but i don't use it currently
 (remove-hook! 'haskell-mode-local-vars-hook #'lsp!)
