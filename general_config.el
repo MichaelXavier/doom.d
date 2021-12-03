@@ -89,7 +89,8 @@
   (when (not (file-exists-p (buffer-file-name)))
     (set-buffer-modified-p t)))
 
-(add-hook! 'find-file-hooks #'assume-new-is-modified)
+; this breaks file-templates expansion
+; (add-hook! 'find-file-hooks #'assume-new-is-modified)
 
 (defun sudo-find-file (file-name)
   "Like find file, but opens the file as root."
