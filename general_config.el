@@ -175,9 +175,9 @@
         ("Oc" counsel-projectile-switch-project-action-org-capture "capture into project")
         ("Oa" counsel-projectile-switch-project-action-org-agenda "open project agenda")))
 
-;; company mode is really annoying in org mode
+;; company mode is really annoying in these modes
 (setq company-global-modes
-      '(not org-mode erc-mode message-mode help-mode gud-mode vterm-mode))
+      '(not org-mode erc-mode message-mode help-mode gud-mode vterm-mode sh-mode))
 
 ;; spellchecking only used selectively
 (remove-hook 'text-mode-hook #'spell-fu-mode)
