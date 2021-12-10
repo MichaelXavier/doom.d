@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: no-warn-unused-local-binds
+# key: fnwulb
+# --
+{-# OPTIONS_GHC -fno-warn-unused-local-binds #-}
