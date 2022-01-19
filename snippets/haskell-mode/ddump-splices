@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: ddump-splices
+# key: ddump
+# --
+{-# OPTIONS_GHC -ddump-splices #-}
