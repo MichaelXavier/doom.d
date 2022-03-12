@@ -15,6 +15,10 @@
 ;; drop doom default snippets
 (package! doom-snippets :ignore t)
 (package! string-inflection)
+;;TODO: would be good to figure out how to make these conditional
+(package! exwm)
+;; TODO: doesn't work (package! exwm-config)
+(package! xelb)
 
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
                                         ;(package! some-package)
