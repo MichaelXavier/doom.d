@@ -16,6 +16,9 @@
 (package! doom-snippets :ignore t)
 (package! string-inflection)
 
+;; tiling window manager
+(package! edwina)
+
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
                                         ;(package! some-package)
 
