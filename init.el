@@ -41,7 +41,12 @@
        ;;nav-flash         ; blink cursor line after big motions
        ;;neotree           ; a project drawer, like NERDTree for vim
        ophints           ; highlight the region an operation acts on
-       (popup +defaults)   ; tame sudden yet inevitable temporary windows
+
+       ; popups seems to cause issues with edwina. repro: split to 2+ windows
+       ; and then do C-c C-t in an org file. you'll get an error about splitting
+       ; a too-small window
+       ; (popup +defaults)   ; tame sudden yet inevitable temporary windows TODO: this seems to conflict with edwina.
+
        ;;tabs              ; a tab bar for Emacs
        ;;treemacs          ; a project drawer, like neotree but cooler
        unicode           ; extended unicode support for various languages
