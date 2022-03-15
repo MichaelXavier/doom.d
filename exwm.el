@@ -235,10 +235,19 @@
 ;;(exwm-systemtray-enable)
 (exwm-randr-enable)
 
-;; make the buffer name follow the class name of the window
-(add-hook 'exwm-update-class-hook
-          (lambda ()
-            (exwm-workspace-rename-buffer exwm-class-name)))
+;; make the buffer name always reflect the class and title name of X windows
+;; https://github.com/ch11ng/exwm/issues/198#issuecomment-249723369
+(defun exwm-rename-buffer ()
+  (interactive)
+  (exwm-workspace-rename-buffer
+   (concat exwm-class-name ":"
+           (if (<= (length exwm-title) 50) exwm-title
+             (concat (substring exwm-title 0 49) "...")))))
+
+;; Add these hooks in a suitable place (e.g., as done in exwm-config-default)
+(add-hook 'exwm-update-class-hook 'exwm-rename-buffer)
+(add-hook 'exwm-update-title-hook 'exwm-rename-buffer)
+
 
 ;; keybindings
 (unless (get 'exwm-input-global-keys 'saved-value)
@@ -257,10 +266,27 @@
           (,(kbd "s-R") . exwm-reset)
           )))
 
+;; passthrough keys when using X programs in line mode. If you switch to char
+;; mode with s-i, there is no simulation, everything goes straight through to
+;; the X program. the first element is the key that you input and the second is
+;; the key that is sent
+(unless (get 'exwm-input-simulation-keys 'saved-value)
+    (setq exwm-input-simulation-keys
+          '((,(kbd "C-b") . ,(kbd "<left>"))
+            (,(kbd "C-f") . ,(kbd "<right>"))
+            (,(kbd "C-p") . ,(kbd "<up>"))
+            (,(kbd "C-n") . ,(kbd "<down>"))
+            (,(kbd "C-a") . ,(kbd "<home>"))
+            (,(kbd "C-e") . ,(kbd "<end>"))
+            (,(kbd "M-v") . ,(kbd "<prior>"))
+            (,(kbd "C-v") . ,(kbd "<next>"))
+            (,(kbd "C-d") . ,(kbd "<delete>"))
+            (,(kbd "C-k") . ,(kbd "S-<end> <delete>")))))
+
 ;;TODO: line editing shit
 ;;TODO: C-n and C-p for scrolling would be nice i think
+;;TODO: exwm-firefox
 
-;;TOOD: exwm-input-simulation-keys
 ;;TODO: telephone-line stuff
 
 ;; this always has to come last evidently
