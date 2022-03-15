@@ -20,6 +20,9 @@
 ;; TODO: doesn't work (package! exwm-config)
 (package! xelb)
 
+;; tiling window manager
+(package! edwina)
+
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
                                         ;(package! some-package)
 

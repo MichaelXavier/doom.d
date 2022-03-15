@@ -4,9 +4,8 @@
  "C-s" #'swiper
  "C-x C-m" #'execute-extended-command
  "C-x C-k" #'kill-region
- "C-S-p" #'previous-multiframe-window
- "C-S-n" #'next-multiframe-window
- "C-c s" #'counsel-tramp
+ "C-S-p" #'edwina-select-previous-window
+ "C-S-n" #'edwina-select-next-window
  "C-S-k" #'kill-whole-line
  "C-;" #'iedit-mode
  "C-/" #'undo-fu-only-undo
@@ -122,7 +121,6 @@
 (map! :map projectile-mode-map
       "C-c C-p" #'projectile-command-map)
 
-;;TODO: is this working?
 ;; dumb-jump
 ;; if you run C-u C-M-g (universal argument), it will run the prompt version of dumb-jump-go
 (defun custom-dumb-jump-go (&optional _)
@@ -185,3 +183,24 @@
 
 ;; suppress annoying TAGS prompt
 (setq tags-add-tables nil)
+
+;; configure edwina, a tiling window manager
+;; this sets display-buffer to open a new window by default. whatever that means
+(setq display-buffer-base-action '(display-buffer-below-selected))
+(edwina-mode t)
+
+;; copy edwina's bindings into the doom w workspaces/windows leader prefix.
+;; might make sense to have additional super-based bindings for exwm mode? maybe
+;; that'll be too confusing.
+(map! :map edwina-mode-map
+      :leader
+      :desc "Rearrange panes" "w r" #'edwina-arrange
+      :desc "Move to next window cyclically" "w n" #'edwina-select-next-window
+      :desc "Move to previous window cyclically" "w p" #'edwina-select-previous-window
+      :desc "Move current window into master area" "w RET" #'edwina-zoom
+      :desc "Clone selected window" "w c" #'edwina-clone-window
+      :desc "Delete selected window" "w k" #'edwina-delete-window
+      :desc "Grow master window size" "w l" #'edwina-inc-mfact
+      :desc "Grow master window size" "w h" #'edwina-dec-mfact
+      )
+
