@@ -235,6 +235,10 @@
 ;;(exwm-systemtray-enable)
 (exwm-randr-enable)
 
+;; make the buffer name follow the class name of the window
+(add-hook 'exwm-update-class-hook
+          (lambda ()
+            (exwm-workspace-rename-buffer exwm-class-name)))
 
 ;; keybindings
 (unless (get 'exwm-input-global-keys 'saved-value)
@@ -253,8 +257,10 @@
           (,(kbd "s-R") . exwm-reset)
           )))
 
+;;TODO: line editing shit
+;;TODO: C-n and C-p for scrolling would be nice i think
+
 ;;TOOD: exwm-input-simulation-keys
-;;TODO: edwina
 ;;TODO: telephone-line stuff
 
 ;; this always has to come last evidently
