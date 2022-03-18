@@ -203,4 +203,5 @@
       :desc "Grow master window size" "w l" #'edwina-inc-mfact
       :desc "Grow master window size" "w h" #'edwina-dec-mfact
       )
-
+;;TODO: edwina zoom should focus the zoomed buffer i think
+;;TODO: C-w 1 move to the window numbered 1
