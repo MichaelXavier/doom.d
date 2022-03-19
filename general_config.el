@@ -189,6 +189,18 @@
 (setq display-buffer-base-action '(display-buffer-below-selected))
 (edwina-mode t)
 
+;; https://github.com/ajgrf/edwina/issues/7#issuecomment-663598457
+(defun my/edwina-zoom-and-switch ()
+  "Zoom/cycle the selected window to/from master area and then switch to the master window."
+  (interactive)
+  (if (eq (selected-window) (frame-first-window))
+      (edwina-swap-next-window)
+    (let ((pane (edwina-pane (selected-window))))
+      (edwina-delete-window)
+      (edwina-arrange (cons pane (edwina-pane-list)))
+      ;; switch to master window
+      (select-window (car (edwina--window-list))))))
+
 ;; copy edwina's bindings into the doom w workspaces/windows leader prefix.
 ;; might make sense to have additional super-based bindings for exwm mode? maybe
 ;; that'll be too confusing.
@@ -197,11 +209,9 @@
       :desc "Rearrange panes" "w r" #'edwina-arrange
       :desc "Move to next window cyclically" "w n" #'edwina-select-next-window
       :desc "Move to previous window cyclically" "w p" #'edwina-select-previous-window
-      :desc "Move current window into master area" "w RET" #'edwina-zoom
+      :desc "Move current window into master area" "w RET" #'my/edwina-zoom-and-switch
       :desc "Clone selected window" "w c" #'edwina-clone-window
       :desc "Delete selected window" "w k" #'edwina-delete-window
       :desc "Grow master window size" "w l" #'edwina-inc-mfact
       :desc "Grow master window size" "w h" #'edwina-dec-mfact
       )
-;;TODO: edwina zoom should focus the zoomed buffer i think
-;;TODO: C-w 1 move to the window numbered 1
