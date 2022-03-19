@@ -18,9 +18,6 @@
 ;;            (laptop-monitor "eDP-1"))
 ;;         `(1 ,dell-monitor 2 ,laptop-monitor)))
 
-;;TODO: shold we do server-
-;;TODO: is this making x windows float?
-
 ;; Emacs as a window manager
 (exwm-randr-enable)
 
@@ -54,12 +51,10 @@
         (,(kbd "s-p") . counsel-linux-app)
         ;; Toggle between "line-mode" and "char mode"
         (,(kbd "s-i") . exwm-input-toggle-keyboard)
-        ;;TODO: does this make it so they don't get captured in native windows?
         (,(kbd "C-S-p") . edwina-select-previous-window)
         (,(kbd "C-S-n") . edwina-select-next-window)
 
         (,(kbd "s-t") . exwm-launch-terminal)
-        ;;TODO: s-S-<return> to launch terminal
         ))
 
 ;;TODO: how to get exwm to reload its global keys?
@@ -84,8 +79,6 @@
 
 ;;TODO: this might help with multiple monitors
 ;;(setq framemove-hook-into-windmove t)
-
-;;TODO: exwm-firefox?
 
 ;; this always has to come last evidently
 ;;
