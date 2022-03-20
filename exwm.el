@@ -5,18 +5,7 @@
 
 (load! "exwm/multi_monitor.el")
 
-;;TODO: how do we make this conditional?
-
 ;; lots taken from https://github.com/johanwiden/exwm-setup
-
-;; Number workspaces to monitors. this is very specifi to my home setup so if i
-;; need to plug in somewhere else it's probably gonna suck. I think I only need
-;; a workspace per monitor i'm using though
-;; (setq exwm-randr-workspace-monitor-plist
-;;       (let
-;;           ((dell-monitor "DP-3")
-;;            (laptop-monitor "eDP-1"))
-;;         `(1 ,dell-monitor 2 ,laptop-monitor)))
 
 ;; Emacs as a window manager
 (exwm-randr-enable)
@@ -38,14 +27,14 @@
 (defun exwm-launch-terminal ()
    "Function used to launch a terminal from inside exwm"
    (interactive)
-   (call-process "alacritty" nil 0 nil))
+   (call-process "kitty" nil 0 nil))
 
 ;; keybindings
 (setq exwm-input-global-keys
       `(
         ;; 's-r': Reset (to line-mode).
         (,(kbd "s-r") . exwm-reset)
-        ;; 's-w': Switch workspace. TODO: keep?
+        ;; 's-w': Switch workspace.
         (,(kbd "s-w") . exwm-workspace-switch)
         ;; 's-p': Launch application.
         (,(kbd "s-p") . counsel-linux-app)
@@ -55,6 +44,24 @@
         (,(kbd "C-S-n") . edwina-select-next-window)
 
         (,(kbd "s-t") . exwm-launch-terminal)
+
+        ;; 's-N': Switch to a certain workspace.
+        ,@(mapcar (lambda (i)
+                    `(,(kbd (format "s-%d" i)) .
+                      (lambda ()
+                        (interactive)
+                        (exwm-workspace-switch-create ,i))))
+                  (number-sequence 0 9))
+        ;; 'S-s-N': Move window to, and switch to, a certain workspace.
+        ,@(cl-mapcar (lambda (c n)
+                       `(,(kbd (format "s-%c" c)) .
+                         (lambda ()
+                           (interactive)
+                           (exwm-workspace-move-window ,n)
+                           (exwm-workspace-switch ,n))))
+                     '(?\) ?! ?@ ?# ?$ ?% ?^ ?& ?* ?\()
+                     ;; '(?\= ?! ?\" ?# ?¤ ?% ?& ?/ ?\( ?\))
+                     (number-sequence 0 9))
         ))
 
 ;;TODO: how to get exwm to reload its global keys?
@@ -77,12 +84,14 @@
         (,(kbd "C-d") . ,(kbd "<delete>"))
         (,(kbd "C-k") . ,(kbd "S-<end> <delete>"))))
 
-;;TODO: this might help with multiple monitors
-;;(setq framemove-hook-into-windmove t)
+;; Override default behaviors for some windows
+(setq exwm-manage-configurations
+      '(
+        ;; terminal epplications have a lot of hotkey overlap with emacs
+        ((member exwm-class-name '("Alacritty" "kitty")) char-mode t)
+        ))
 
 ;; this always has to come last evidently
 ;;
 (exwm-enable) ;; this is "harmless"
 ;; but logs an annoying warning on boot when exwm is not enabled
-
-;;TODO; bind xmonad like bindings for s-w and s-e which runs something like (exwm-workspace-switch-create 2)
