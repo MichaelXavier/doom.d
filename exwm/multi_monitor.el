@@ -1,5 +1,7 @@
 ;;; exwm/multi-monitor.el -*- lexical-binding: t; -*-
 
+;; Taken from https://github.com/johanwiden/exwm-setup
+
 ;; Support for multiple monitors, and plugging and unplugging of monitors.
 
 ;; If you have a static setup, i.e. you will not change the screen configuration
@@ -69,8 +71,14 @@
             t
           nil)))
 
+;; Set the initial number of workspaces to the number of screens
+(setq exwm-workspace-number (let* ((output-list (jw/xrandr-output-list))
+                                  (available-screens (seq-intersection jw/x11-screen-list output-list)))
+                              (length available-screens)))
+
 (setq exwm-randr-workspace-monitor-plist (jw/build-workspace-monitor-plist jw/exwm-workspace-list))
 
+;;TODO: where do these env vars come from?
 (defun jw/exwm-change-screen-hook ()
   "Execute xrandr to select and position available screens according to X11_SCREEN_* environment variables."
   (let* ((output-list (jw/xrandr-output-list))
