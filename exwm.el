@@ -91,6 +91,12 @@
         ((member exwm-class-name '("Alacritty" "kitty")) char-mode t)
         ))
 
+;; suggested in ;;https://github.com/ch11ng/exwm/issues/50#issuecomment-140746653
+;; Show buffers from all workspaces in the buffer list
+(setq exwm-workspace-show-all-buffers t)
+;; Undocumented. Allows moving an X window by switching to its buffer
+(setq exwm-layout-show-all-buffers t)
+
 ;; this always has to come last evidently
 ;;
 (exwm-enable) ;; this is "harmless"
