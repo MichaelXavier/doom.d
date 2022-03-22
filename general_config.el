@@ -215,3 +215,44 @@
       :desc "Grow master window size" "w l" #'edwina-inc-mfact
       :desc "Grow master window size" "w h" #'edwina-dec-mfact
       )
+
+;; Taken and slightly modified from  https://codeberg.org/dalz/dotfiles/src/branch/master/doom/+exwm.el
+(defun my/app-launcher ()
+  "An app launcher that completes using the executables in PATH (labeled with x) and desktop apps (labeled with d)"
+  (interactive)
+  (ivy-read "run: "
+            (append (mapcar (lambda (c)
+                              (let* ((name (caar c))
+                                     (cats (cdar c))
+                                     (str (concat name cats)))
+                                (put-text-property 0 (length str) 'display (concat "d: " name) str)
+                                (cons str (cdr c))))
+                            (my/desktop-apps))
+                    (mapcar (lambda (s)
+                              (put-text-property 0 (length s) 'display (concat "x: " s) s) s)
+                            (my/executables-in-path)))
+            :action (lambda (x)
+                      (if (consp x)
+                          (counsel-linux-app-action-default x)
+                        (start-process-shell-command x nil x)))))
+(defun my/executables-in-path ()
+  (delete-dups
+   (mapcar #'f-filename
+           (-filter #'f-executable-p
+                    (-flatten
+                     (mapcar (lambda (dir)
+                               (directory-files dir t directory-files-no-dot-files-regexp))
+                             (-filter #'f-directory-p (split-string (getenv "PATH") ":"))))))))
+
+(defun my/desktop-apps ()
+  (mapcar (lambda (c)
+            (cons (with-temp-buffer
+                    (insert-file-contents (cdr c))
+                    (cons
+                     (progn (re-search-forward "^Name *= *\\(.+\\)$")
+                            (match-string 1))
+                     (progn (goto-char (point-min))
+                            (re-search-forward "^Categories *= *\\(.+\\)$" nil t)
+                            (match-string 1))))
+                  (car c)))
+          (counsel-linux-apps-list-desktop-files)))

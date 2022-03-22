@@ -37,7 +37,7 @@
         ;; 's-w': Switch workspace.
         (,(kbd "s-w") . exwm-workspace-switch)
         ;; 's-p': Launch application.
-        (,(kbd "s-p") . counsel-linux-app)
+        (,(kbd "s-p") . my/app-launcher)
         ;; Toggle between "line-mode" and "char mode"
         (,(kbd "s-i") . exwm-input-toggle-keyboard)
         (,(kbd "C-S-p") . edwina-select-previous-window)
