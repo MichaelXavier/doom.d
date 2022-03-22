@@ -50,6 +50,7 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
+(load! "local_machine_config.el" doom-private-dir t)
 (load! "general_config.el" doom-private-dir)
 (load! "org_config.el" doom-private-dir)
 (load! "haskell_config.el" doom-private-dir)

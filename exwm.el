@@ -3,6 +3,10 @@
 ;; multi-monitor support
 (require 'exwm-randr)
 
+(defvar exwm-terminal-command
+  "kitty"
+  "The command to run your preferred terminal via s-r")
+
 (load! "exwm/multi_monitor.el")
 
 ;; lots taken from https://github.com/johanwiden/exwm-setup
@@ -27,7 +31,7 @@
 (defun exwm-launch-terminal ()
    "Function used to launch a terminal from inside exwm"
    (interactive)
-   (call-process "kitty" nil 0 nil))
+   (call-process exwm-terminal-command nil 0 nil))
 
 ;; keybindings
 (setq exwm-input-global-keys
