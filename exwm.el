@@ -33,13 +33,47 @@
    (interactive)
    (call-process exwm-terminal-command nil 0 nil))
 
+(defun exwm-focus-left-monitor ()
+  "Focus on the left monitor, aka workspace 1"
+  (interactive)
+  (exwm-workspace-switch-create 1))
+
+(defun exwm-focus-right-monitor ()
+  "Focus on the right monitor, aka workspace 2"
+  (interactive)
+  (exwm-workspace-switch-create 2))
+
+(defun exwm-workspace-move-and-switch (workspace)
+  "Move the current window to the given workspace number and then switch to that workspace"
+  (interactive "n")
+  (exwm-workspace-move-window workspace)
+  (exwm-workspace-switch workspace))
+
+(defun exwm-move-window-to-left-monitor ()
+  "Move the current window to the left monitor, aka workspace 1"
+  (interactive)
+  (exwm-workspace-move-and-switch 1))
+
+(defun exwm-move-window-to-right-monitor ()
+  "Move the current window to the right monitor, aka workspace 2"
+  (interactive)
+  (exwm-workspace-move-and-switch 2))
+
 ;; keybindings
 (setq exwm-input-global-keys
       `(
         ;; 's-r': Reset (to line-mode).
         (,(kbd "s-r") . exwm-reset)
-        ;; 's-w': Switch workspace.
-        (,(kbd "s-w") . exwm-workspace-switch)
+        ;; Pretty much all of the time we're on 1 or 2 monitors. I prefer to
+        ;; just have one workspace per monitor and then use buffer/window
+        ;; management to pull up and arrange stuff
+        ;;
+        ;; XMonad-like bindings: s-w shifts to the "left" workspace/monitor 1,
+        ;; and s-e to the "right" workspace/monitor 2
+        (,(kbd "s-w") . exwm-focus-left-monitor)
+        (,(kbd "s-W") . exwm-move-window-to-left-monitor)
+        (,(kbd "s-e") . exwm-focus-right-monitor)
+        (,(kbd "s-E") . exwm-move-window-to-right-monitor)
         ;; 's-p': Launch application.
         (,(kbd "s-p") . my/app-launcher)
         ;; Toggle between "line-mode" and "char mode"
@@ -61,8 +95,7 @@
                        `(,(kbd (format "s-%c" c)) .
                          (lambda ()
                            (interactive)
-                           (exwm-workspace-move-window ,n)
-                           (exwm-workspace-switch ,n))))
+                           (exwm-workspace-move-and-switch ,n))))
                      '(?\) ?! ?@ ?# ?$ ?% ?^ ?& ?* ?\()
                      ;; '(?\= ?! ?\" ?# ?¤ ?% ?& ?/ ?\( ?\))
                      (number-sequence 0 9))
