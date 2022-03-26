@@ -23,6 +23,12 @@
 ;; tiling window manager
 (package! edwina)
 
+;; When moving to a window, focus the mouse on the center of that window
+(package! exwm-mff)
+
+;; Extract text fields into an emacs buffer for editing
+(package! exwm-edit)
+
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
                                         ;(package! some-package)
 
