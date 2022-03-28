@@ -43,21 +43,35 @@
   (interactive)
   (exwm-workspace-switch-create 2))
 
-(defun exwm-workspace-move-and-switch (workspace)
+(defun exwm-ensure-workspace-exists (frame-or-index)
+  "Ensure that the given numbered workspace exists"
+  (interactive)
+  (unless (or (framep frame-or-index)
+              (< frame-or-index (exwm-workspace--count)))
+    ;; Grow the workspace count to meet the requested number and fill them with frames
+    (let ((exwm-workspace--create-silently t))
+      (dotimes (_ (min exwm-workspace-switch-create-limit
+                       (1+ (- frame-or-index
+                              (exwm-workspace--count)))))
+        (make-frame))
+      (run-hooks 'exwm-workspace-list-change-hook))))
+
+(defun exwm-workspace-move-switch-create (workspace)
   "Move the current window to the given workspace number and then switch to that workspace"
   (interactive "n")
+  (exwm-ensure-workspace-exists workspace)
   (exwm-workspace-move-window workspace)
   (exwm-workspace-switch workspace))
 
 (defun exwm-move-window-to-left-monitor ()
   "Move the current window to the left monitor, aka workspace 1"
   (interactive)
-  (exwm-workspace-move-and-switch 1))
+  (exwm-workspace-move-switch-create 1))
 
 (defun exwm-move-window-to-right-monitor ()
   "Move the current window to the right monitor, aka workspace 2"
   (interactive)
-  (exwm-workspace-move-and-switch 2))
+  (exwm-workspace-move-switch-create 2))
 
 ;; keybindings
 (setq exwm-input-global-keys
@@ -95,7 +109,7 @@
                        `(,(kbd (format "s-%c" c)) .
                          (lambda ()
                            (interactive)
-                           (exwm-workspace-move-and-switch ,n))))
+                           (exwm-workspace-move-switch-create ,n))))
                      '(?\) ?! ?@ ?# ?$ ?% ?^ ?& ?* ?\()
                      ;; '(?\= ?! ?\" ?# ?¤ ?% ?& ?/ ?\( ?\))
                      (number-sequence 0 9))
