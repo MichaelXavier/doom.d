@@ -133,7 +133,12 @@
         (,(kbd "M-v") . ,(kbd "<prior>"))
         (,(kbd "C-v") . ,(kbd "<next>"))
         (,(kbd "C-d") . ,(kbd "<delete>"))
-        (,(kbd "C-k") . ,(kbd "S-<end> <delete>"))))
+        (,(kbd "C-k") . ,(kbd "S-<end> <delete>"))
+        ;; kill-ring-save is analogous to copy in most GUI apps
+        (,(kbd "M-w") . ,(kbd "C-c"))
+        ;; Yank is analogous to paste in most GUI apps
+        (,(kbd "C-y") . ,(kbd "C-v"))
+        ))
 
 ;; Override default behaviors for some windows
 (setq exwm-manage-configurations
