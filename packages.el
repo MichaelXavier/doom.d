@@ -29,6 +29,8 @@
 ;; Extract text fields into an emacs buffer for editing
 (package! exwm-edit)
 
+(package! memory-usage)
+
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
                                         ;(package! some-package)
 
