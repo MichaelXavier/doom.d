@@ -31,6 +31,9 @@
 
 (package! memory-usage)
 
+;; HTTP request library with babel integration
+(package! verb)
+
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
                                         ;(package! some-package)
 
