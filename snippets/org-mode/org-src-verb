@@ -1,0 +1,8 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: org-src-verb
+# key: +SV
+# binding: direct-keybinding
+# --
+#+BEGIN_SRC verb :wrap src ob-verb-response
+  $0
+#+END_SRC

@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: org-header-var
+# key: +HV
+# binding: direct-keybinding
+# --
+#+HEADER: :var $1="$2"
+$0
