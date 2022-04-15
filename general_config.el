@@ -256,3 +256,6 @@
                             (match-string 1))))
                   (car c)))
           (counsel-linux-apps-list-desktop-files)))
+
+;; Disambiguate auth sources
+(setq auth-sources '("~/.authinfo.gpg"))
