@@ -13,3 +13,14 @@
 ; buffers. otherwise, archive files don't automatically get saved and
 ; are easy to forget about
 (advice-add 'org-archive-subtree-default :after #'org-save-all-org-buffers)
+
+; Allow refile to work at deeper levels than default, otherwise copied from doom emacs' modules/lang/org/config.el
+(setq org-refile-targets
+        '((nil :maxlevel . 10)
+          (org-agenda-files :maxlevel . 3))
+        ;; Without this, completers like ivy/helm are only given the first level of
+        ;; each outline candidates. i.e. all the candidates under the "Tasks" heading
+        ;; are just "Tasks/". This is unhelpful. We want the full path to each refile
+        ;; target! e.g. FILE/Tasks/heading/subheading
+        org-refile-use-outline-path 'file
+        org-outline-path-complete-in-steps nil)
