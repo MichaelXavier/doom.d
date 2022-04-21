@@ -24,3 +24,8 @@
         ;; target! e.g. FILE/Tasks/heading/subheading
         org-refile-use-outline-path 'file
         org-outline-path-complete-in-steps nil)
+
+;; Set more generous timeouts in verb
+(setq verb-babel-timeout 60.0)
+;; but warn after 10
+(setq verb-show-timeout-warning 10.0)
