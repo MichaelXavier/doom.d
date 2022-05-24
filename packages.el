@@ -34,6 +34,9 @@
 ;; HTTP request library with babel integration
 (package! verb)
 
+;; Graphviz mode for .dot files
+(package! graphviz-dot-mode)
+
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
                                         ;(package! some-package)
 
