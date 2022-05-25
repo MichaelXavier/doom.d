@@ -259,3 +259,9 @@
 
 ;; Disambiguate auth sources
 (setq auth-sources '("~/.authinfo.gpg"))
+
+;; Save bookmarks file on every 1 modification. This is useful because with
+;; EXWM, emacs is rarely killed
+(setq bookmark-save-flag 1)
+;; Set an explicit bookmark pack that can be symlinked in from Dropbox on systems that support it
+(setq bookmark-default-file "~/.emacs-bookmarks")

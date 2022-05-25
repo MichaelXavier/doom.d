@@ -37,6 +37,9 @@
 ;; Graphviz mode for .dot files
 (package! graphviz-dot-mode)
 
+;; Gopher and gemini client
+(package! elpher)
+
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
                                         ;(package! some-package)
 
