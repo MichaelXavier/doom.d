@@ -56,6 +56,7 @@
 (load! "haskell_config.el" doom-private-dir)
 (load! "purescript_config.el" doom-private-dir)
 (load! "dhall_config.el" doom-private-dir)
+(load! "javascript_config.el" doom-private-dir)
 ;; If we're not booting into an EXWM env, don't load the files. This avoids an
 ;; annoying error about an already-running WM
 (if (getenv "USE_EXWM")
