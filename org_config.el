@@ -1,3 +1,5 @@
+(require 'ht)
+
 (setq org-directory "~/Dropbox/org/")
 
 (defun org-archive-done-tasks ()
@@ -32,7 +34,8 @@
 
 
 ;; various functions used for requests
-(defun mx/well/get-jwt (env)
+(defun mx/well/get-azure-jwt (env)
+  "Load the JWT token deposited via aws-login $env"
   (interactive "Menv: ")
   (let (
         (file-env
@@ -45,6 +48,7 @@
   )
 
 (defun mx/well/get-arbiter-api (env)
+  "Compute the base URL to use based on the environment"
   (interactive "Menv: ")
   (let ((production-boa "https://nlb.arbiter.us-east-2.boa.ps.pro.aws.wellit.io")
         )
@@ -56,4 +60,30 @@
       (otherwise (s-lex-format "https://arbiter.${env}.well.co"))
       )
     )
+  )
+
+(defun mx/well/parse-cognito-token-file (env)
+  "Parse the cognito token file for the given env"
+  (interactive "Menv: ")
+  (let* (
+         (file-env
+          (pcase env
+            ("localhost" "development")
+            (otherwise env)))
+         (raw-file (f-read-text (s-lex-format "/ssh:well-macbook2:/Users/michael.xavier/${file-env}_cognito.json")))
+         )
+    (json-parse-string raw-file)
+    )
+  )
+
+(defun mx/well/get-cognito-authorization (env)
+  "Get the .authenticationResult.idToken value for the Authorization header"
+  (interactive "Menv: ")
+  (ht-get* (mx/well/parse-cognito-token-file env) "authenticationResult" "idToken")
+  )
+
+(defun mx/well/get-cognito-access-token (env)
+  "Get the .authenticationResult.accessToken value for the AccessToken header"
+  (interactive "Menv: ")
+  (ht-get* (mx/well/parse-cognito-token-file env) "authenticationResult" "accessToken")
   )

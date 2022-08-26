@@ -84,3 +84,6 @@
                                         ;(unpin! t)
 ;; Get a newer version of forge: https://github.com/magit/forge/issues/491
 (unpin! forge)
+
+;; Hash-table tools
+(package! ht)
