@@ -147,6 +147,7 @@
   (global-smart-tab-mode t))
 
 ;; default to opening a project in dired
+;; NOTE: not currently used with vertico
 (setq counsel-projectile-switch-project-action
       '(4
         ("o" counsel-projectile-switch-project-action "jump to a project buffer or file")
@@ -265,3 +266,13 @@
 (setq bookmark-save-flag 1)
 ;; Set an explicit bookmark pack that can be symlinked in from Dropbox on systems that support it
 (setq bookmark-default-file "~/.emacs-bookmarks")
+
+
+;; Open dired when switching projects
+(setq projectile-switch-project-action 'projectile-dired)
+;;TODO: launch linux app not showing items in PATH
+;;TODO: how well will this work in tramp?
+
+;; Allow you to descend into a directory with slash
+(map! :map vertico-map
+      "/" #'vertico-directory-enter)
