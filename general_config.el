@@ -276,3 +276,7 @@
 ;; Allow you to descend into a directory with slash
 (map! :map vertico-map
       "/" #'vertico-directory-enter)
+
+;; Consult starts previewing as you type which causes weird stuff to happen on windows like terminal that are in char mode and capture input.
+;; Solution is from https://github.com/minad/consult/issues/233#issuecomment-1109006627
+(consult-customize consult-buffer :preview-key nil)
