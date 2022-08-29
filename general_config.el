@@ -10,7 +10,6 @@
  "C-;" #'iedit-mode
  "C-/" #'undo-fu-only-undo
  "C-?" #'undo-fu-only-redo
- "C-c C-p s s" #'+ivy/project-search
  ;; unbind mail compose
  "C-x m" nil)
 
@@ -116,10 +115,6 @@
 (map! "C-x C-s" #'save-buffer-always)
 
 (map! "C-z" #'ignore)
-
-;; Set C-c C-p as the projectile command prefix
-(map! :map projectile-mode-map
-      "C-c C-p" #'projectile-command-map)
 
 ;; dumb-jump
 ;; if you run C-u C-M-g (universal argument), it will run the prompt version of dumb-jump-go
@@ -288,3 +283,5 @@
 
 ;;NOTE: I'm under the impression that using require is discouraged becase it slows load time? I can't seem to force counsel to load though so require it is
 (require 'counsel)
+;; By default consult logs to an invisible buffer. This makes debugging a bit easier
+(setq consult--async-log "*consult-async*")
