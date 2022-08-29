@@ -7,6 +7,7 @@
 
 (package! ace-jump-mode)
 (package! shm)
+(package! counsel)
 (package! counsel-tramp)
 (package! ormolu)
 (package! default-text-scale)

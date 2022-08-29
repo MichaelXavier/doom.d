@@ -88,8 +88,8 @@
   (when (not (file-exists-p (buffer-file-name)))
     (set-buffer-modified-p t)))
 
-; this breaks file-templates expansion
-; (add-hook! 'find-file-hooks #'assume-new-is-modified)
+                                        ; this breaks file-templates expansion
+                                        ; (add-hook! 'find-file-hooks #'assume-new-is-modified)
 
 (defun sudo-find-file (file-name)
   "Like find file, but opens the file as root."
@@ -217,6 +217,34 @@
       :desc "Grow master window size" "w h" #'edwina-dec-mfact
       )
 
+
+
+;; Disambiguate auth sources
+(setq auth-sources '("~/.authinfo.gpg"))
+
+;; Save bookmarks file on every 1 modification. This is useful because with
+;; EXWM, emacs is rarely killed
+(setq bookmark-save-flag 1)
+;; Set an explicit bookmark pack that can be symlinked in from Dropbox on systems that support it
+(setq bookmark-default-file "~/.emacs-bookmarks")
+
+
+;; Open dired when switching projects
+(setq projectile-switch-project-action 'projectile-dired)
+;;TODO: launch linux app not showing items in PATH
+;;TODO: how well will this work in tramp?
+
+;; Allow you to descend into a directory with slash
+(map! :map vertico-map
+      "/" #'vertico-directory-enter)
+
+;; Consult starts previewing as you type which causes weird stuff to happen on windows like terminal that are in char mode and capture input.
+;; Solution is from https://github.com/minad/consult/issues/233#issuecomment-1109006627
+(after! consult
+  (consult-customize consult-buffer :preview-key nil))
+;;TODO add after! counsel with linux launch
+
+
 ;; Taken and slightly modified from  https://codeberg.org/dalz/dotfiles/src/branch/master/doom/+exwm.el
 (defun my/app-launcher ()
   "An app launcher that completes using the executables in PATH (labeled with x) and desktop apps (labeled with d)"
@@ -258,25 +286,5 @@
                   (car c)))
           (counsel-linux-apps-list-desktop-files)))
 
-;; Disambiguate auth sources
-(setq auth-sources '("~/.authinfo.gpg"))
-
-;; Save bookmarks file on every 1 modification. This is useful because with
-;; EXWM, emacs is rarely killed
-(setq bookmark-save-flag 1)
-;; Set an explicit bookmark pack that can be symlinked in from Dropbox on systems that support it
-(setq bookmark-default-file "~/.emacs-bookmarks")
-
-
-;; Open dired when switching projects
-(setq projectile-switch-project-action 'projectile-dired)
-;;TODO: launch linux app not showing items in PATH
-;;TODO: how well will this work in tramp?
-
-;; Allow you to descend into a directory with slash
-(map! :map vertico-map
-      "/" #'vertico-directory-enter)
-
-;; Consult starts previewing as you type which causes weird stuff to happen on windows like terminal that are in char mode and capture input.
-;; Solution is from https://github.com/minad/consult/issues/233#issuecomment-1109006627
-(consult-customize consult-buffer :preview-key nil)
+;;NOTE: I'm under the impression that using require is discouraged becase it slows load time? I can't seem to force counsel to load though so require it is
+(require 'counsel)
