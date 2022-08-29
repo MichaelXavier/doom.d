@@ -153,11 +153,6 @@
 ;; Undocumented. Allows moving an X window by switching to its buffer
 (setq exwm-layout-show-all-buffers t)
 
-(require 'exwm-mff)
-
-;; When moving to a window, snap the pointer to the center
-(exwm-mff-mode)
-
 ;; When editing any text field in an X program, hit C-c ' to edit the text in an
 ;; emacs buffer, then C-c to save or C-k to abandon
 (require 'exwm-edit)
