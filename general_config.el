@@ -285,3 +285,6 @@
 (require 'counsel)
 ;; By default consult logs to an invisible buffer. This makes debugging a bit easier
 (setq consult--async-log "*consult-async*")
+
+;; Slow down how quickly consult searches re-search.
+(setq consult-async-input-debounce 0.7)
