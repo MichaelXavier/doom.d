@@ -1,7 +1,7 @@
 ;; custom keymapping
 (map!
  "C-w" #'backward-kill-word
- "C-s" #'swiper
+ "C-s" #'consult-line
  "C-x C-m" #'execute-extended-command
  "C-x C-k" #'kill-region
  "C-S-p" #'edwina-select-previous-window
@@ -293,3 +293,8 @@
 
 ;;TODO: dumb jump doesn't let you Narrow now?. maybe we should use +lookup/definition for the binding instead of dumb jump?
 ;; evidently dumb-jump-go isn't even a thing now. you should use sref-find-definitions?
+
+;; could try feeding +vertico/file-search with counsel-tramp--candidates
+
+;;TODO: look for reasonable defaults with vertico
+;; https://macowners.club/posts/from-ivy-to-vertico/
