@@ -244,21 +244,24 @@
 (defun my/app-launcher ()
   "An app launcher that completes using the executables in PATH (labeled with x) and desktop apps (labeled with d)"
   (interactive)
-  (ivy-read "run: "
-            (append (mapcar (lambda (c)
-                              (let* ((name (caar c))
-                                     (cats (cdar c))
-                                     (str (concat name cats)))
-                                (put-text-property 0 (length str) 'display (concat "d: " name) str)
-                                (cons str (cdr c))))
-                            (my/desktop-apps))
-                    (mapcar (lambda (s)
-                              (put-text-property 0 (length s) 'display (concat "x: " s) s) s)
-                            (my/executables-in-path)))
-            :action (lambda (x)
-                      (if (consp x)
-                          (counsel-linux-app-action-default x)
-                        (start-process-shell-command x nil x)))))
+  (let* ((desktop-apps (mapcar (lambda (c)
+                                 (let* ((name (caar c))
+                                        (cats (cdar c))
+                                        (str (concat name cats)))
+                                   (put-text-property 0 (length str) 'display (concat "d: " name) str)
+                                   (cons str (cdr c))))
+                               (my/desktop-apps)))
+         (executables (mapcar (lambda (s)
+                                (put-text-property 0 (length s) 'display (concat "x: " s) s) s)
+                              (my/executables-in-path)))
+         (candidates (append desktop-apps executables))
+         (selection (completing-read "Run: " candidates))
+         )
+    (if (consp selection)
+        (counsel-linux-app-action-default selection)
+      (start-process-shell-command selection nil selection))
+    )
+  )
 (defun my/executables-in-path ()
   (delete-dups
    (mapcar #'f-filename
@@ -296,13 +299,13 @@
 
 ;;TODO: add more entries to +lookup-provider-url-alist
 (defun tramp-find-file ()
-    "Prompt for a TRAMP path from your SSH config and then browse that host"
-    (interactive)
-    (let* ((host (completing-read "Host: " (counsel-tramp--candidates)))
-           (default-directory host))
-      (find-file)
-      )
-)
+  "Prompt for a TRAMP path from your SSH config and then browse that host"
+  (interactive)
+  (let* ((host (completing-read "Host: " (counsel-tramp--candidates)))
+         (default-directory host))
+    (find-file)
+    )
+  )
 
 ;; C-c f t to browse files via tramp, replacing counsel-tramp
 (map! :map doom-leader-file-map
@@ -310,10 +313,10 @@
 
 ;; Add some online search providers which can be used with C-c s O
 (dolist
-  (provider
-   '(("Hackage" "https://hackage.haskell.org/packages/search?terms=%s")
-     ("Hoogle" "https://hoogle.haskell.org/?scope=set%3Astackage&hoogle=%s")
-     ("JustWatch" "https://www.justwatch.com/us/search?q=%s")
-     ;;TODO: wiki search, local hoogle
-     ))
+    (provider
+     '(("Hackage" "https://hackage.haskell.org/packages/search?terms=%s")
+       ("Hoogle" "https://hoogle.haskell.org/?scope=set%3Astackage&hoogle=%s")
+       ("JustWatch" "https://www.justwatch.com/us/search?q=%s")
+       ;;TODO: wiki search, local hoogle
+       ))
   (add-to-list '+lookup-provider-url-alist provider))
