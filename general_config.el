@@ -286,7 +286,6 @@
 
 ;;NOTE: I'm under the impression that using require is discouraged becase it slows load time? I can't seem to force counsel to load though so require it is
 (require 'counsel)
-;;TODO is there a vertico/consult for tramp?
 
 ;; By default consult logs to an invisible buffer. This makes debugging a bit easier
 (setq consult--async-log "*consult-async*")
