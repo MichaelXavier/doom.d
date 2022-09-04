@@ -283,21 +283,13 @@
 
 ;;NOTE: I'm under the impression that using require is discouraged becase it slows load time? I can't seem to force counsel to load though so require it is
 (require 'counsel)
-;;TODO project search seems to try to use ivy?
-;;TODO vertico project search seems either extremely slow or not working remotely
 ;;TODO is there a vertico/consult for tramp?
-;;TODO embark export seems to not work very well? i get "can't expand minibuffer to full frame". popwin?
-
-;; TODO: dunno if we should keep this. debugging buffer for conssult
-;;TODO: can we somehow alias C-c C-p to C-c p?
 
 ;; By default consult logs to an invisible buffer. This makes debugging a bit easier
 (setq consult--async-log "*consult-async*")
 
 ;; Slow down how quickly consult searches re-search.
 (setq consult-async-input-debounce 0.7)
-
-;;TODO: export pops things up in a split buffer but keeps the minibuffer open which is not desIrable
 
 ;;TODO: dumb jump doesn't let you Narrow now?. maybe we should use +lookup/definition for the binding instead of dumb jump?
 ;; evidently dumb-jump-go isn't even a thing now. you should use sref-find-definitions?

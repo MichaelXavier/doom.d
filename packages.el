@@ -22,7 +22,9 @@
 (package! xelb)
 
 ;; tiling window manager
-(package! edwina)
+;; This is my fork of another fork (just in case the original fork evaporates) which may fix some issues
+(package! edwina
+  :recipe (:host github :repo "MichaelXavier/edwina"))
 
 ;; Extract text fields into an emacs buffer for editing
 (package! exwm-edit)
