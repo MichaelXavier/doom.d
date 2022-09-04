@@ -298,3 +298,15 @@
 
 ;;TODO: look for reasonable defaults with vertico
 ;; https://macowners.club/posts/from-ivy-to-vertico/
+
+
+;;TODO: add more entries to +lookup-provider-url-alist
+
+;; Add some online search providers which can be used with C-c s O
+(dolist
+  (provider
+   '(("Hackage" "https://hackage.haskell.org/packages/search?terms=%s")
+     ("Hoogle" "https://hoogle.haskell.org/?scope=set%3Astackage&hoogle=%s")
+     ;;TODO: wiki search, local hoogle
+     ))
+  (add-to-list '+lookup-provider-url-alist provider))
