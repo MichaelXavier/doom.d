@@ -294,13 +294,19 @@
 ;;TODO: dumb jump doesn't let you Narrow now?. maybe we should use +lookup/definition for the binding instead of dumb jump?
 ;; evidently dumb-jump-go isn't even a thing now. you should use sref-find-definitions?
 
-;; could try feeding +vertico/file-search with counsel-tramp--candidates
-
-;;TODO: look for reasonable defaults with vertico
-;; https://macowners.club/posts/from-ivy-to-vertico/
-
-
 ;;TODO: add more entries to +lookup-provider-url-alist
+(defun tramp-find-file ()
+    "Prompt for a TRAMP path from your SSH config and then browse that host"
+    (interactive)
+    (let* ((host (completing-read "Host: " (counsel-tramp--candidates)))
+           (default-directory host))
+      (find-file)
+      )
+)
+
+;; C-c f t to browse files via tramp, replacing counsel-tramp
+(map! :map doom-leader-file-map
+      :desc "Find file via TRAMP" "t" #'tramp-find-file)
 
 ;; Add some online search providers which can be used with C-c s O
 (dolist
