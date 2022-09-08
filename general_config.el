@@ -327,3 +327,20 @@
 ;; shifts focus to the next window and you're not able to issue commands. This
 ;; is less usable because it shows a terse one-line summary of the magit commands but seems to work
 (setq transient-show-popup nil)
+
+(defun mx/browse-url-container (container url)
+  "Open a URL in the named firefox container"
+  (browse-url-firefox (s-lex-format "ext+container:name=${container}&url=${url}"))
+  )
+
+(defun mx/well/browse-url (url &rest args)
+  "Open a URL in the well container, defaulting to the URL under point"
+  (interactive (browse-url-interactive-arg "URL: "))
+  (mx/browse-url-container "Well" url)
+  )
+
+(map! :leader
+      :desc "browse" :prefix ("b" . "browse")
+      :desc "Browse URL" "b" #'browse-url
+      :desc "Browse Well URL" "w" #'mx/well/browse-url
+      )
