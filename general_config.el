@@ -339,8 +339,15 @@
   (mx/browse-url-container "Well" url)
   )
 
+(defun mx/well/browse-jira-ticket (ticket-number)
+  "Open the JIRA ticket with the given ticket number"
+  (interactive "sTicket: ")
+  (mx/well/browse-url (s-lex-format "https://wellco.atlassian.net/browse/${ticket-number}"))
+  )
+
 (map! :leader
       :desc "browse" :prefix ("b" . "browse")
       :desc "Browse URL" "b" #'browse-url
       :desc "Browse Well URL" "w" #'mx/well/browse-url
+      :desc "Browse Well JIRA ticket" "j" #'mx/well/browse-jira-ticket
       )
