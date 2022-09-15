@@ -87,3 +87,6 @@
 
 ;; Hash-table tools
 (package! ht)
+
+;; Minor mode that sets the background color of color codes to the corresponding color
+(package! rainbow-mode)

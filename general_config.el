@@ -175,7 +175,8 @@
 
 ;; spellchecking only used selectively
 (remove-hook 'text-mode-hook #'spell-fu-mode)
-(add-hook 'markdown-mode-hook #'spell-fu-mode)
+
+(add-hook! 'markdown-mode-hook #'spell-fu-mode)
 
 ;; suppress annoying TAGS prompt
 (setq tags-add-tables nil)
@@ -351,3 +352,9 @@
       :desc "Browse Well URL" "w" #'mx/well/browse-url
       :desc "Browse Well JIRA ticket" "j" #'mx/well/browse-jira-ticket
       )
+
+;; Add a few modes that should auto-color hex color codes
+(defun mx/enable-rainbow-mode ()
+  (rainbow-mode 1))
+
+(add-hook! '(json-mode-hook haskell-mode-hook) 'mx/enable-rainbow-mode)
