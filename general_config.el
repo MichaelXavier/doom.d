@@ -227,8 +227,6 @@
 
 ;; Open dired when switching projects
 (setq projectile-switch-project-action 'projectile-dired)
-;;TODO: launch linux app not showing items in PATH
-;;TODO: how well will this work in tramp?
 
 ;; Allow you to descend into a directory with slash
 (map! :map vertico-map
@@ -238,7 +236,6 @@
 ;; Solution is from https://github.com/minad/consult/issues/233#issuecomment-1109006627
 (after! consult
   (consult-customize consult-buffer :preview-key nil))
-;;TODO add after! counsel with linux launch
 
 
 ;; Taken and slightly modified from  https://codeberg.org/dalz/dotfiles/src/branch/master/doom/+exwm.el
@@ -295,10 +292,6 @@
 ;; Slow down how quickly consult searches re-search.
 (setq consult-async-input-debounce 0.7)
 
-;;TODO: dumb jump doesn't let you Narrow now?. maybe we should use +lookup/definition for the binding instead of dumb jump?
-;; evidently dumb-jump-go isn't even a thing now. you should use sref-find-definitions?
-
-;;TODO: add more entries to +lookup-provider-url-alist
 (defun tramp-find-file ()
   "Prompt for a TRAMP path from your SSH config and then browse that host"
   (interactive)
