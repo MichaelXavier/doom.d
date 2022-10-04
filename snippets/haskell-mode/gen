@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: gen
+# key: gen
+# --
+gen$1 :: HH.Gen $1
+gen$1 = do
+  $0 <- gen
+  pure $1 {..}

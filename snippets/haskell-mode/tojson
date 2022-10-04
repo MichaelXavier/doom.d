@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: tojson
+# key: tojson
+# --
+instance A.ToJSON $1 where
+  toJSON $1 {..} = A.object
+    [ "$0" A..=
+    ]

@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: fromjson
+# key: fromjson
+# --
+instance A.FromJSON $1 where
+  parseJSON = A.withObject "$1" $ \o -> do
+    $0 <- o A..: ""
+    pure $1 {..}
