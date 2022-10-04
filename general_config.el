@@ -351,3 +351,6 @@
   (rainbow-mode 1))
 
 (add-hook! '(json-mode-hook haskell-mode-hook) 'mx/enable-rainbow-mode)
+
+;; Show a number by company completions, e.g. 1 can be selected with M-1. Unclear if this is going to actually be useful
+(setq company-show-quick-access 'left)
