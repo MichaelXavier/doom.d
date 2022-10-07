@@ -309,7 +309,7 @@
 (dolist
     (provider
      '(("Hackage" "https://hackage.haskell.org/packages/search?terms=%s")
-       ("Hoogle" "https://hoogle.haskell.org/?scope=set%3Astackage&hoogle=%s")
+       ("Hoogle" "https://hoogle.haskell.org/?scope=set:stackage&hoogle=%s")
        ("JustWatch" "https://www.justwatch.com/us/search?q=%s")
        ;;TODO: wiki search, local hoogle
        ))
