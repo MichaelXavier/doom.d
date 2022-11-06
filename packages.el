@@ -90,3 +90,6 @@
 
 ;; Minor mode that sets the background color of color codes to the corresponding color
 (package! rainbow-mode)
+
+;; Mastodon client
+(package! mastodon)
