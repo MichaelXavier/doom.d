@@ -96,3 +96,5 @@
 ;; Normally the recipe is on the release branch which seems quite old. This gets us haskell support
 (unpin! tree-sitter-langs)
 (unpin! tree-sitter)
+
+;; NOTE i'm keeping an eye on combobulate and tree-edit for structural editing. I'd like to eliminate SHM
