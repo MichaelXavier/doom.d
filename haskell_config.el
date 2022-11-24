@@ -37,11 +37,15 @@
 ;; Try snippets first, failing that, terms found in buffers, then fallback
 (set-company-backend! 'haskell-mode-hook '(company-yasnippet company-dabbrev-code company-capf))
 
-;; these checkers are dog slow. not sure if this is the right way
+
 (add-hook! 'haskell-mode-hook
+  ;; these checkers are dog slow. not sure if this is the right way
   (add-to-list 'flycheck-disabled-checkers 'haskell-ghc)
   (add-to-list 'flycheck-disabled-checkers 'haskell-stack-ghc)
-  (add-to-list 'flycheck-disabled-checkers 'haskell-hlint))
+  (add-to-list 'flycheck-disabled-checkers 'haskell-hlint)
+  ;; there is no +tree-sitter flag for the haskell doom-emacs lang module yet
+  (tree-sitter!)
+  )
 
 ;; turn off lsp to avoid annoying error. might break LSP but i don't use it currently
 (remove-hook! 'haskell-mode-local-vars-hook #'lsp!)
