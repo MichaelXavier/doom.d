@@ -283,21 +283,25 @@
           (counsel-linux-apps-list-desktop-files)))
 
 ;;NOTE: I'm under the impression that using require is discouraged becase it slows load time? I can't seem to force counsel to load though so require it is
-(require 'counsel)
-(require 'counsel-tramp)
+(use-package! consult
+  :config
+  ;; By default consult logs to an invisible buffer. This makes debugging a bit easier
+  (setq consult--async-log "*consult-async*")
+  ;; Slow down how quickly consult searches re-search.
+  (setq consult-async-input-debounce 0.7)
+  )
 
-;; By default consult logs to an invisible buffer. This makes debugging a bit easier
-(setq consult--async-log "*consult-async*")
-
-;; Slow down how quickly consult searches re-search.
-(setq consult-async-input-debounce 0.7)
-
-(defun tramp-find-file ()
-  "Prompt for a TRAMP path from your SSH config and then browse that host"
-  (interactive)
-  (let* ((host (completing-read "Host: " (counsel-tramp--candidates)))
-         (default-directory host))
-    (find-file)
+(use-package! counsel)
+(use-package! counsel-tramp
+  :after (counsel)
+  :config
+  (defun tramp-find-file ()
+    "Prompt for a TRAMP path from your SSH config and then browse that host"
+    (interactive)
+    (let* ((host (completing-read "Host: " (counsel-tramp--candidates)))
+           (default-directory host))
+      (find-file)
+      )
     )
   )
 
@@ -354,3 +358,21 @@
 
 ;; Show a number by company completions, e.g. 1 can be selected with M-1. Unclear if this is going to actually be useful
 (setq company-show-quick-access 'left)
+
+
+;; Set common time zones that i use
+(use-package! tzc
+  :config
+  (setq tzc-favourite-time-zones-alist
+        '(("America/Los_Angeles" "US_Pacific")
+          ("UTC+0000" "UTC")
+          ("America/Chicago" "US_Central")
+          ("America/New_York" "US_Eastern")
+          ("Europe/Istanbul" "Turkey")
+          ("Europe/Berlin" "Germany")
+          ))
+  (map! :leader
+        :desc "time zones" :prefix ("z" . "time zones")
+        :desc "World clock" "w" #'tzc-world-clock
+        )
+  )

@@ -90,3 +90,6 @@
 
 ;; Minor mode that sets the background color of color codes to the corresponding color
 (package! rainbow-mode)
+
+;; Provides tools for converting between time zones
+(package! tzc)
