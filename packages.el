@@ -97,4 +97,9 @@
 (unpin! tree-sitter-langs)
 (unpin! tree-sitter)
 
+<<<<<<< HEAD
+=======
+;; Structural editing with tree-sitter. very much a WIP
+(package! tree-edit)
+>>>>>>> 959cc34 (Unpin tree-sitter, use it, use rust lsp)
 ;; NOTE i'm keeping an eye on combobulate and tree-edit for structural editing. I'd like to eliminate SHM
