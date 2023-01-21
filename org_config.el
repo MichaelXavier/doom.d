@@ -87,3 +87,18 @@
   (interactive "Menv: ")
   (ht-get* (mx/well/parse-cognito-token-file env) "authenticationResult" "accessToken")
   )
+
+;; https://emacs.stackexchange.com/a/51734
+;; this ob evaluates the block as ifself, so it can be used as input
+;; for another block
+
+(defun org-babel-execute:passthrough (body params)
+  body)
+
+;; json output is json
+(defalias 'org-babel-execute:json 'org-babel-execute:passthrough)
+
+;; Enable ob-jq from jq-mode
+(org-babel-do-load-languages 'org-babel-load-languages
+                             '((jq . t)
+                               (passthrough . t)))

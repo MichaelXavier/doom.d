@@ -100,3 +100,6 @@
 ;; Structural editing with tree-sitter. very much a WIP
 (package! tree-edit)
 ;; NOTE i'm keeping an eye on combobulate and tree-edit for structural editing. I'd like to eliminate SHM
+
+;; Major mode for editing jq scripts
+(package! jq-mode)
