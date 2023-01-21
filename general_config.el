@@ -339,8 +339,16 @@
 
 (defun mx/well/browse-jira-ticket (ticket-number)
   "Open the JIRA ticket with the given ticket number"
-  (interactive "sTicket: ")
+  (interactive "sTicket Number: ")
   (mx/well/browse-url (s-lex-format "https://wellco.atlassian.net/browse/${ticket-number}"))
+  )
+
+(defun mx/well/memsource-project (project-id)
+  "Open the Memsource project with the given project id"
+  (interactive (list
+                (read-string (format "Project ID (%s): " (thing-at-point 'sexp))
+                             nil nil (thing-at-point 'sexp))))
+  (mx/well/browse-url (s-lex-format "https://cloud.memsource.com/web/project2/show/${project-id}"))
   )
 
 (map! :leader
@@ -348,6 +356,7 @@
       :desc "Browse URL" "b" #'browse-url
       :desc "Browse Well URL" "w" #'mx/well/browse-url
       :desc "Browse Well JIRA ticket" "j" #'mx/well/browse-jira-ticket
+      :desc "Browse Memsource project" "m" #'mx/well/browse-memsource-project
       )
 
 ;; Add a few modes that should auto-color hex color codes
