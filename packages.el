@@ -103,3 +103,7 @@
 
 ;; Major mode for editing jq scripts
 (package! jq-mode)
+
+;; Rust pest grammars
+(package! pest-mode)
+(package! flycheck-pest)
