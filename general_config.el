@@ -319,13 +319,6 @@
        ))
   (add-to-list '+lookup-provider-url-alist provider))
 
-
-;; TODO: this is a stop gap since transient in magit is acting really weird.
-;; Commands seem to be failing and when you bring up the transient buffer it
-;; shifts focus to the next window and you're not able to issue commands. This
-;; is less usable because it shows a terse one-line summary of the magit commands but seems to work
-(setq transient-show-popup nil)
-
 (defun mx/browse-url-container (container url)
   "Open a URL in the named firefox container"
   (browse-url-firefox (s-lex-format "ext+container:name=${container}&url=${url}"))
