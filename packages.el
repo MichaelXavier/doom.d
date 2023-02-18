@@ -108,3 +108,7 @@
 ;; Rust pest grammars
 (package! pest-mode)
 (package! flycheck-pest)
+
+;; Modal editing mode. Trying this in a non-committal way. If it works out
+;; there's a whole unofficial doom module for it. TODO
+(package! meow)
