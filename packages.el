@@ -5,7 +5,6 @@
 ;; on the command line, then restart Emacs for the changes to take effect -- or
 ;; use 'M-x doom/reload'.
 
-(package! ace-jump-mode)
 (package! shm)
 (package! counsel)
 (package! counsel-tramp)
@@ -112,3 +111,6 @@
 ;; Modal editing mode. Trying this in a non-committal way. If it works out
 ;; there's a whole unofficial doom module for it. TODO
 (package! meow)
+
+;; This already seems to be included transitively but I'd rather be specific.
+(package! avy)

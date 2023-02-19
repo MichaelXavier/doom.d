@@ -2,6 +2,7 @@
 (map!
  "C-w" #'backward-kill-word
  "C-s" #'consult-line
+ ;; NOTE: meow can run this with SPC x
  "C-x C-m" #'execute-extended-command
  "C-x C-k" #'kill-region
  "C-S-p" #'edwina-select-previous-window
@@ -20,6 +21,10 @@
 (defalias 'ucr 'uncomment-region)
 (defalias 'bu 'browse-url)
 (defalias 'ft 'find-tag)
+
+(map! :map goto-map
+      ;; This translates to M-g c
+      :desc "Avy char" "c" #'avy-goto-char)
 
 ;; smartparens bindings
 ;; https://github.com/Fuco1/smartparens/wiki/Example-configuration
@@ -61,7 +66,6 @@
       "H-s n" #'sp-add-to-next-sexp
       "H-s j" #'sp-join-sexp
       "H-s s" #'sp-split-sexp
-      "C-c SPC" #'ace-jump-mode
       "C-+" #'default-text-scale-increase
       "C--" #'default-text-scale-decrease
       "C-0" #'default-text-scale-reset)
@@ -567,5 +571,5 @@
   (setq meow--kbd-kill-whole-line "C-S-k")
   :config
   (meow-setup)
-   ;; Off by default
+   ;; Off by default for now
   (meow-global-mode 0))
