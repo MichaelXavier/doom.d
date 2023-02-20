@@ -569,3 +569,8 @@
   (meow-setup)
    ;; Off by default for now
   (meow-global-mode 0))
+
+;; Commands seem to be failing and when you bring up the transient buffer it
+;; shifts focus to the next window and you're not able to issue commands. This
+;; is less usable because it shows a terse one-line summary of the magit commands but seems to work
+(setq transient-show-popup nil)
