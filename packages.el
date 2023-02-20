@@ -5,7 +5,8 @@
 ;; on the command line, then restart Emacs for the changes to take effect -- or
 ;; use 'M-x doom/reload'.
 
-(package! shm)
+;; SHM is unmaintained and getting hard to build so I'm trying to ween myself off of its few features that I use.
+;; (package! shm)
 (package! counsel)
 (package! counsel-tramp)
 (package! ormolu)
