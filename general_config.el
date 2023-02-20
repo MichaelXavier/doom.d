@@ -567,8 +567,7 @@
   (setq meow--kbd-kill-whole-line "C-S-k")
   :config
   (meow-setup)
-   ;; Off by default for now
-  (meow-global-mode 0))
+  (meow-global-mode 1))
 
 ;; Commands seem to be failing and when you bring up the transient buffer it
 ;; shifts focus to the next window and you're not able to issue commands. This
