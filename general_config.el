@@ -516,6 +516,10 @@
    '("A" . meow-open-below)
    '("b" . meow-back-word)
    '("B" . meow-back-symbol)
+   ;; This doesn't seem to be advertised very much but it does a change but
+   ;; first kills the code you're replacing so that it's in the kill-ring and
+   ;; can be pasted somewhere else. It is useful for extracting bindings.
+   '("C" . meow-change-save)
    '("c" . meow-change)
    '("d" . meow-delete)
    '("D" . meow-backward-delete)
@@ -558,7 +562,6 @@
    '("z" . meow-pop-selection)
    '("'" . repeat)
    '("<escape>" . ignore)))
-
 ;; modal editing with meow. Can practice with meow-tutor
 (use-package! meow
   :init
