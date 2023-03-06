@@ -475,6 +475,11 @@
        ".vr"
        ".vrs"))
 
+;; https://github.com/meow-edit/meow/issues/111#issuecomment-990785463
+;; Define angle brackets as a thing you can select with meow
+(meow-thing-register 'angle '(regexp "<" ">") '(regexp "<" ">"))
+(add-to-list 'meow-char-thing-table '(?a . angle))
+
 ;; Taken from https://github.com/meow-edit/meow/blob/master/KEYBINDING_QWERTY.org
 (defun meow-setup ()
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
