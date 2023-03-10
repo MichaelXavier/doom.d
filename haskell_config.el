@@ -1,24 +1,7 @@
-;; i still think this is what shm/copy-region is supposed to do. copy
-;; the node but don't remove it
-;; (defun shm/copy-node ()
-;;   "Copy the current node."
-;;   (interactive)
-;;   (shm-kill-node nil nil nil t))
-
 (after! haskell
   (map! :map haskell-mode-map
         "C-c C-f" #'haskell-mode-stylish-buffer
         "C-c C-o" #'ormolu-format-buffer))
-
-;; (after! shm
-;;   (map! :map shm-map
-;;         "C-w" #'shm/backward-kill-word
-;;         "C-M-w" #'shm/copy-node)
-;;   ;; Make it easier to toggle shm when it shits the bed
-;;   (defalias 'shm 'structured-haskell-mode))
-
-;; use shm by default in haskell files
-;; (add-hook! 'haskell-mode-hook #'structured-haskell-mode)
 
 ;; So smartparens doesn't get confused at language pragmas
 (sp-local-pair 'haskell-mode "{-#" "#-}")

@@ -5,8 +5,6 @@
 ;; on the command line, then restart Emacs for the changes to take effect -- or
 ;; use 'M-x doom/reload'.
 
-;; SHM is unmaintained and getting hard to build so I'm trying to ween myself off of its few features that I use.
-;; (package! shm)
 (package! counsel)
 (package! counsel-tramp)
 (package! ormolu)
@@ -100,7 +98,6 @@
 
 ;; Structural editing with tree-sitter. very much a WIP
 (package! tree-edit)
-;; NOTE i'm keeping an eye on combobulate and tree-edit for structural editing. I'd like to eliminate SHM
 
 ;; Major mode for editing jq scripts
 (package! jq-mode)
