@@ -566,8 +566,6 @@
    '("Y" . meow-sync-grab)
    '("z" . meow-pop-selection)
    '("'" . repeat)
-   ;; Little convenience binding to switch buffers with 1 keystroke
-   '("\"" . consult-buffer)
    '("<escape>" . ignore)))
 ;; modal editing with meow. Can practice with meow-tutor
 (use-package! meow
