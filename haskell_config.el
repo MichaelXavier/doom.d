@@ -17,10 +17,6 @@
 ;;   ;; Make it easier to toggle shm when it shits the bed
 ;;   (defalias 'shm 'structured-haskell-mode))
 
-;; haskell files use camelcase and tend to benefit from subword movement
-(add-hook! 'haskell-mode-hook #'subword-mode)
-(add-hook! 'haskell-cabal-mode-hook #'subword-mode)
-
 ;; use shm by default in haskell files
 ;; (add-hook! 'haskell-mode-hook #'structured-haskell-mode)
 
