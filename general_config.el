@@ -575,7 +575,12 @@
   (setq meow--kbd-kill-whole-line "C-S-k")
   :config
   (meow-setup)
-  (meow-global-mode 1))
+  ;; Expand the numbered expand helpers to make them easier to use
+  (setq meow-expand-hint-remove-delay 3.0)
+   ;; start git commits in insert mode
+  (add-hook 'git-commit-mode-hook 'meow-insert-mode)
+  (meow-global-mode 1)
+  )
 
 ;; Commands seem to be failing and when you bring up the transient buffer it
 ;; shifts focus to the next window and you're not able to issue commands. This
