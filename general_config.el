@@ -480,6 +480,30 @@
 (meow-thing-register 'angle '(regexp "<" ">") '(regexp "<" ">"))
 (add-to-list 'meow-char-thing-table '(?a . angle))
 
+;; https://github.com/meow-edit/meow/issues/382#issuecomment-1353971582
+;;
+;; I find using negative to reverse direction kind of a pain. Instead, this
+;; defines a macro that you can use to bind specific reverse versions of things
+;; like find, till, and search
+(defmacro nt--call-negative (form)
+  `(let ((current-prefix-arg -1))
+     (call-interactively ,form)))
+
+(defun nt-negative-meow-find ()
+  "Find a character in the line in reverse."
+  (interactive)
+  (nt--call-negative 'meow-find))
+
+(defun nt-negative-meow-till ()
+  "Till a character (i.e. stopping one character shy) in reverse"
+  (interactive)
+  (nt--call-negative 'meow-till))
+
+(defun nt-negative-meow-search ()
+  "Reverse the direction of meow-search"
+  (interactive)
+  (nt--call-negative 'meow-search))
+
 ;; Taken from https://github.com/meow-edit/meow/blob/master/KEYBINDING_QWERTY.org
 (defun meow-setup ()
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
@@ -531,6 +555,7 @@
    '("e" . meow-next-word)
    '("E" . meow-next-symbol)
    '("f" . meow-find)
+   '("F" . nt-negative-meow-find)
    '("g" . meow-cancel-selection)
    '("G" . meow-grab)
    '("h" . meow-left)
@@ -545,6 +570,9 @@
    '("L" . meow-right-expand)
    '("m" . meow-join)
    '("n" . meow-search)
+   ;; This one works a bit differently than the other negatives. You'd press N
+   ;; to reverse and then n to go in that direction
+   '("N" . nt-negative-meow-search)
    '("o" . meow-block)
    '("O" . meow-to-block)
    '("p" . meow-yank)
@@ -552,9 +580,9 @@
    '("Q" . meow-goto-line)
    '("r" . meow-replace)
    '("R" . meow-swap-grab)
-   ;; TODO this is not working right. we need to set it to use C-x C-k to get kill-region
    '("s" . meow-kill)
    '("t" . meow-till)
+   '("T" . nt-negative-meow-till)
    '("u" . meow-undo)
    '("U" . meow-undo-in-selection)
    '("v" . meow-visit)
