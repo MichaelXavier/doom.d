@@ -475,11 +475,6 @@
        ".vr"
        ".vrs"))
 
-;; https://github.com/meow-edit/meow/issues/111#issuecomment-990785463
-;; Define angle brackets as a thing you can select with meow
-(meow-thing-register 'angle '(regexp "<" ">") '(regexp "<" ">"))
-(add-to-list 'meow-char-thing-table '(?a . angle))
-
 ;; https://github.com/meow-edit/meow/issues/382#issuecomment-1353971582
 ;;
 ;; I find using negative to reverse direction kind of a pain. Instead, this
@@ -507,6 +502,11 @@
 ;; Taken from https://github.com/meow-edit/meow/blob/master/KEYBINDING_QWERTY.org
 (defun meow-setup ()
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
+  ;; https://github.com/meow-edit/meow/issues/111#issuecomment-990785463
+  ;; Define angle brackets as a thing you can select with meow
+  (meow-thing-register 'angle '(regexp "<" ">") '(regexp "<" ">"))
+  (add-to-list 'meow-char-thing-table '(?a . angle))
+
   (meow-leader-define-key
    ;; SPC j/k will run the original command in MOTION state.
    '("j" . "H-j")
