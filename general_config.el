@@ -480,24 +480,31 @@
 ;; I find using negative to reverse direction kind of a pain. Instead, this
 ;; defines a macro that you can use to bind specific reverse versions of things
 ;; like find, till, and search
-(defmacro nt--call-negative (form)
+(defmacro my--call-negative (form)
   `(let ((current-prefix-arg -1))
      (call-interactively ,form)))
 
-(defun nt-negative-meow-find ()
+(defun my-negative-meow-find ()
   "Find a character in the line in reverse."
   (interactive)
-  (nt--call-negative 'meow-find))
+  (my--call-negative 'meow-find))
 
-(defun nt-negative-meow-till ()
+(defun my-negative-meow-till ()
   "Till a character (i.e. stopping one character shy) in reverse"
   (interactive)
-  (nt--call-negative 'meow-till))
+  (my--call-negative 'meow-till))
 
-(defun nt-negative-meow-search ()
+(defun my-negative-meow-search ()
   "Reverse the direction of meow-search"
   (interactive)
-  (nt--call-negative 'meow-search))
+  (my--call-negative 'meow-search))
+
+(defun my-meow-redo ()
+  "Cancel current selection then redo."
+  (interactive)
+  (when (region-active-p)
+    (meow--cancel-selection))
+  (meow--execute-kbd-macro "C-?"))
 
 ;; Taken from https://github.com/meow-edit/meow/blob/master/KEYBINDING_QWERTY.org
 (defun meow-setup ()
@@ -555,7 +562,7 @@
    '("e" . meow-next-word)
    '("E" . meow-next-symbol)
    '("f" . meow-find)
-   '("F" . nt-negative-meow-find)
+   '("F" . my-negative-meow-find)
    '("g" . meow-cancel-selection)
    '("G" . meow-grab)
    '("h" . meow-left)
@@ -572,7 +579,7 @@
    '("n" . meow-search)
    ;; This one works a bit differently than the other negatives. You'd press N
    ;; to reverse and then n to go in that direction
-   '("N" . nt-negative-meow-search)
+   '("N" . my-negative-meow-search)
    '("o" . meow-block)
    '("O" . meow-to-block)
    '("p" . meow-yank)
@@ -583,9 +590,10 @@
    '("R" . meow-swap-grab)
    '("s" . meow-kill)
    '("t" . meow-till)
-   '("T" . nt-negative-meow-till)
+   '("T" . my-negative-meow-till)
    '("u" . meow-undo)
-   '("U" . meow-undo-in-selection)
+   ;; Previously this was meow-undo-in-selection but I don't really see how that's supposed to be useful.
+   '("U" . my-meow-redo)
    '("v" . meow-visit)
    '("w" . meow-mark-word)
    '("W" . meow-mark-symbol)
