@@ -73,6 +73,11 @@
 (map! :map emacs-lisp-mode-map
       ")" #'sp-up-sexp)
 
+(defun my/interactively-wrap-with-pair (pair &optional arg)
+  "Like sp-wrap-pair but prompts for the pair as a character"
+  (interactive "sPair:")
+  (sp-wrap-with-pair pair))
+
 ;; managing windows
 (map! :map winner-mode-map
       "C-M-S-<left>" #'winner-undo
@@ -583,6 +588,8 @@
    '("o" . meow-block)
    '("O" . meow-to-block)
    '("p" . meow-yank)
+   ;; Wrap a selection with a given pair, using smartparens
+   '("P" . my/interactively-wrap-with-pair)
    ;; Normally this is set to meow-quit which just closes the buffer. I don't really need a super fast way to do that so i've set it to regex replace
    '("q" . meow-query-replace-regexp)
    '("Q" . meow-goto-line)
@@ -592,7 +599,9 @@
    '("t" . meow-till)
    '("T" . my-negative-meow-till)
    '("u" . meow-undo)
-   ;; Previously this was meow-undo-in-selection but I don't really see how that's supposed to be useful.
+   ;; Previously this was meow-undo-in-selection but I don't really see how
+   ;; that's supposed to be useful. May require additional registration of pairs
+   ;; for certain modes.
    '("U" . my-meow-redo)
    '("v" . meow-visit)
    '("w" . meow-mark-word)
