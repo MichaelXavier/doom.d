@@ -632,3 +632,6 @@
 ;; shifts focus to the next window and you're not able to issue commands. This
 ;; is less usable because it shows a terse one-line summary of the magit commands but seems to work
 (setq transient-show-popup nil)
+
+;; Use adaptive word wrapping almost everywhere
+(+global-word-wrap-mode +1)
