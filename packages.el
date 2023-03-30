@@ -112,3 +112,7 @@
 
 ;; This already seems to be included transitively but I'd rather be specific.
 (package! avy)
+
+;; UML tools
+(package! plantuml-mode)
+(package! flycheck-plantuml)

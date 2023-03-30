@@ -635,3 +635,24 @@
 
 ;; Use adaptive word wrapping almost everywhere
 (+global-word-wrap-mode +1)
+
+(use-package! plantuml-mode
+  :mode "\\.plantuml\\'"
+  :config
+  ;; If we don't set this, it hits the server and sends it your diagram data!
+  ;; On nix I've installed plantuml via the plantuml-c4 package
+  (setq plantuml-default-exec-mode 'executable)
+  ;; Same thing but for org-babel
+  (setq org-plantuml-exec-mode 'plantuml)
+  ;; The executable wrapper nix gives puts an argument at the front. By default
+  ;; the executable args tries to pass -headless which i think is a java
+  ;; argument and must come first. Thus, the output always has a warning about
+  ;; that argument and doesn't parse properly. It still seems to work without
+  ;; using headless so we'll just not send that.
+  (setq plantuml-executable-args nil)
+  ;; Same thing but for org-babel
+  (setq org-plantuml-args nil)
+  ;; Register to use with org mode. This seems to just get syntax highlighting?
+  (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+  ;; Register with babel so we can get execution as well
+  )
