@@ -656,3 +656,8 @@
   (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
   ;; Register with babel so we can get execution as well
   )
+
+;; This is probably overly aggrssive but eldoc mode is usually insanely annoying
+;; when LSP is enabled but not in use. All eldoc is is a way to see the
+;; highlighted function's arguments in the minibuffer.
+(setq global-eldoc-mode nil)
