@@ -661,3 +661,7 @@
 ;; when LSP is enabled but not in use. All eldoc is is a way to see the
 ;; highlighted function's arguments in the minibuffer.
 (setq global-eldoc-mode nil)
+
+;; I very rarely if ever want a warning buffer to come up and steal focus. lsp
+;; integrations seem to do this a ton.
+(setq warning-minimum-level :error)
