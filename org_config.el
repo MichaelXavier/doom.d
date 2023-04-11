@@ -102,3 +102,6 @@
 (org-babel-do-load-languages 'org-babel-load-languages
                              '((jq . t)
                                (passthrough . t)))
+
+;; Disable org element cache because it seems to have frequent issues.
+(setq org-element-use-cache nil)
