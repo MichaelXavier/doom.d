@@ -631,7 +631,9 @@
 ;; Commands seem to be failing and when you bring up the transient buffer it
 ;; shifts focus to the next window and you're not able to issue commands. This
 ;; is less usable because it shows a terse one-line summary of the magit commands but seems to work
-(setq transient-show-popup nil)
+;; (setq transient-show-popup nil)
+;; Seems like the issue might be fixed as of 4/16/2023?
+(setq transient-show-popup t)
 
 ;; Use adaptive word wrapping almost everywhere
 (+global-word-wrap-mode +1)
