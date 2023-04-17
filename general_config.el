@@ -5,8 +5,6 @@
  ;; NOTE: meow can run this with SPC x
  "C-x C-m" #'execute-extended-command
  "C-x C-k" #'kill-region
- "C-S-p" #'edwina-select-previous-window
- "C-S-n" #'edwina-select-next-window
  "C-S-k" #'kill-whole-line
  "C-;" #'iedit-mode
  "C-/" #'undo-fu-only-undo
@@ -189,40 +187,6 @@
 
 ;; suppress annoying TAGS prompt
 (setq tags-add-tables nil)
-
-;; configure edwina, a tiling window manager
-;; this sets display-buffer to open a new window by default. whatever that means
-(setq display-buffer-base-action '(display-buffer-below-selected))
-(edwina-mode t)
-
-;; https://github.com/ajgrf/edwina/issues/7#issuecomment-663598457
-(defun my/edwina-zoom-and-switch ()
-  "Zoom/cycle the selected window to/from master area and then switch to the master window."
-  (interactive)
-  (if (eq (selected-window) (frame-first-window))
-      (edwina-swap-next-window)
-    (let ((pane (edwina-pane (selected-window))))
-      (edwina-delete-window)
-      (edwina-arrange (cons pane (edwina-pane-list)))
-      ;; switch to master window
-      (select-window (car (edwina--window-list))))))
-
-;; copy edwina's bindings into the doom w workspaces/windows leader prefix.
-;; might make sense to have additional super-based bindings for exwm mode? maybe
-;; that'll be too confusing.
-(map! :map edwina-mode-map
-      :leader
-      :desc "Rearrange panes" "w r" #'edwina-arrange
-      :desc "Move to next window cyclically" "w n" #'edwina-select-next-window
-      :desc "Move to previous window cyclically" "w p" #'edwina-select-previous-window
-      :desc "Move current window into master area" "w RET" #'my/edwina-zoom-and-switch
-      :desc "Clone selected window" "w c" #'edwina-clone-window
-      :desc "Delete selected window" "w k" #'edwina-delete-window
-      :desc "Grow master window size" "w l" #'edwina-inc-mfact
-      :desc "Grow master window size" "w h" #'edwina-dec-mfact
-      )
-
-
 
 ;; Disambiguate auth sources
 (setq auth-sources '("~/.authinfo.gpg"))
@@ -655,3 +619,64 @@
 ;; I very rarely if ever want a warning buffer to come up and steal focus. lsp
 ;; integrations seem to do this a ton.
 (setq warning-minimum-level :error)
+
+;; Edwina is a window manager in emacs and it becomes my tiling window manager
+;; under EXWM.
+
+;; some code taken from.
+;; https://github.com/lucasgruss/.doom.d/blob/master/config.org#edwina I'm not
+;; exactly sure what this does but I've noticed less weird window focusing
+;; issues and I so far seem to be able to use transient-based menus like magit
+;; and docker again.
+(use-package! edwina
+  :init
+  (defvar my/display-buffer-alist-save nil
+    "Stores previous value of display-buffer-alist before entering edwina-mode")
+  (defvar my/display-buffer-base-action-save nil
+    "Stores previous value of display-buffer-base-action before entering edwina-mode")
+  (defun my/edwina-remove-or-restore-buffer-behavior ()
+    "If edwina-mode is active, save and set to nil the following variables:
+
+       - display-buffer-alist
+       - display-buffer-base-action
+
+ or restore it if edwina mode is inactive."
+    (if edwina-mode
+        (progn
+          (setq my/display-buffer-base-action-save display-buffer-base-action)
+          (setq display-buffer-base-action '(display-buffer-below-selected))
+          (setq my/display-buffer-alist-save display-buffer-alist)
+          (setq display-buffer-alist nil))
+      (setq display-buffer-base-action my/display-buffer-base-action-save)
+      (setq display-buffer-alist my/display-buffer-alist-save)))
+
+  ;; https://github.com/ajgrf/edwina/issues/7#issuecomment-663598457
+  (defun my/edwina-zoom-and-switch ()
+    "Zoom/cycle the selected window to/from master area and then switch to the master window."
+    (interactive)
+    (if (eq (selected-window) (frame-first-window))
+        (edwina-swap-next-window)
+      (let ((pane (edwina-pane (selected-window))))
+        (edwina-delete-window)
+        (edwina-arrange (cons pane (edwina-pane-list)))
+        ;; switch to master window
+        (select-window (car (edwina--window-list))))))
+
+  :hook (edwina-mode . my/edwina-remove-or-restore-buffer-behavior)
+  :bind (("C-S-p" . edwina-select-previous-window)
+         ("C-S-n" . edwina-select-next-window)
+         )
+  :config
+  (map! :map edwina-mode-map
+      :leader
+      :desc "Rearrange panes" "w r" #'edwina-arrange
+      :desc "Move to next window cyclically" "w n" #'edwina-select-next-window
+      :desc "Move to previous window cyclically" "w p" #'edwina-select-previous-window
+      :desc "Move current window into master area" "w RET" #'my/edwina-zoom-and-switch
+      :desc "Clone selected window" "w c" #'edwina-clone-window
+      :desc "Delete selected window" "w k" #'edwina-delete-window
+      :desc "Grow master window size" "w l" #'edwina-inc-mfact
+      :desc "Grow master window size" "w h" #'edwina-dec-mfact
+      )
+  (edwina-mode t)
+  )
