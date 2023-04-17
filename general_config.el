@@ -667,3 +667,12 @@
 ;; I very rarely if ever want a warning buffer to come up and steal focus. lsp
 ;; integrations seem to do this a ton.
 (setq warning-minimum-level :error)
+
+;; TODO: reenable cape-dabbrev-check-other-buffers?
+;; TODO: how do we globally add dabbrev? seems like haskell-mode and others set their own
+;; Corfu/Cape completion settings
+(use-package! cape
+  :init
+  (add-hook! 'prog-mode-hook
+    (lambda ()
+      (add-to-list 'completion-at-point-functions #'cape-dabbrev))))

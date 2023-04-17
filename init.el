@@ -20,11 +20,18 @@
        ;;layout            ; auie,ctsrnm is the superior home row
 
        :completion
-       company           ; inline auto completions
+       ;; TODO: do i disable completion now that there's corfu?
+       ;;company           ; inline auto completions
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
        ;;(ivy +icons +prescient)               ; a search engine for love and life
        (vertico +icons)
+       ;; Currently enabled by creating a subtree LuigiPiucco's fork. Should
+       ;; eventually be merged upstream.
+       ;; https://github.com/doomemacs/doomemacs/pull/7002
+       ;; https://medium.com/@icheko/use-a-subfolder-from-a-remote-repo-in-another-repo-using-git-subtree-98046f33ca40
+       ;; icons displays icons next to suggestions
+       (corfu +icons)
 
        :ui
        ;;deft              ; notational velocity for Emacs
