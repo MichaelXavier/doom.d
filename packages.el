@@ -79,9 +79,6 @@
                                         ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
                                         ;(unpin! t)
-;; Get a newer version of forge: https://github.com/magit/forge/issues/491
-;; This is no longer working
-;; (unpin! forge)
 
 ;; Hash-table tools
 (package! ht)
