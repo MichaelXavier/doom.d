@@ -328,21 +328,10 @@
        ))
   (add-to-list '+lookup-provider-url-alist provider))
 
-(defun mx/browse-url-container (container url)
-  "Open a URL in the named firefox container"
-  (browse-url-firefox (s-lex-format "ext+container:name=${container}&url=${url}"))
-  )
-
-(defun mx/well/browse-url (url &rest args)
-  "Open a URL in the well container, defaulting to the URL under point"
-  (interactive (browse-url-interactive-arg "URL: "))
-  (mx/browse-url-container "Well" url)
-  )
-
 (defun mx/well/browse-jira-ticket (ticket-number)
   "Open the JIRA ticket with the given ticket number"
   (interactive "sTicket Number: ")
-  (mx/well/browse-url (s-lex-format "https://wellco.atlassian.net/browse/${ticket-number}"))
+  (browse-url (s-lex-format "https://wellco.atlassian.net/browse/${ticket-number}"))
   )
 
 (defun mx/well/memsource-project (project-id)
@@ -350,13 +339,12 @@
   (interactive (list
                 (read-string (format "Project ID (%s): " (thing-at-point 'sexp))
                              nil nil (thing-at-point 'sexp))))
-  (mx/well/browse-url (s-lex-format "https://cloud.memsource.com/web/project2/show/${project-id}"))
+  (browse-url (s-lex-format "https://cloud.memsource.com/web/project2/show/${project-id}"))
   )
 
 (map! :leader
       :desc "browse" :prefix ("b" . "browse")
       :desc "Browse URL" "b" #'browse-url
-      :desc "Browse Well URL" "w" #'mx/well/browse-url
       :desc "Browse Well JIRA ticket" "j" #'mx/well/browse-jira-ticket
       :desc "Browse Memsource project" "m" #'mx/well/browse-memsource-project
       )
