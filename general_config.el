@@ -448,145 +448,148 @@
        ".vr"
        ".vrs"))
 
-;; https://github.com/meow-edit/meow/issues/382#issuecomment-1353971582
-;;
-;; I find using negative to reverse direction kind of a pain. Instead, this
-;; defines a macro that you can use to bind specific reverse versions of things
-;; like find, till, and search
-(defmacro my--call-negative (form)
-  `(let ((current-prefix-arg -1))
-     (call-interactively ,form)))
-
-(defun my-negative-meow-find ()
-  "Find a character in the line in reverse."
-  (interactive)
-  (my--call-negative 'meow-find))
-
-(defun my-negative-meow-till ()
-  "Till a character (i.e. stopping one character shy) in reverse"
-  (interactive)
-  (my--call-negative 'meow-till))
-
-(defun my-negative-meow-search ()
-  "Reverse the direction of meow-search"
-  (interactive)
-  (my--call-negative 'meow-search))
-
-(defun my-meow-redo ()
-  "Cancel current selection then redo."
-  (interactive)
-  (when (region-active-p)
-    (meow--cancel-selection))
-  (meow--execute-kbd-macro "C-?"))
-
-;; Taken from https://github.com/meow-edit/meow/blob/master/KEYBINDING_QWERTY.org
-(defun meow-setup ()
-  (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
-  ;; https://github.com/meow-edit/meow/issues/111#issuecomment-990785463
-  ;; Define angle brackets as a thing you can select with meow
-  (meow-thing-register 'angle '(regexp "<" ">") '(regexp "<" ">"))
-  (add-to-list 'meow-char-thing-table '(?a . angle))
-
-  (meow-leader-define-key
-   ;; SPC j/k will run the original command in MOTION state.
-   '("j" . "H-j")
-   '("k" . "H-k")
-   ;; Use SPC (0-9) for digit arguments.
-   '("1" . meow-digit-argument)
-   '("2" . meow-digit-argument)
-   '("3" . meow-digit-argument)
-   '("4" . meow-digit-argument)
-   '("5" . meow-digit-argument)
-   '("6" . meow-digit-argument)
-   '("7" . meow-digit-argument)
-   '("8" . meow-digit-argument)
-   '("9" . meow-digit-argument)
-   '("0" . meow-digit-argument)
-   '("/" . meow-keypad-describe-key)
-   '("?" . meow-cheatsheet))
-  (meow-normal-define-key
-   '("0" . meow-expand-0)
-   '("9" . meow-expand-9)
-   '("8" . meow-expand-8)
-   '("7" . meow-expand-7)
-   '("6" . meow-expand-6)
-   '("5" . meow-expand-5)
-   '("4" . meow-expand-4)
-   '("3" . meow-expand-3)
-   '("2" . meow-expand-2)
-   '("1" . meow-expand-1)
-   '("-" . negative-argument)
-   '(";" . meow-reverse)
-   '("," . meow-inner-of-thing)
-   '("." . meow-bounds-of-thing)
-   '("[" . meow-beginning-of-thing)
-   '("]" . meow-end-of-thing)
-   '("a" . meow-append)
-   '("A" . meow-open-below)
-   '("b" . meow-back-word)
-   '("B" . meow-back-symbol)
-   ;; This doesn't seem to be advertised very much but it does a change but
-   ;; first kills the code you're replacing so that it's in the kill-ring and
-   ;; can be pasted somewhere else. It is useful for extracting bindings.
-   '("C" . meow-change-save)
-   '("c" . meow-change)
-   '("d" . meow-delete)
-   '("D" . meow-backward-delete)
-   '("e" . meow-next-word)
-   '("E" . meow-next-symbol)
-   '("f" . meow-find)
-   '("F" . my-negative-meow-find)
-   '("g" . meow-cancel-selection)
-   '("G" . meow-grab)
-   '("h" . meow-left)
-   '("H" . meow-left-expand)
-   '("i" . meow-insert)
-   '("I" . meow-open-above)
-   '("j" . meow-next)
-   '("J" . meow-next-expand)
-   '("k" . meow-prev)
-   '("K" . meow-prev-expand)
-   '("l" . meow-right)
-   '("L" . meow-right-expand)
-   '("m" . meow-join)
-   '("n" . meow-search)
-   ;; This one works a bit differently than the other negatives. You'd press N
-   ;; to reverse and then n to go in that direction
-   '("N" . my-negative-meow-search)
-   '("o" . meow-block)
-   '("O" . meow-to-block)
-   '("p" . meow-yank)
-   ;; Wrap a selection with a given pair, using smartparens
-   '("P" . my/interactively-wrap-with-pair)
-   ;; Normally this is set to meow-quit which just closes the buffer. I don't really need a super fast way to do that so i've set it to regex replace
-   '("q" . meow-query-replace-regexp)
-   '("Q" . meow-goto-line)
-   '("r" . meow-replace)
-   '("R" . meow-swap-grab)
-   '("s" . meow-kill)
-   '("t" . meow-till)
-   '("T" . my-negative-meow-till)
-   '("u" . meow-undo)
-   ;; Previously this was meow-undo-in-selection but I don't really see how
-   ;; that's supposed to be useful. May require additional registration of pairs
-   ;; for certain modes.
-   '("U" . my-meow-redo)
-   '("v" . meow-visit)
-   '("w" . meow-mark-word)
-   '("W" . meow-mark-symbol)
-   '("x" . meow-line)
-   '("X" . meow-goto-line)
-   '("y" . meow-save)
-   '("Y" . meow-sync-grab)
-   '("z" . meow-pop-selection)
-   '("'" . repeat)
-   '("<escape>" . ignore)))
 ;; modal editing with meow. Can practice with meow-tutor
 (use-package! meow
   :init
   ;; meow wants C-k to be kill-region but we've overridden that to C-x C-k
   (setq meow--kbd-kill-region "C-x C-k")
   (setq meow--kbd-kill-whole-line "C-S-k")
+
+  ;; https://github.com/meow-edit/meow/issues/382#issuecomment-1353971582
+  ;;
+  ;; I find using negative to reverse direction kind of a pain. Instead, this
+  ;; defines a macro that you can use to bind specific reverse versions of things
+  ;; like find, till, and search
+  (defmacro my--call-negative (form)
+    `(let ((current-prefix-arg -1))
+       (call-interactively ,form)))
+
+  (defun my-negative-meow-find ()
+    "Find a character in the line in reverse."
+    (interactive)
+    (my--call-negative 'meow-find))
+
+  (defun my-negative-meow-till ()
+    "Till a character (i.e. stopping one character shy) in reverse"
+    (interactive)
+    (my--call-negative 'meow-till))
+
+  (defun my-negative-meow-search ()
+    "Reverse the direction of meow-search"
+    (interactive)
+    (my--call-negative 'meow-search))
+
+  (defun my-meow-redo ()
+    "Cancel current selection then redo."
+    (interactive)
+    (when (region-active-p)
+      (meow--cancel-selection))
+    (meow--execute-kbd-macro "C-?"))
+
+
+  ;; Taken from https://github.com/meow-edit/meow/blob/master/KEYBINDING_QWERTY.org
+  (defun meow-setup ()
+    (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
+    ;; https://github.com/meow-edit/meow/issues/111#issuecomment-990785463
+    ;; Define angle brackets as a thing you can select with meow
+    (meow-thing-register 'angle '(regexp "<" ">") '(regexp "<" ">"))
+    (add-to-list 'meow-char-thing-table '(?a . angle))
+
+    (meow-leader-define-key
+     ;; SPC j/k will run the original command in MOTION state.
+     '("j" . "H-j")
+     '("k" . "H-k")
+     ;; Use SPC (0-9) for digit arguments.
+     '("1" . meow-digit-argument)
+     '("2" . meow-digit-argument)
+     '("3" . meow-digit-argument)
+     '("4" . meow-digit-argument)
+     '("5" . meow-digit-argument)
+     '("6" . meow-digit-argument)
+     '("7" . meow-digit-argument)
+     '("8" . meow-digit-argument)
+     '("9" . meow-digit-argument)
+     '("0" . meow-digit-argument)
+     '("/" . meow-keypad-describe-key)
+     '("?" . meow-cheatsheet))
+    (meow-normal-define-key
+     '("0" . meow-expand-0)
+     '("9" . meow-expand-9)
+     '("8" . meow-expand-8)
+     '("7" . meow-expand-7)
+     '("6" . meow-expand-6)
+     '("5" . meow-expand-5)
+     '("4" . meow-expand-4)
+     '("3" . meow-expand-3)
+     '("2" . meow-expand-2)
+     '("1" . meow-expand-1)
+     '("-" . negative-argument)
+     '(";" . meow-reverse)
+     '("," . meow-inner-of-thing)
+     '("." . meow-bounds-of-thing)
+     '("[" . meow-beginning-of-thing)
+     '("]" . meow-end-of-thing)
+     '("a" . meow-append)
+     '("A" . meow-open-below)
+     '("b" . meow-back-word)
+     '("B" . meow-back-symbol)
+     ;; This doesn't seem to be advertised very much but it does a change but
+     ;; first kills the code you're replacing so that it's in the kill-ring and
+     ;; can be pasted somewhere else. It is useful for extracting bindings.
+     '("C" . meow-change-save)
+     '("c" . meow-change)
+     '("d" . meow-delete)
+     '("D" . meow-backward-delete)
+     '("e" . meow-next-word)
+     '("E" . meow-next-symbol)
+     '("f" . meow-find)
+     '("F" . my-negative-meow-find)
+     '("g" . meow-cancel-selection)
+     '("G" . meow-grab)
+     '("h" . meow-left)
+     '("H" . meow-left-expand)
+     '("i" . meow-insert)
+     '("I" . meow-open-above)
+     '("j" . meow-next)
+     '("J" . meow-next-expand)
+     '("k" . meow-prev)
+     '("K" . meow-prev-expand)
+     '("l" . meow-right)
+     '("L" . meow-right-expand)
+     '("m" . meow-join)
+     '("n" . meow-search)
+     ;; This one works a bit differently than the other negatives. You'd press N
+     ;; to reverse and then n to go in that direction
+     '("N" . my-negative-meow-search)
+     '("o" . meow-block)
+     '("O" . meow-to-block)
+     '("p" . meow-yank)
+     ;; Wrap a selection with a given pair, using smartparens
+     '("P" . my/interactively-wrap-with-pair)
+     ;; Normally this is set to meow-quit which just closes the buffer. I don't really need a super fast way to do that so i've set it to regex replace
+     '("q" . meow-query-replace-regexp)
+     '("Q" . meow-goto-line)
+     '("r" . meow-replace)
+     '("R" . meow-swap-grab)
+     '("s" . meow-kill)
+     '("t" . meow-till)
+     '("T" . my-negative-meow-till)
+     '("u" . meow-undo)
+     ;; Previously this was meow-undo-in-selection but I don't really see how
+     ;; that's supposed to be useful. May require additional registration of pairs
+     ;; for certain modes.
+     '("U" . my-meow-redo)
+     '("v" . meow-visit)
+     '("w" . meow-mark-word)
+     '("W" . meow-mark-symbol)
+     '("x" . meow-line)
+     '("X" . meow-goto-line)
+     '("y" . meow-save)
+     '("Y" . meow-sync-grab)
+     '("z" . meow-pop-selection)
+     '("'" . repeat)
+     '("<escape>" . ignore)))
+
   :config
   (meow-setup)
   ;; Expand the numbered expand helpers to make them easier to use
