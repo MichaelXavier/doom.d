@@ -20,7 +20,10 @@
   (setq exwm-edit-split t)
   (defun my/on-exwm-edit-compose ()
     "Runs my customized hooks when exwm composition window appears."
+    ;; Enable markdown mode since most longform text is probably markdown entry
     (funcall 'markdown-mode)
+    ;; Enable zen mode for a slightly cleaner writing experience
+    (+zen/toggle 1)
     )
   :hook (exwm-edit-compose . my/on-exwm-edit-compose)
   ;; TODO: not sure why i have to do this but it's required for exwm and i need this loaded beforehand and adding :after to exwm doesn't seem to help
