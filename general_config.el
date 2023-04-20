@@ -622,13 +622,29 @@
 
 ;; TODO: reenable cape-dabbrev-check-other-buffers?
 ;; TODO: how do we globally add dabbrev? seems like haskell-mode and others set their own
-;; TODO: this doesn't seem to work
 ;; Corfu/Cape completion settings
 (use-package! cape
+  :after (:all corfu)
   :init
-  (add-hook! 'prog-mode-hook
+  ;; TODO: this might slow things down too much but it's how I expect dabbrev to work
+  (setq cape-dabbrev-check-other-buffers t)
+
+  (add-hook 'haskell-mode-hook
     (lambda ()
-      (add-to-list 'completion-at-point-functions #'cape-dabbrev))))
+      ;; HACK blow away haskell's default completions which clobber any previously configured ones
+      (make-local-variable 'completion-at-point-functions)
+      (setq completion-at-point-functions '(cape-keyword cape-dabbrev cape-file tags-completion-at-point-function corfu--ispell-in-comments-and-strings cape-dict))
+      )
+    )
+  )
+
+(use-package! corfu
+  :init
+  ;; Slightly slow down the time before auto-completion starts to see if it is a
+  ;; little less distracting. The default is 0.1. I also think it tends to eat
+  ;; characters?
+  (setq corfu-auto-delay 0.2)
+  )
 
 ;; Edwina is a window manager in emacs and it becomes my tiling window manager
 ;; under EXWM.
@@ -689,4 +705,12 @@
       :desc "Grow master window size" "w h" #'edwina-dec-mfact
       )
   (edwina-mode t)
+  )
+
+(use-package! corfu-popupinfo
+  :config
+  ;; Clear out conflicting keybindings that the corfu-module adds to corfu-map.
+  ;; Use C-<up> and C-<down> instead.
+  (unbind-key "C-S-n" corfu-map)
+  (unbind-key "C-S-p" corfu-map)
   )
