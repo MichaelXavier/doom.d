@@ -30,9 +30,9 @@
        ;; eventually be merged upstream.
        ;; https://github.com/doomemacs/doomemacs/pull/7002
        ;; https://medium.com/@icheko/use-a-subfolder-from-a-remote-repo-in-another-repo-using-git-subtree-98046f33ca40
-       ;; icons displays icons next to suggestions
-       ;; TODO: disabling, may be causing frequent lockups?
-       ;; (corfu +icons +tng)
+       ;; +icons displays icons next to suggestions
+       ;; +tng uses tabs instead of C-SPC for completion
+       (corfu +icons +tng)
 
        :ui
        ;;deft              ; notational velocity for Emacs
