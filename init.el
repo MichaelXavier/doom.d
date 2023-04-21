@@ -21,7 +21,7 @@
 
        :completion
        ;; TODO: do i disable completion now that there's corfu?
-       ;;company           ; inline auto completions
+       ;; company           ; inline auto completions
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
        ;;(ivy +icons +prescient)               ; a search engine for love and life
@@ -31,7 +31,8 @@
        ;; https://github.com/doomemacs/doomemacs/pull/7002
        ;; https://medium.com/@icheko/use-a-subfolder-from-a-remote-repo-in-another-repo-using-git-subtree-98046f33ca40
        ;; icons displays icons next to suggestions
-       (corfu +icons)
+       ;; TODO: disabling, may be causing frequent lockups?
+       ;; (corfu +icons +tng)
 
        :ui
        ;;deft              ; notational velocity for Emacs
