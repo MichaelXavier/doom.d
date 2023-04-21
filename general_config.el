@@ -492,8 +492,14 @@
     (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
     ;; https://github.com/meow-edit/meow/issues/111#issuecomment-990785463
     ;; Define angle brackets as a thing you can select with meow
-    (meow-thing-register 'angle '(regexp "<" ">") '(regexp "<" ">"))
+    (meow-thing-register 'angle '(pair ("<") (">")) '(pair ("<") (">")))
+    (meow-thing-register 'url 'url 'url)
+    (meow-thing-register 'uuid 'uuid 'uuid)
+
+    ;; These will be enabled for all modes
     (add-to-list 'meow-char-thing-table '(?a . angle))
+    (add-to-list 'meow-char-thing-table '(?u . url))
+    (add-to-list 'meow-char-thing-table '(?U . uuid))
 
     (meow-leader-define-key
      ;; SPC j/k will run the original command in MOTION state.
