@@ -81,8 +81,8 @@
   (sp-local-pair 'org-mode "=" "=")
   ;; code
   (sp-local-pair 'org-mode "~" "~")
-  ;; italic
-  (sp-local-pair 'org-mode "/" "/")
+  ;; italic. Common enough that we don't want it auto-inserting the closing slash
+  (sp-local-pair 'org-mode "/" "/" :actions '(wrap))
   ;; bold
   (sp-local-pair 'org-mode "*" "*")
   ;; Strikethrough
