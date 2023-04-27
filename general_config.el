@@ -648,30 +648,45 @@
 ;; TODO: reenable cape-dabbrev-check-other-buffers?
 ;; TODO: how do we globally add dabbrev? seems like haskell-mode and others set their own
 ;; Corfu/Cape completion settings
-;; TODO: temporarily disabled to troubleshoot
-(use-package! cape
-  :after (:all corfu)
-  :init
-  ;; TODO: this might slow things down too much but it's how I expect dabbrev to work
-  ;; (setq cape-dabbrev-check-other-buffers t)
+;; TODO: i'm just turning this shit off. i can't get it working right in prog-mode, haskell mode, etc
+;; (use-package! cape
+;;   :after (:all corfu)
+;;   :init
+;;   ;; TODO: this might slow things down too much but it's how I expect dabbrev to work
+;;   ;; TODO: this may have been causing crashes. without it, I was getting lockups. Could be unrelated
+;;   ;; dabbrev-friend-buffer-function is set to dabbrev--same-major-mode-p which means it should only consider like buffers so that should decrease the load i would think.
+;;   ;; TODO: what are dabbrev ignore rules
+;;   ;; TODO: what is dabbrev-select-buffers-function? that's set to
+;;   ;; TODO: what about cape-line-buffer-function?
+;;   ;; TODO: cape-dabbrev-check-other-buffers
+;;   ;; TODO: I belive that some make it so it defers to dabbrev which should default to checking buffers of the same major mode
+;;   ;; TODO: is setting this to 'some breaking completion in other places?
+;;   ;; (setq cape-dabbrev-check-other-buffers 'some)
 
-  (add-hook 'haskell-mode-hook
-    (lambda ()
-      ;; HACK blow away haskell's default completions which clobber any previously configured ones
-      (make-local-variable 'completion-at-point-functions)
-      (setq completion-at-point-functions '(cape-keyword cape-dabbrev cape-file tags-completion-at-point-function corfu--ispell-in-comments-and-strings cape-dict))
-      )
-    )
-  )
+;;   ;; I find spelling completion needlessly distracting. It isn't going to
+;;   ;; highlight my typos and I generally don't use words that I don't know how to
+;;   ;; spell.
+;;   ;; TODO: did these 2 somehow break completion in haskell-mode?
+;;   ;; (setq +corfu-ispell-in-comments-and-strings nil)
+;;   ;; (setq +corfu-ispell-completion-modes nil)
+;;   ;; TODO: am i doing this wrong? if i turn this off then the shitty completion provided by haskell-mode will take priority
+;;   ;; (add-hook 'haskell-mode-hook
+;;   ;;   (lambda ()
+;;   ;;     ;; HACK blow away haskell's default completions which clobber any previously configured ones
+;;   ;;     (make-local-variable 'completion-at-point-functions)
+;;   ;;     (setq completion-at-point-functions '(cape-keyword cape-dabbrev))
+;;   ;;     )
+;;   ;;   )
+;;   )
 
 ;; TODO: temporarily disabled
-(use-package! corfu
-  :init
-  ;; Slightly slow down the time before auto-completion starts to see if it is a
-  ;; little less distracting. The default is 0.1. I also think it tends to eat
-  ;; characters?
-  (setq corfu-auto-delay 0.2)
-  )
+;; (use-package! corfu
+;;   :init
+;;   ;; Slightly slow down the time before auto-completion starts to see if it is a
+;;   ;; little less distracting. The default is 0.1. I also think it tends to eat
+;;   ;; characters?
+;;   (setq corfu-auto-delay 0.2)
+;;   )
 
 ;; Edwina is a window manager in emacs and it becomes my tiling window manager
 ;; under EXWM.
@@ -735,10 +750,10 @@
   )
 
 ;; TODO: temporarily disabled
-(use-package! corfu-popupinfo
-  :config
-  ;; Clear out conflicting keybindings that the corfu-module adds to corfu-map.
-  ;; Use C-<up> and C-<down> instead.
-  (unbind-key "C-S-n" corfu-map)
-  (unbind-key "C-S-p" corfu-map)
-  )
+;; (use-package! corfu-popupinfo
+;;   :config
+;;   ;; Clear out conflicting keybindings that the corfu-module adds to corfu-map.
+;;   ;; Use C-<up> and C-<down> instead.
+;;   (unbind-key "C-S-n" corfu-map)
+;;   (unbind-key "C-S-p" corfu-map)
+;;   )

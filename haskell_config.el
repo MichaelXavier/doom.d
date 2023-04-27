@@ -24,7 +24,14 @@
   (add-to-list 'flycheck-disabled-checkers 'haskell-hlint)
   ;; there is no +tree-sitter flag for the haskell doom-emacs lang module yet
   (tree-sitter!)
+
+
+  ;;TODO: is this anything? i don't know why you'd do this or why cape-dabbrev doesn't fuckin work in haskell-mode
+  ;; it kinda works but all the suggestions are downcased?
+  ;; (setq-local completion-at-point-functions
+  ;;             (mapcar #'cape-company-to-capf
+  ;;                     (list #'company-dabbrev)))
   )
 
 ;; turn off lsp to avoid annoying error. might break LSP but i don't use it currently
-(remove-hook! 'haskell-mode-local-vars-hook #'lsp!)
+;; (remove-hook! 'haskell-mode-local-vars-hook #'lsp!)
