@@ -34,6 +34,8 @@
 ;;TODO: namespace everything with exwm prefix
 (use-package! exwm
   :commands (exwm-enable)
+  ;; Counsel needed for my application launcher
+  :after (counsel)
   :init
   ;; We put a lot of stuff in init because exwm seems pretty sensitive about things like keybindings being configured before setup
   (defvar exwm-terminal-command

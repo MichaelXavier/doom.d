@@ -165,6 +165,7 @@
 
 ;; default to opening a project in dired
 ;; NOTE: not currently used with vertico
+;; TODO: drop?
 (setq counsel-projectile-switch-project-action
       '(4
         ("o" counsel-projectile-switch-project-action "jump to a project buffer or file")
@@ -225,50 +226,52 @@
 (after! consult
   (consult-customize consult-buffer :preview-key nil))
 
-
-;; Taken and slightly modified from  https://codeberg.org/dalz/dotfiles/src/branch/master/doom/+exwm.el
-(defun my/app-launcher ()
-  "An app launcher that completes using the executables in PATH (labeled with x) and desktop apps (labeled with d)"
-  (interactive)
-  (let* ((desktop-apps (mapcar (lambda (c)
-                                 (let* ((name (caar c))
-                                        (cats (cdar c))
-                                        (str (concat name cats)))
-                                   (put-text-property 0 (length str) 'display (concat "d: " name) str)
-                                   (cons str (cdr c))))
-                               (my/desktop-apps)))
-         (executables (mapcar (lambda (s)
-                                (put-text-property 0 (length s) 'display (concat "x: " s) s) s)
-                              (my/executables-in-path)))
-         (candidates (append desktop-apps executables))
-         (selection (completing-read "Run: " candidates))
-         )
-    (if (consp selection)
-        (counsel-linux-app-action-default selection)
-      (start-process-shell-command selection nil selection))
+(use-package! counsel
+  :config
+  ;; Taken and slightly modified from  https://codeberg.org/dalz/dotfiles/src/branch/master/doom/+exwm.el
+  (defun my/app-launcher ()
+    "An app launcher that completes using the executables in PATH (labeled with x) and desktop apps (labeled with d)"
+    (interactive)
+    (let* ((desktop-apps (mapcar (lambda (c)
+                                   (let* ((name (caar c))
+                                          (cats (cdar c))
+                                          (str (concat name cats)))
+                                     (put-text-property 0 (length str) 'display (concat "d: " name) str)
+                                     (cons str (cdr c))))
+                                 (my/desktop-apps)))
+           (executables (mapcar (lambda (s)
+                                  (put-text-property 0 (length s) 'display (concat "x: " s) s) s)
+                                (my/executables-in-path)))
+           (candidates (append desktop-apps executables))
+           (selection (completing-read "Run: " candidates))
+           )
+      (if (consp selection)
+          (counsel-linux-app-action-default selection)
+        (start-process-shell-command selection nil selection))
+      )
     )
-  )
-(defun my/executables-in-path ()
-  (delete-dups
-   (mapcar #'f-filename
-           (-filter #'f-executable-p
-                    (-flatten
-                     (mapcar (lambda (dir)
-                               (directory-files dir t directory-files-no-dot-files-regexp))
-                             (-filter #'f-directory-p (split-string (getenv "PATH") ":"))))))))
+  (defun my/executables-in-path ()
+    (delete-dups
+     (mapcar #'f-filename
+             (-filter #'f-executable-p
+                      (-flatten
+                       (mapcar (lambda (dir)
+                                 (directory-files dir t directory-files-no-dot-files-regexp))
+                               (-filter #'f-directory-p (split-string (getenv "PATH") ":"))))))))
 
-(defun my/desktop-apps ()
-  (mapcar (lambda (c)
-            (cons (with-temp-buffer
-                    (insert-file-contents (cdr c))
-                    (cons
-                     (progn (re-search-forward "^Name *= *\\(.+\\)$")
-                            (match-string 1))
-                     (progn (goto-char (point-min))
-                            (re-search-forward "^Categories *= *\\(.+\\)$" nil t)
-                            (match-string 1))))
-                  (car c)))
-          (counsel-linux-apps-list-desktop-files)))
+  (defun my/desktop-apps ()
+    (mapcar (lambda (c)
+              (cons (with-temp-buffer
+                      (insert-file-contents (cdr c))
+                      (cons
+                       (progn (re-search-forward "^Name *= *\\(.+\\)$")
+                              (match-string 1))
+                       (progn (goto-char (point-min))
+                              (re-search-forward "^Categories *= *\\(.+\\)$" nil t)
+                              (match-string 1))))
+                    (car c)))
+            (counsel-linux-apps-list-desktop-files)))
+  )
 
 ;;NOTE: I'm under the impression that using require is discouraged becase it slows load time? I can't seem to force counsel to load though so require it is
 (after! consult
@@ -278,7 +281,8 @@
   (setq consult-async-input-debounce 0.7)
   )
 
-(after! counsel-tramp
+(use-package! counsel-tramp
+  :config
   (defun tramp-find-file ()
     "Prompt for a TRAMP path from your SSH config and then browse that host"
     (interactive)
