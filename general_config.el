@@ -24,72 +24,71 @@
       ;; This translates to M-g c
       :desc "Avy char" "c" #'avy-goto-char)
 
-(use-package! smartparens
-  :bind
+(after! smartparens
   ;; https://github.com/Fuco1/smartparens/wiki/Example-configuration
-  (:map smartparens-mode-map
-   ("C-M-f" . sp-forward-sexp)
-   ("C-M-b" . sp-backward-sexp)
-   ("C-M-d" . sp-down-sexp)
-   ("C-M-a" . sp-backward-down-sexp)
-   ("C-S-a" . sp-beginning-of-sexp)
-   ("C-S-d" . sp-end-of-sexp)
-   ("C-M-e" . sp-up-sexp)
-   ("C-M-u" . sp-backward-up-sexp)
-   ("C-M-t" . sp-transpose-sexp)
-   ("C-M-n" . sp-next-sexp)
-   ("C-M-p" . sp-previous-sexp)
-   ("C-M-k" . sp-kill-sexp)
-   ("C-M-w" . sp-copy-sexp)
-   ("M-<delete>" . sp-unwrap-sexp)
-   ("M-<backspace>" . sp-backward-unwrap-sexp)
-   ("C-<right>" . sp-forward-slurp-sexp)
-   ("C-<left>" . sp-forward-barf-sexp)
-   ("C-M-<left>" . sp-backward-slurp-sexp)
-   ("C-M-<right>" . sp-backward-barf-sexp)
-   ("M-D" . sp-splice-sexp)
-   ("C-M-<delete>" . sp-splice-sexp-killing-forward)
-   ("C-M-<backspace>" . sp-splice-sexp-killing-backward)
-   ("C-S-<backspace>" . sp-splice-sexp-killing-around)
-   ("C-]" . sp-select-next-thing-exchange)
-   ("C-<left_bracket>" . sp-select-previous-thing)
-   ("C-M-]" . sp-select-next-thing)
-   ("M-F" . sp-forward-symbol)
-   ("M-B" . sp-backward-symbol)
-   ("H-t" . sp-prefix-tag-object)
-   ("H-p" . sp-prefix-pair-object)
-   ("H-s c" . sp-convolute-sexp)
-   ("H-s a" . sp-absorb-sexp)
-   ("H-s e" . sp-emit-sexp)
-   ("H-s p" . sp-add-to-previous-sexp)
-   ("H-s n" . sp-add-to-next-sexp)
-   ("H-s j" . sp-join-sexp)
-   ("H-s s" . sp-split-sexp)
-   ("C-+" . default-text-scale-increase)
-   ("C--" . default-text-scale-decrease)
-   ("C-0" . default-text-scale-reset)
-   :map emacs-lisp-mode-map
-   (")" . sp-up-sexp)
-   )
-  :config
-  (defun my/interactively-wrap-with-pair (pair &optional arg)
-    "Like sp-wrap-pair but prompts for the pair as a character"
-    (interactive "sPair:")
-    (sp-wrap-with-pair pair))
-  ;; Set up some additional recognized pairs to let us wrap expressions that are used in specific modes
-  ;; "Verbatim"?
-  (sp-local-pair 'org-mode "=" "=")
-  ;; code
-  (sp-local-pair 'org-mode "~" "~")
-  ;; italic. Common enough that we don't want it auto-inserting the closing slash
-  (sp-local-pair 'org-mode "/" "/" :actions '(wrap))
-  ;; bold
-  (sp-local-pair 'org-mode "*" "*")
-  ;; Strikethrough
-  (sp-local-pair 'org-mode "+" "+")
-  ;; Underline
-  (sp-local-pair 'org-mode "_" "_")
-  ;;TODO: can we add mode-specific objects in meow?
+  (map! :map smartparens-mode-map
+        "C-M-b" #'sp-backward-sexp
+        "C-M-d" #'sp-down-sexp
+        "C-M-a" #'sp-backward-down-sexp
+        "C-S-a" #'sp-beginning-of-sexp
+        "C-S-d" #'sp-end-of-sexp
+        "C-M-e" #'sp-up-sexp
+        "C-M-u" #'sp-backward-up-sexp
+        "C-M-t" #'sp-transpose-sexp
+        "C-M-n" #'sp-next-sexp
+        "C-M-p" #'sp-previous-sexp
+        "C-M-k" #'sp-kill-sexp
+        "C-M-w" #'sp-copy-sexp
+        "M-<delete>" #'sp-unwrap-sexp
+        "M-<backspace>" #'sp-backward-unwrap-sexp
+        "C-<right>" #'sp-forward-slurp-sexp
+        "C-<left>" #'sp-forward-barf-sexp
+        "C-M-<left>" #'sp-backward-slurp-sexp
+        "C-M-<right>" #'sp-backward-barf-sexp
+        "M-D" #'sp-splice-sexp
+        "C-M-<delete>" #'sp-splice-sexp-killing-forward
+        "C-M-<backspace>" #'sp-splice-sexp-killing-backward
+        "C-S-<backspace>" #'sp-splice-sexp-killing-around
+        "C-]" #'sp-select-next-thing-exchange
+        "C-<left_bracket>" #'sp-select-previous-thing
+        "C-M-]" #'sp-select-next-thing
+        "M-F" #'sp-forward-symbol
+        "M-B" #'sp-backward-symbol
+        "H-t" #'sp-prefix-tag-object
+        "H-p" #'sp-prefix-pair-object
+        "H-s c" #'sp-convolute-sexp
+        "H-s a" #'sp-absorb-sexp
+        "H-s e" #'sp-emit-sexp
+        "H-s p" #'sp-add-to-previous-sexp
+        "H-s n" #'sp-add-to-next-sexp
+        "H-s j" #'sp-join-sexp
+        "H-s s" #'sp-split-sexp
+        "C-+" #'default-text-scale-increase
+        "C--" #'default-text-scale-decrease
+        "C-0" #'default-text-scale-reset
+        )
+   (map! :map emacs-lisp-mode-map
+                ")" #'sp-up-sexp)
+   (defun my/interactively-wrap-with-pair (pair &optional arg)
+     "Like sp-wrap-pair but prompts for the pair as a character"
+     (interactive "sPair:")
+     (sp-wrap-with-pair pair))
+
+   (sp-with-modes 'org-mode
+    ;; "Verbatim"?
+    (sp-local-pair "=" "=")
+    ;; code
+    (sp-local-pair "~" "~")
+    ;; italic. Common enough that we don't want it auto-inserting the closing slash
+    (sp-local-pair "/" "/" :actions '(wrap))
+    ;; bold
+    (sp-local-pair "*" "*")
+    ;; Strikethrough
+    (sp-local-pair "+" "+")
+    ;; Underline
+    (sp-local-pair "_" "_")
+    ;;TODO: can we add mode-specific objects in meow?
+    )
   )
 
 ;; managing windows
@@ -272,18 +271,14 @@
           (counsel-linux-apps-list-desktop-files)))
 
 ;;NOTE: I'm under the impression that using require is discouraged becase it slows load time? I can't seem to force counsel to load though so require it is
-(use-package! consult
-  :config
+(after! consult
   ;; By default consult logs to an invisible buffer. This makes debugging a bit easier
   (setq consult--async-log "*consult-async*")
   ;; Slow down how quickly consult searches re-search.
   (setq consult-async-input-debounce 0.7)
   )
 
-(use-package! counsel)
-(use-package! counsel-tramp
-  :after (counsel)
-  :config
+(after! counsel-tramp
   (defun tramp-find-file ()
     "Prompt for a TRAMP path from your SSH config and then browse that host"
     (interactive)
@@ -292,11 +287,11 @@
       (find-file)
       )
     )
-  )
+  ;; C-c f t to browse files via tramp, replacing counsel-tramp
+  (map! :map doom-leader-file-map
+        :desc "Find file via TRAMP" "t" #'tramp-find-file)
 
-;; C-c f t to browse files via tramp, replacing counsel-tramp
-(map! :map doom-leader-file-map
-      :desc "Find file via TRAMP" "t" #'tramp-find-file)
+  )
 
 ;; Add some online search providers which can be used with C-c s O
 (dolist
@@ -611,9 +606,6 @@
 ;; (setq transient-show-popup nil)
 ;; Seems like the issue might be fixed as of 4/16/2023?
 (setq transient-show-popup t)
-
-;; Use adaptive word wrapping almost everywhere
-(+global-word-wrap-mode +1)
 
 (use-package! plantuml-mode
   :mode "\\.plantuml\\'"

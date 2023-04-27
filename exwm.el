@@ -1,6 +1,7 @@
 ;;; exwm.el -*- lexical-binding: t; -*-
 
 ;; lots taken from https://github.com/johanwiden/exwm-setup
+;; TODO: should these be after!?
 
 ;; Multi-monitor support
 (use-package! exwm-randr

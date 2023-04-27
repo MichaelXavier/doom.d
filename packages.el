@@ -113,3 +113,9 @@
 ;; UML tools
 (package! plantuml-mode)
 (package! flycheck-plantuml)
+
+;; TODO: rolling my own cape integration since the WIP one seems to give me trouble
+(package! corfu :recipe (:files ("*.el" "extensions/*.el")))
+(package! cape)
+(package! dabbrev)
+(package! kind-icon)
