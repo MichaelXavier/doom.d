@@ -680,32 +680,23 @@ generally useful.  This function needs to be called in certain
 mode hooks, as some modes fill the buffer-local capfs with
 exclusive completion functions, so that the global ones don't get
 called at all."
-    ;; TODO: drop
-    (message (format "my/register-default-capfs called from %s" major-mode))
-
-    ;;TODO: does haskell-mode work if you force it to an explicit list/
-    ;;TODO: i think we actually want to use some of the default completion in emacs lisp
-    ;; (make-local-variable 'completion-at-point-functions)
     (add-to-list 'completion-at-point-functions #'cape-dabbrev)
     (add-to-list 'completion-at-point-functions #'cape-file))
-
-  (defun my/force-default-capfs ()
-    "I don't even know if this works but some aggressively shitty
-modes like haskell-mode don't seem to respond to merely adding
-completion-at-point-functions"
-    ;; TODO: drop
-    (message (format "my/force-default-capfs called from %s" major-mode))
-
-    ;;TODO: does haskell-mode work if you force it to an explicit list/
-    ;;TODO: i think we actually want to use some of the default completion in emacs lisp
-    (make-local-variable 'completion-at-point-functions)
-    (setq completion-at-point-functions '(cape-dabbrev cape-file)))
 
   (my/register-default-capfs)
 
   :hook ((emacs-lisp-mode . my/register-default-capfs)
-         ;;TODO: does this work?
-         (haskell-mode . my/force-default-capfs))
+         (haskell-mode . my/register-default-capfs))
+
+  :config
+  ;;TODO: i'm not sure why but this length isn't for the overall completion but
+  ;;seems to be for the substring prefix before case switches, at least with
+  ;;haskell-mode's completion. Thus in all my testing when I used FooBar as a
+  ;;completion test, the default of 4 would fail because you get the 3 letters
+  ;;F-o-o before B acts as a cutoff. I noticed that anything at 3 or below was
+  ;;completing correctly. We can probably figure out what case setting is
+  ;;screwing this up eventually but setting this number lower at least works.
+  (setq cape-dabbrev-min-length 2)
 
   )
 
@@ -727,7 +718,8 @@ completion-at-point-functions"
   ;; Allows you to go back to the first completion when you're on the last
   (setq corfu-cycle t)
   ;; Preselect the first completion
-  (setq corfu-preselect nil)
+  ;; TODO: what does this actually do?
+  (setq corfu-preselect 'valid)
   ;; Preview currently selected candidate
   (setq corfu-preview-current 'insert)
   (setq corfu-excluded-modes '(erc-mode
