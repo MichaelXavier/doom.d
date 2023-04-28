@@ -21,7 +21,7 @@
 
        :completion
        ;; TODO: do i disable completion now that there's corfu?
-       company           ; inline auto completions
+       ;; company           ; inline auto completions
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
        ;;(ivy +icons +prescient)               ; a search engine for love and life

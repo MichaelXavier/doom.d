@@ -645,44 +645,116 @@
 ;; TODO: how do we globally add dabbrev? seems like haskell-mode and others set their own
 ;; Corfu/Cape completion settings
 ;; TODO: i'm just turning this shit off. i can't get it working right in prog-mode, haskell mode, etc
-;; (use-package! cape
-;;   :after (:all corfu)
-;;   :init
-;;   ;; TODO: this might slow things down too much but it's how I expect dabbrev to work
-;;   ;; TODO: this may have been causing crashes. without it, I was getting lockups. Could be unrelated
-;;   ;; dabbrev-friend-buffer-function is set to dabbrev--same-major-mode-p which means it should only consider like buffers so that should decrease the load i would think.
-;;   ;; TODO: what are dabbrev ignore rules
-;;   ;; TODO: what is dabbrev-select-buffers-function? that's set to
-;;   ;; TODO: what about cape-line-buffer-function?
-;;   ;; TODO: cape-dabbrev-check-other-buffers
-;;   ;; TODO: I belive that some make it so it defers to dabbrev which should default to checking buffers of the same major mode
-;;   ;; TODO: is setting this to 'some breaking completion in other places?
-;;   ;; (setq cape-dabbrev-check-other-buffers 'some)
+(use-package! cape
+  :init
+  ;; TODO: this might slow things down too much but it's how I expect dabbrev to work
+  ;; TODO: this may have been causing crashes. without it, I was getting lockups. Could be unrelated
+  ;; dabbrev-friend-buffer-function is set to dabbrev--same-major-mode-p which means it should only consider like buffers so that should decrease the load i would think.
+  ;; TODO: what are dabbrev ignore rules
+  ;; TODO: what is dabbrev-select-buffers-function? that's set to
+  ;; TODO: what about cape-line-buffer-function?
+  ;; TODO: cape-dabbrev-check-other-buffers
+  ;; TODO: I belive that some make it so it defers to dabbrev which should default to checking buffers of the same major mode
+  ;; TODO: is setting this to 'some breaking completion in other places?
+  ;; (setq cape-dabbrev-check-other-buffers 'some)
 
-;;   ;; I find spelling completion needlessly distracting. It isn't going to
-;;   ;; highlight my typos and I generally don't use words that I don't know how to
-;;   ;; spell.
-;;   ;; TODO: did these 2 somehow break completion in haskell-mode?
-;;   ;; (setq +corfu-ispell-in-comments-and-strings nil)
-;;   ;; (setq +corfu-ispell-completion-modes nil)
-;;   ;; TODO: am i doing this wrong? if i turn this off then the shitty completion provided by haskell-mode will take priority
-;;   ;; (add-hook 'haskell-mode-hook
-;;   ;;   (lambda ()
-;;   ;;     ;; HACK blow away haskell's default completions which clobber any previously configured ones
-;;   ;;     (make-local-variable 'completion-at-point-functions)
-;;   ;;     (setq completion-at-point-functions '(cape-keyword cape-dabbrev))
-;;   ;;     )
-;;   ;;   )
-;;   )
+  ;; I find spelling completion needlessly distracting. It isn't going to
+  ;; highlight my typos and I generally don't use words that I don't know how to
+  ;; spell.
+  ;; TODO: did these 2 somehow break completion in haskell-mode?
+  ;; (setq +corfu-ispell-in-comments-and-strings nil)
+  ;; (setq +corfu-ispell-completion-modes nil)
+  ;; TODO: am i doing this wrong? if i turn this off then the shitty completion provided by haskell-mode will take priority
+  ;; (add-hook 'haskell-mode-hook
+  ;;   (lambda ()
+  ;;     ;; HACK blow away haskell's default completions which clobber any previously configured ones
+  ;;     (make-local-variable 'completion-at-point-functions)
+  ;;     (setq completion-at-point-functions '(cape-keyword cape-dabbrev))
+  ;;     )
+  ;;   )
+
+  ;; https://github.com/kenranunderscore/dotfiles/blob/main/home-manager-modules/emacs/emacs.d/config.org#more-completion-at-point-backends-via-cape
+  (defun my/register-default-capfs ()
+    "I use 'cape-dabbrev' and 'cape-file' everywhere as they are
+generally useful.  This function needs to be called in certain
+mode hooks, as some modes fill the buffer-local capfs with
+exclusive completion functions, so that the global ones don't get
+called at all."
+    ;; TODO: drop
+    (message (format "my/register-default-capfs called from %s" major-mode))
+
+    ;;TODO: does haskell-mode work if you force it to an explicit list/
+    ;;TODO: i think we actually want to use some of the default completion in emacs lisp
+    ;; (make-local-variable 'completion-at-point-functions)
+    (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+    (add-to-list 'completion-at-point-functions #'cape-file))
+
+  (defun my/force-default-capfs ()
+    "I don't even know if this works but some aggressively shitty
+modes like haskell-mode don't seem to respond to merely adding
+completion-at-point-functions"
+    ;; TODO: drop
+    (message (format "my/force-default-capfs called from %s" major-mode))
+
+    ;;TODO: does haskell-mode work if you force it to an explicit list/
+    ;;TODO: i think we actually want to use some of the default completion in emacs lisp
+    (make-local-variable 'completion-at-point-functions)
+    (setq completion-at-point-functions '(cape-dabbrev cape-file)))
+
+  (my/register-default-capfs)
+
+  :hook ((emacs-lisp-mode . my/register-default-capfs)
+         ;;TODO: does this work?
+         (haskell-mode . my/force-default-capfs))
+
+  )
 
 ;; TODO: temporarily disabled
-;; (use-package! corfu
-;;   :init
-;;   ;; Slightly slow down the time before auto-completion starts to see if it is a
-;;   ;; little less distracting. The default is 0.1. I also think it tends to eat
-;;   ;; characters?
-;;   (setq corfu-auto-delay 0.2)
-;;   )
+(use-package! corfu
+  ;;TODO: why can't this be in :config?
+  :init
+  (global-corfu-mode)
+  :config
+
+  ;; Corfu dialog should appear automatically without needing input to be summoned
+  (setq corfu-auto t)
+  ;; Slightly slow down the time before auto-completion starts to see if
+  ;; it is a little less distracting. The default is 0.1. I also think it tends
+  ;; to eat characters?
+  (setq corfu-auto-delay 0.2)
+  ;; You must type at least this many characters before auto corfu kicks in
+  (setq corfu-auto-prefix 3)
+  ;; Allows you to go back to the first completion when you're on the last
+  (setq corfu-cycle t)
+  ;; Preselect the first completion
+  (setq corfu-preselect nil)
+  ;; Preview currently selected candidate
+  (setq corfu-preview-current 'insert)
+  (setq corfu-excluded-modes '(erc-mode
+                               circe-mode
+                               help-mode
+                               gud-mode
+                               vterm-mode))
+
+  ;; Slightly slow down the time before auto-completion starts to see if it is a
+  ;; little less distracting. The default is 0.1. I also think it tends to eat
+  ;; characters?
+  (setq corfu-auto-delay 0.2)
+  )
+
+(use-package! corfu-popupinfo
+  :config
+  ;; Pop-up docs
+  (corfu-popupinfo-mode)
+  (setq corfu-popupinfo-delay 0.5)
+  ;; Clear out conflicting keybindings that the corfu-module adds to corfu-map.
+  ;; Use C-<up> and C-<down> instead.
+  ;; TODO: do we need this now that we're not using the doom module?
+  ;; TODO: use :map?
+  (unbind-key "C-S-n" corfu-map)
+  (unbind-key "C-S-p" corfu-map)
+  )
+
 
 ;; Edwina is a window manager in emacs and it becomes my tiling window manager
 ;; under EXWM.
@@ -744,12 +816,3 @@
         )
   (edwina-mode t)
   )
-
-;; TODO: temporarily disabled
-;; (use-package! corfu-popupinfo
-;;   :config
-;;   ;; Clear out conflicting keybindings that the corfu-module adds to corfu-map.
-;;   ;; Use C-<up> and C-<down> instead.
-;;   (unbind-key "C-S-n" corfu-map)
-;;   (unbind-key "C-S-p" corfu-map)
-;;   )
