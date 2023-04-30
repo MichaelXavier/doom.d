@@ -642,14 +642,11 @@
 (setq warning-minimum-level :error)
 
 ;; TODO: reenable cape-dabbrev-check-other-buffers?
-;; TODO: how do we globally add dabbrev? seems like haskell-mode and others set their own
-;; Corfu/Cape completion settings
-;; TODO: i'm just turning this shit off. i can't get it working right in prog-mode, haskell mode, etc
 (use-package! cape
   :init
   (defun my/register-capfs (capfs)
     "Register the given list of capfs in the current mode."
-    (-each capfs (lambda (capfs) (add-to-list 'completion-at-point-functions capfs)))
+    (-each-r capfs (lambda (capfs) (add-to-list 'completion-at-point-functions capfs)))
     )
 
   ;; https://github.com/kenranunderscore/dotfiles/blob/main/home-manager-modules/emacs/emacs.d/config.org#more-completion-at-point-backends-via-cape
@@ -658,8 +655,7 @@
 function needs to be called in certain mode hooks, as some modes
 fill the buffer-local capfs with exclusive completion functions,
 so that the global ones don't get called at all."
-    ;; TODO trying out cape-line
-    (my/register-capfs '(#'cape-dabbrev #'cape-keyword #'cape-file #'cape-line))
+    (my/register-capfs '(cape-dabbrev cape-keyword cape-file cape-line))
     )
 
   (my/register-default-capfs)
@@ -707,9 +703,10 @@ so that the global ones don't get called at all."
                                     "where")
 )
 
-
-  :hook ((emacs-lisp-mode . (lambda () (my/register-capfs '(#'cape-symbol #'cape-dabbrev #'cape-keyword #'cape-file #'cape-line))))
-         (haskell-mode . my/register-default-capfs))
+  :hook ((emacs-lisp-mode . (lambda () (my/register-capfs '(cape-symbol cape-dabbrev cape-keyword cape-file cape-line))))
+         (haskell-mode . my/register-default-capfs)
+         (python-mode . my/register-default-capfs)
+         )
 
   :config
   ;;TODO: i'm not sure why but this length isn't for the overall completion but
@@ -723,9 +720,7 @@ so that the global ones don't get called at all."
 
   )
 
-;; TODO: temporarily disabled
 (use-package! corfu
-  ;;TODO: why can't this be in :config?
   :init
   (global-corfu-mode)
   :config
@@ -769,7 +764,6 @@ so that the global ones don't get called at all."
   (unbind-key "C-S-n" corfu-map)
   (unbind-key "C-S-p" corfu-map)
   )
-
 
 ;; Edwina is a window manager in emacs and it becomes my tiling window manager
 ;; under EXWM.
