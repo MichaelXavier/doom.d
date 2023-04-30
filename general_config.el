@@ -647,45 +647,68 @@
 ;; TODO: i'm just turning this shit off. i can't get it working right in prog-mode, haskell mode, etc
 (use-package! cape
   :init
-  ;; TODO: this might slow things down too much but it's how I expect dabbrev to work
-  ;; TODO: this may have been causing crashes. without it, I was getting lockups. Could be unrelated
-  ;; dabbrev-friend-buffer-function is set to dabbrev--same-major-mode-p which means it should only consider like buffers so that should decrease the load i would think.
-  ;; TODO: what are dabbrev ignore rules
-  ;; TODO: what is dabbrev-select-buffers-function? that's set to
-  ;; TODO: what about cape-line-buffer-function?
-  ;; TODO: cape-dabbrev-check-other-buffers
-  ;; TODO: I belive that some make it so it defers to dabbrev which should default to checking buffers of the same major mode
-  ;; TODO: is setting this to 'some breaking completion in other places?
-  ;; (setq cape-dabbrev-check-other-buffers 'some)
-
-  ;; I find spelling completion needlessly distracting. It isn't going to
-  ;; highlight my typos and I generally don't use words that I don't know how to
-  ;; spell.
-  ;; TODO: did these 2 somehow break completion in haskell-mode?
-  ;; (setq +corfu-ispell-in-comments-and-strings nil)
-  ;; (setq +corfu-ispell-completion-modes nil)
-  ;; TODO: am i doing this wrong? if i turn this off then the shitty completion provided by haskell-mode will take priority
-  ;; (add-hook 'haskell-mode-hook
-  ;;   (lambda ()
-  ;;     ;; HACK blow away haskell's default completions which clobber any previously configured ones
-  ;;     (make-local-variable 'completion-at-point-functions)
-  ;;     (setq completion-at-point-functions '(cape-keyword cape-dabbrev))
-  ;;     )
-  ;;   )
+  (defun my/register-capfs (capfs)
+    "Register the given list of capfs in the current mode."
+    (-each capfs (lambda (capfs) (add-to-list 'completion-at-point-functions capfs)))
+    )
 
   ;; https://github.com/kenranunderscore/dotfiles/blob/main/home-manager-modules/emacs/emacs.d/config.org#more-completion-at-point-backends-via-cape
   (defun my/register-default-capfs ()
-    "I use 'cape-dabbrev' and 'cape-file' everywhere as they are
-generally useful.  This function needs to be called in certain
-mode hooks, as some modes fill the buffer-local capfs with
-exclusive completion functions, so that the global ones don't get
-called at all."
-    (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-    (add-to-list 'completion-at-point-functions #'cape-file))
+    "I use these caps everywhere as they are generally useful. This
+function needs to be called in certain mode hooks, as some modes
+fill the buffer-local capfs with exclusive completion functions,
+so that the global ones don't get called at all."
+    ;; TODO trying out cape-line
+    (my/register-capfs '(#'cape-dabbrev #'cape-keyword #'cape-file #'cape-line))
+    )
 
   (my/register-default-capfs)
 
-  :hook ((emacs-lisp-mode . my/register-default-capfs)
+  ;; Add some keyword lists to cape keyword completion. I should probably add a
+  ;; PR but I don't want to deal with the contributor license.
+  (add-to-list 'cape-keyword-list '(haskell-mode
+                                    "as"
+                                    "case"
+                                    "class"
+                                    "data family"
+                                    "data instance"
+                                    "data"
+                                    "default"
+                                    "deriving instance"
+                                    "deriving"
+                                    "do"
+                                    "else"
+                                    "family"
+                                    "forall"
+                                    "foreign import"
+                                    "foreign"
+                                    "hiding"
+                                    "if"
+                                    "import qualified"
+                                    "import"
+                                    "in"
+                                    "infix"
+                                    "infixl"
+                                    "infixr"
+                                    "instance"
+                                    "let"
+                                    "mdo"
+                                    "module"
+                                    "newtype"
+                                    "of"
+                                    "proc"
+                                    "qualified"
+                                    "rec"
+                                    "signature"
+                                    "then"
+                                    "type family"
+                                    "type instance"
+                                    "type"
+                                    "where")
+)
+
+
+  :hook ((emacs-lisp-mode . (lambda () (my/register-capfs '(#'cape-symbol #'cape-dabbrev #'cape-keyword #'cape-file #'cape-line))))
          (haskell-mode . my/register-default-capfs))
 
   :config
