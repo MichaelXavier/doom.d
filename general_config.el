@@ -740,6 +740,10 @@ so that the global ones don't get called at all."
   (setq corfu-preselect 'valid)
   ;; Preview currently selected candidate
   (setq corfu-preview-current 'insert)
+  ;; This seems to prevent a "No match" menu from coming up all the time and
+  ;; stealing focus. I might also want to fiddle with the corfu keybindings so
+  ;; that meow movement always works
+  (setq corfu-quit-no-match t)
   (setq corfu-excluded-modes '(erc-mode
                                circe-mode
                                help-mode
