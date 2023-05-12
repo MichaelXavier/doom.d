@@ -644,6 +644,8 @@
 ;; TODO: reenable cape-dabbrev-check-other-buffers?
 (use-package! cape
   :init
+  (require 'dash)
+  (require 'cape-keyword)
   (defun my/register-capfs (capfs)
     "Register the given list of capfs in the current mode."
     (-each-r capfs (lambda (capfs) (add-to-list 'completion-at-point-functions capfs)))
@@ -655,10 +657,29 @@
 function needs to be called in certain mode hooks, as some modes
 fill the buffer-local capfs with exclusive completion functions,
 so that the global ones don't get called at all."
-    (my/register-capfs '(cape-dabbrev cape-keyword cape-file cape-line))
+    ;; I think we want to see all results from some one of these completions.
+    ;; I've noticed that individually, one of the capes will start matching and
+    ;; will suppress results from the others.
+    (my/register-capfs (list (cape-super-capf #'cape-dabbrev #'cape-keyword) #'cape-file))
     )
 
   (my/register-default-capfs)
+
+
+  :hook ((emacs-lisp-mode . (lambda () (my/register-capfs (list (cape-super-capf #'cape-symbol #'cape-dabbrev #'cape-keyword) #'cape-file))))
+         (haskell-mode . my/register-default-capfs)
+         (python-mode . my/register-default-capfs)
+         )
+
+  :config
+  ;;TODO: i'm not sure why but this length isn't for the overall completion but
+  ;;seems to be for the substring prefix before case switches, at least with
+  ;;haskell-mode's completion. Thus in all my testing when I used FooBar as a
+  ;;completion test, the default of 4 would fail because you get the 3 letters
+  ;;F-o-o before B acts as a cutoff. I noticed that anything at 3 or below was
+  ;;completing correctly. We can probably figure out what case setting is
+  ;;screwing this up eventually but setting this number lower at least works.
+  (setq cape-dabbrev-min-length 2)
 
   ;; Add some keyword lists to cape keyword completion. I should probably add a
   ;; PR but I don't want to deal with the contributor license.
@@ -701,22 +722,8 @@ so that the global ones don't get called at all."
                                     "type instance"
                                     "type"
                                     "where")
-)
+               )
 
-  :hook ((emacs-lisp-mode . (lambda () (my/register-capfs '(cape-symbol cape-dabbrev cape-keyword cape-file cape-line))))
-         (haskell-mode . my/register-default-capfs)
-         (python-mode . my/register-default-capfs)
-         )
-
-  :config
-  ;;TODO: i'm not sure why but this length isn't for the overall completion but
-  ;;seems to be for the substring prefix before case switches, at least with
-  ;;haskell-mode's completion. Thus in all my testing when I used FooBar as a
-  ;;completion test, the default of 4 would fail because you get the 3 letters
-  ;;F-o-o before B acts as a cutoff. I noticed that anything at 3 or below was
-  ;;completing correctly. We can probably figure out what case setting is
-  ;;screwing this up eventually but setting this number lower at least works.
-  (setq cape-dabbrev-min-length 2)
 
   )
 
