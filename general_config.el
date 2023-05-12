@@ -836,3 +836,12 @@ so that the global ones don't get called at all."
         )
   (edwina-mode t)
   )
+
+(after! pdf-tools
+  ;; https://github.com/Fuco1/smartparens/wiki/Example-configuration
+  (map! :map pdf-view-mode-map
+        ;; Meow bindings
+        "j" #'pdf-view-next-page-command
+        "k" #'pdf-view-previous-page-command
+        )
+  )
