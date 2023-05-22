@@ -843,5 +843,10 @@ so that the global ones don't get called at all."
         ;; Meow bindings
         "j" #'pdf-view-next-page-command
         "k" #'pdf-view-previous-page-command
+        ;; pdf-view mode hooks into isearch system so we need to set up those
+        ;; bindings to override, otherwise it'll search through the literal
+        ;; source code of the PDF
+        "C-s" #'isearch-forward
+        "C-r" #'isearch-backward
         )
   )
