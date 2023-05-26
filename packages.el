@@ -119,3 +119,6 @@
 (package! cape)
 (package! dabbrev)
 (package! kind-icon)
+(package! dired-rsync-transient)
+;; Currently pinned one seems to be stuck on 2021 and the most recent change is December 2022
+(unpin! dired-rsync)

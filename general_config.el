@@ -850,3 +850,9 @@ so that the global ones don't get called at all."
         "C-r" #'isearch-backward
         )
   )
+
+(use-package! dired-rsync-transient
+  :after dired-rsync
+  :bind (:map dired-mode-map
+              ("C-c C-x" . dired-rsync-transient))
+  )
