@@ -21,6 +21,10 @@
 ;; font string. You generally only need these two:
 ;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
+;;
+;; Pick this with describe-font, then run doom/reload-font to apply it without
+;; restarting
+(setq doom-font "-CTDB-Fira Code-normal-normal-normal-*-18-*-*-*-m-0-iso10646-1")
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
