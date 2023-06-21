@@ -601,6 +601,11 @@
   (setq meow-expand-hint-remove-delay 3.0)
    ;; start git commits in insert mode
   (add-hook 'git-commit-mode-hook 'meow-insert-mode)
+  ;; Completion candidates should really only be active when inserting. There
+  ;; may be a better way to do this. When I exit insert mode, I'm no longer
+  ;; trying to modify the text under cursor so the recommendations should go
+  ;; away.
+  (add-hook 'meow-insert-exit-hook 'corfu-quit)
   (meow-global-mode 1)
   )
 
