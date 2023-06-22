@@ -164,8 +164,8 @@
   ;; Override default behaviors for some windows
   (setq exwm-manage-configurations
         '(
-          ;; terminal epplications have a lot of hotkey overlap with emacs
-          ((member exwm-class-name '("Alacritty" "kitty")) char-mode t)
+          ;; applications which have too much hotkey overlap with exwm should start in char-mode
+          ((member exwm-class-name '("Alacritty" "kitty" "Blender")) char-mode t)
           ))
 
   ;; suggested in ;;https://github.com/ch11ng/exwm/issues/50#issuecomment-140746653
