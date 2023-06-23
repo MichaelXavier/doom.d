@@ -67,14 +67,14 @@
         "C--" #'default-text-scale-decrease
         "C-0" #'default-text-scale-reset
         )
-   (map! :map emacs-lisp-mode-map
-                ")" #'sp-up-sexp)
-   (defun my/interactively-wrap-with-pair (pair &optional arg)
-     "Like sp-wrap-pair but prompts for the pair as a character"
-     (interactive "sPair:")
-     (sp-wrap-with-pair pair))
+  (map! :map emacs-lisp-mode-map
+        ")" #'sp-up-sexp)
+  (defun my/interactively-wrap-with-pair (pair &optional arg)
+    "Like sp-wrap-pair but prompts for the pair as a character"
+    (interactive "sPair:")
+    (sp-wrap-with-pair pair))
 
-   (sp-with-modes 'org-mode
+  (sp-with-modes 'org-mode
     ;; "Verbatim"?
     (sp-local-pair "=" "=")
     ;; code
@@ -362,90 +362,90 @@
 ;; Dired is a little too aggressive with hiding
 (setq dired-omit-extensions
       '(".hi"
-       ".o"
-       "~"
-       ".lbin"
-       ".so"
-       ".a"
-       ".ln"
-       ".blg"
-       ".bbl"
-       ".elc"
-       ".lof"
-       ".glo"
-       ".idx"
-       ".lot"
-       ".svn/"
-       ".hg/"
-       ".git/"
-       ".bzr/"
-       "CVS/"
-       "_darcs/"
-       "_MTN/"
-       ".fmt"
-       ".tfm"
-       ".class"
-       ".fas"
-       ".lib"
-       ".mem"
-       ".x86f"
-       ".sparcf"
-       ".dfsl"
-       ".pfsl"
-       ".d64fsl"
-       ".p64fsl"
-       ".lx64fsl"
-       ".lx32fsl"
-       ".dx64fsl"
-       ".dx32fsl"
-       ".fx64fsl"
-       ".fx32fsl"
-       ".sx64fsl"
-       ".sx32fsl"
-       ".wx64fsl"
-       ".wx32fsl"
-       ".fasl"
-       ".ufsl"
-       ".fsl"
-       ".dxl"
-       ".lo"
-       ".la"
-       ".gmo"
-       ".mo"
-       ".toc"
-       ".aux"
-       ".cp"
-       ".fn"
-       ".ky"
-       ".pg"
-       ".tp"
-       ".vr"
-       ".cps"
-       ".fns"
-       ".kys"
-       ".pgs"
-       ".tps"
-       ".vrs"
-       ".pyc"
-       ".pyo"
-       ".idx"
-       ".lof"
-       ".lot"
-       ".glo"
-       ".blg"
-       ".bbl"
-       ".cp"
-       ".cps"
-       ".fn"
-       ".fns"
-       ".ky"
-       ".kys"
-       ".pg"
-       ".pgs"
-       ".tp"
-       ".tps"
-       ".vr"
-       ".vrs"))
+        ".o"
+        "~"
+        ".lbin"
+        ".so"
+        ".a"
+        ".ln"
+        ".blg"
+        ".bbl"
+        ".elc"
+        ".lof"
+        ".glo"
+        ".idx"
+        ".lot"
+        ".svn/"
+        ".hg/"
+        ".git/"
+        ".bzr/"
+        "CVS/"
+        "_darcs/"
+        "_MTN/"
+        ".fmt"
+        ".tfm"
+        ".class"
+        ".fas"
+        ".lib"
+        ".mem"
+        ".x86f"
+        ".sparcf"
+        ".dfsl"
+        ".pfsl"
+        ".d64fsl"
+        ".p64fsl"
+        ".lx64fsl"
+        ".lx32fsl"
+        ".dx64fsl"
+        ".dx32fsl"
+        ".fx64fsl"
+        ".fx32fsl"
+        ".sx64fsl"
+        ".sx32fsl"
+        ".wx64fsl"
+        ".wx32fsl"
+        ".fasl"
+        ".ufsl"
+        ".fsl"
+        ".dxl"
+        ".lo"
+        ".la"
+        ".gmo"
+        ".mo"
+        ".toc"
+        ".aux"
+        ".cp"
+        ".fn"
+        ".ky"
+        ".pg"
+        ".tp"
+        ".vr"
+        ".cps"
+        ".fns"
+        ".kys"
+        ".pgs"
+        ".tps"
+        ".vrs"
+        ".pyc"
+        ".pyo"
+        ".idx"
+        ".lof"
+        ".lot"
+        ".glo"
+        ".blg"
+        ".bbl"
+        ".cp"
+        ".cps"
+        ".fn"
+        ".fns"
+        ".ky"
+        ".kys"
+        ".pg"
+        ".pgs"
+        ".tp"
+        ".tps"
+        ".vr"
+        ".vrs"))
 
 ;; modal editing with meow. Can practice with meow-tutor
 (use-package! meow
@@ -599,7 +599,7 @@
   (meow-setup)
   ;; Expand the numbered expand helpers to make them easier to use
   (setq meow-expand-hint-remove-delay 3.0)
-   ;; start git commits in insert mode
+  ;; start git commits in insert mode
   (add-hook 'git-commit-mode-hook 'meow-insert-mode)
   ;; Completion candidates should really only be active when inserting. There
   ;; may be a better way to do this. When I exit insert mode, I'm no longer
@@ -860,4 +860,36 @@ so that the global ones don't get called at all."
   :after dired-rsync
   :bind (:map dired-mode-map
               ("C-c C-x" . dired-rsync-transient))
+  )
+
+(use-package! lab
+  :config
+  (setq lab-host "https://gitlab.com")
+  ;; TODO: lab-group and lab-token
+  )
+
+(use-package! pushover
+  :config
+  ;; TODO: pushover-api-key and pushover-user-key
+  )
+
+(use-package! 1password
+  :demand t
+  :config
+  (1password-auth-source-enable)
+
+  (defun my/op-signin (password)
+    "Prompt for a password, sign into onepass, and then set the OP_SERVICE_ACCOUNT_TOKEN env var for the emacs process."
+    (interactive (list (read-passwd "op password: ")))
+    (let
+        ((token (with-temp-buffer
+                  (if (zerop (call-process-region password nil 1password-op-executable nil t nil "signin" "--raw"))
+                      (buffer-string)
+                    (error "'op signin --raw' failed: %s" (buffer-string)))
+                  ))
+         )
+      (setenv "OP_SERVICE_ACCOUNT_TOKEN" token)
+      (message "Successfully set OP_SERVICE_ACCOUNT_TOKEN")
+      )
+    )
   )

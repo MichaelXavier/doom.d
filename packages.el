@@ -122,3 +122,10 @@
 (package! dired-rsync-transient)
 ;; Currently pinned one seems to be stuck on 2021 and the most recent change is December 2022
 (unpin! dired-rsync)
+;; Gitlab support
+(package! lab)
+;; notifications
+(package! pushover)
+;; 1password auth source
+;; https://dev.to/kamushadenes/1passwordel-integrating-1password-with-emacs-and-auth-source-4nkl
+(package! 1password :recipe (:host github :repo "kamushadenes/1password.el" :files ("*.el")))
