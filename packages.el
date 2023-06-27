@@ -128,5 +128,6 @@
 (package! pushover)
 ;; 1password auth source
 ;; https://dev.to/kamushadenes/1passwordel-integrating-1password-with-emacs-and-auth-source-4nkl
-(package! 1password :recipe (:host github :repo "kamushadenes/1password.el" :files ("*.el")))
+;; TODO: temporarily using my own fork with manual sign in
+(package! 1password :recipe (:host github :repo "MichaelXavier/1password.el" :branch "manual-signin" :files ("*.el")))
 (package! alert)

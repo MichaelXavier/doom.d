@@ -877,21 +877,6 @@ so that the global ones don't get called at all."
   :demand t
   :config
   (1password-auth-source-enable)
-
-  (defun my/op-signin (password)
-    "Prompt for a password, sign into onepass, and then set the OP_SERVICE_ACCOUNT_TOKEN env var for the emacs process."
-    (interactive (list (read-passwd "op password: ")))
-    (let
-        ((token (with-temp-buffer
-                  (if (zerop (call-process-region password nil 1password-op-executable nil t nil "signin" "--raw"))
-                      (buffer-string)
-                    (error "'op signin --raw' failed: %s" (buffer-string)))
-                  ))
-         )
-      (setenv "OP_SERVICE_ACCOUNT_TOKEN" token)
-      (message "Successfully set OP_SERVICE_ACCOUNT_TOKEN")
-      )
-    )
   )
 
 (use-package! alert
@@ -904,4 +889,13 @@ so that the global ones don't get called at all."
                         ))
   ;; Send lab alerts to pushover
   (add-to-list 'alert-user-configuration '(((:title . "lab.el")) pushover nil))
+  )
+
+(defun my/refresh-secrets ()
+  "Prompt and then sign into 1password and then set some variables with them."
+  (interactive)
+  ;; This works on the first signin but it may expire
+  (unless 1password--session-token (1password-manual-signin))
+  (setq pushover-user-key (1password-get-field "pushover" "User Key"))
+  (setq lab-token (1password-get-field "well gitlab" "dev machine access token"))
   )
