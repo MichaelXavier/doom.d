@@ -129,3 +129,4 @@
 ;; 1password auth source
 ;; https://dev.to/kamushadenes/1passwordel-integrating-1password-with-emacs-and-auth-source-4nkl
 (package! 1password :recipe (:host github :repo "kamushadenes/1password.el" :files ("*.el")))
+(package! alert)

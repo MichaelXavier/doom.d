@@ -893,3 +893,15 @@ so that the global ones don't get called at all."
       )
     )
   )
+
+(use-package! alert
+  :config
+  ;; Add an alert style that uses pushover
+  (alert-define-style 'pushover :title "Pushover"
+                      :notifier
+                      (lambda (info)
+                        (pushover-send (plist-get info :title) (plist-get info :message))
+                        ))
+  ;; Send lab alerts to pushover
+  (add-to-list 'alert-user-configuration '(((:title . "lab.el")) pushover nil))
+  )
