@@ -899,3 +899,34 @@ so that the global ones don't get called at all."
   (setq pushover-user-key (1password-get-field "pushover" "User Key"))
   (setq lab-token (1password-get-field "well gitlab" "dev machine access token"))
   )
+
+(setq my/arbiter-project-id 12589740)
+(defun my/lab-get-mr (project-id mr-iid)
+  "Get a single MR by the project id and the mr iid. If an MR is referenced by !123 then the iid is 123"
+  (lab--request (format "projects/%s/merge_requests/%s" project-id mr-iid)))
+
+
+(defun my/lab-merged-p (project-id mr-iid)
+  "Check if an MR is merged yet"
+  (let-alist (my/lab-get-mr project-id mr-iid)
+    (string-equal .state "merged")
+    )
+  )
+
+;;TODO: generalize
+(defun my/lab-watch-mr-merge (project-id mr-iid &optional rerun?)
+  "Poll an MR to see if it has gone to state = \"merged\". You should probably only use it for MRs that are unlikely to go unmerged indefinitely."
+  (unless rerun?
+        (message ">> Started watching MR !%s on project %s" mr-iid project-id))
+  (run-with-timer (if rerun? lab--pipeline-watcher-debounce-time 1)
+                  nil
+                  (lambda (project-id mr-iid)
+                          (if (my/lab-merged-p project-id mr-iid)
+                              (lab--alert (format "MR !%s on project %s has merged!" mr-iid project-id))
+                              (my/lab-watch-mr-merge project-id mr-iid t))
+                          )
+                  ;; TODO: why is this necessary? is this avoid with at let*?
+                  project-id
+                  mr-iid
+                  )
+  )
