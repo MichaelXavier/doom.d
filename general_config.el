@@ -644,7 +644,7 @@
 
 ;; Suppress an annoying warning that comes up on every file of a certain type
 ;; when there are no supported LSP clients
-(setq doom-modeline-lsp-warning nil)
+(setq lsp-warn-no-matched-clients nil)
 
 ;; I very rarely if ever want a warning buffer to come up and steal focus. lsp
 ;; integrations seem to do this a ton.
