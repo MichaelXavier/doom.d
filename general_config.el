@@ -899,10 +899,11 @@ so that the global ones don't get called at all."
   "Prompt and then sign into 1password and then set some variables with them."
   (interactive)
   ;; This works on the first signin but it may expire
-  (unless 1password--session-token (1password-manual-signin))
+  (unless 1password--session-token (call-interactively #'1password-manual-signin))
   (setq pushover-user-key (1password-get-field "pushover" "User Key"))
   (setq lab-token (1password-get-field "well gitlab" "dev machine access token"))
-  )
+  (setq jiralib2-token (1password-get-password "Well Jira Token"))
+  (message "Secrets refreshed"))
 
 (setq my/arbiter-project-id 12589740)
 (defun my/lab-get-mr (project-id mr-iid)
@@ -939,3 +940,20 @@ so that the global ones don't get called at all."
   "List recent arbiter pipelines so they can be acted upon"
   (interactive)
   (lab-list-project-pipelines my/arbiter-project-id))
+
+(use-package! jiralib2
+  :config
+  (setq jiralib2-url "https://wellco.atlassian.net")
+  (setq jiralib2-auth 'token)
+  (setq jiralib2-user-login-name "michael.xavier@well.co"))
+
+(defun my/alist-get-path (alist keys)
+  "Runs alist-get successively with the elements of the keys list, descending into a nested alist.
+  For example: (my/alist-get-path my-nested-alist '(outermost-field middle-field innermost-field))"
+  (-reduce-from (-flip #'alist-get) alist keys))
+
+(defun my/get-issue-status (issue-key)
+  "Return the status string for an issue. This may be project specific."
+  (my/alist-get-path (jiralib2-get-issue issue-key) '(fields status name)))
+
+;;TODO: ticket watcher

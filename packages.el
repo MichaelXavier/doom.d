@@ -131,3 +131,4 @@
 ;; TODO: temporarily using my own fork with manual sign in
 (package! 1password :recipe (:host github :repo "MichaelXavier/1password.el" :branch "manual-signin" :files ("*.el")))
 (package! alert)
+(package! jiralib2)
