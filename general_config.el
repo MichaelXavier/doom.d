@@ -893,6 +893,8 @@ so that the global ones don't get called at all."
                         ))
   ;; Send lab alerts to pushover
   (add-to-list 'alert-user-configuration '(((:title . "lab.el")) pushover nil))
+  ;; Send Jira alerts to pushover
+  (add-to-list 'alert-user-configuration '(((:title . "Jira")) pushover nil))
   )
 
 (defun my/refresh-secrets ()
@@ -918,22 +920,58 @@ so that the global ones don't get called at all."
     )
   )
 
-;;TODO: generalize
-(defun my/lab-watch-mr-merge (project-id mr-iid &optional rerun?)
+(cl-defun my/watch-condition-then (&key condition then (check-frequency 30) (check-limit nil) gave-up rerun?)
+  "Watch the :condition function until it returns t and then run the :then function.
+
+Specify a :check-frequency to indicate how often you want to check. Defaults to 30s
+Specify a :check-limit to limit how many times you want to check. Defaults to nil, indicating that there's no limit.
+Specify a :gave-up function that will be called if the condition didn't come true before the check-limit"
+
+  (lexical-let ((condition condition)
+                (then then)
+                (check-frequency check-frequency)
+                (check-limit check-limit)
+                (gave-up gave-up))
+
+    (run-with-timer (if rerun? check-frequency 1)
+                    nil
+                    (lambda ()
+                      (message "INNER condition %s then %s check-frequency %s check-limit %s" condition then check-frequency check-limit)
+                      (if (funcall condition)
+                          (funcall then)
+                        (let ((new-check-limit (if check-limit
+                                                   (- check-limit 1)
+                                                 check-limit)))
+                          (if (or (not check-limit)
+                                  (> check-limit 0))
+                              (my/watch-condition-then
+                               :condition condition
+                               :then then
+                               :check-frequency check-frequency
+                               :check-limit new-check-limit
+                               :gave-up gave-up
+                               :rerun? t)
+                            (when gave-up (funcall gave-up))
+                            )
+                          )))
+                    ))
+  )
+
+(defun my/lab-watch-mr-merge (project-id mr-iid)
   "Poll an MR to see if it has gone to state = \"merged\". You should probably only use it for MRs that are unlikely to go unmerged indefinitely."
-  (unless rerun?
-        (message ">> Started watching MR !%s on project %s" mr-iid project-id))
-  (run-with-timer (if rerun? lab--pipeline-watcher-debounce-time 1)
-                  nil
-                  (lambda (project-id mr-iid)
-                          (if (my/lab-merged-p project-id mr-iid)
-                              (lab--alert (format "MR !%s on project %s has merged!" mr-iid project-id))
-                              (my/lab-watch-mr-merge project-id mr-iid t))
-                          )
-                  ;; TODO: why is this necessary? is this avoid with at let*?
-                  project-id
-                  mr-iid
-                  )
+  (message ">> Started watching MR !%s on project %s" mr-iid project-id)
+  ;;TODO: unfortuantely i need to do this lexical let so that project-id and mr-iid make it into the lambda's closure
+  ;; there's probably a better way but i don't know it right now
+  (lexical-let* ((project-id project-id)
+                 (mr-iid mr-iid))
+    (my/watch-condition-then
+     :condition (lambda () (my/lab-merged-p project-id mr-iid))
+     :then (lambda () (lab--alert (format "MR !%s on project %s has merged!" mr-iid project-id)))
+     :gave-up (lambda () (lab--alert (format "Gave up waiting for MR !%s on project %s." mr-iid project-id)))
+     :check-frequency 30
+     :check-limit 240 ;; 2 hours
+     )
+    )
   )
 
 (defun my/lab-list-arbiter-pipelines ()
@@ -952,8 +990,32 @@ so that the global ones don't get called at all."
   For example: (my/alist-get-path my-nested-alist '(outermost-field middle-field innermost-field))"
   (-reduce-from (-flip #'alist-get) alist keys))
 
-(defun my/get-issue-status (issue-key)
-  "Return the status string for an issue. This may be project specific."
+(defun my/get-jira-issue-status (issue-key)
+  "Return the status string for a Jira issue. This may be project specific."
   (my/alist-get-path (jiralib2-get-issue issue-key) '(fields status name)))
 
-;;TODO: ticket watcher
+(defun my/jira-issue-approved-or-done-p (issue-key)
+  "Returns t if the issue is in either the Approved or Done status."
+  (let ((status (my/get-jira-issue-status issue-key)))
+    (or (string-equal status "Done")
+        (string-equal status "Approved"))))
+
+(defun my/jira-alert (msg)
+  "Sends a message about Jira through alert."
+  (alert msg :title "Jira"))
+
+(defun my/jira-watch-issue-approve (issue-key)
+  "Poll a Jira issue and alert when it moves to Approved or Done"
+  (message ">> Started watching Jira issue !%s" issue-key)
+  ;;TODO: unfortuantely i need to do this lexical let so that project-id and mr-iid make it into the lambda's closure
+  ;; there's probably a better way but i don't know it right now
+  (lexical-let* ((issue-key issue-key))
+    (my/watch-condition-then
+     :condition (lambda () (my/jira-issue-approved-or-done-p issue-key))
+     :then (lambda () (lab--alert (format "Issue %s was approved!" issue-key)))
+     :gave-up (lambda () (lab--alert (format "Gave up waiting on issue %s approval!" issue-key)))
+     :check-frequency 30
+     :check-limit 240 ;; 2 hours
+     )
+    )
+  )
