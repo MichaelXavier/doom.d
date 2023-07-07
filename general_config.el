@@ -934,3 +934,8 @@ so that the global ones don't get called at all."
                   mr-iid
                   )
   )
+
+(defun my/lab-list-arbiter-pipelines ()
+  "List recent arbiter pipelines so they can be acted upon"
+  (interactive)
+  (lab-list-project-pipelines my/arbiter-project-id))
