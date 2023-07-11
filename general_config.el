@@ -1021,10 +1021,20 @@ Specify a :gave-up function that will be called if the condition didn't come tru
   )
 
 (use-package! uuidgen
-  :demand
+  :demand t
   :config
   ;; Makes it so leader i u inserts a uuid
   (map! :map doom-leader-insert-map
       :desc "UUIDv4" "u" #'uuidgen
       )
   )
+
+(use-package! lsp-nix
+  :ensure lsp-mode
+  :after (lsp-mode)
+  :config
+  (setq lsp-nix-nil-formatter ["nixpkgs-fmt"])
+  )
+
+;; TODO: is this a reasonable way to set up lsp for nix?
+(add-hook! 'nix-mode-hook #'lsp!)
