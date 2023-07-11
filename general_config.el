@@ -1019,3 +1019,12 @@ Specify a :gave-up function that will be called if the condition didn't come tru
      )
     )
   )
+
+(use-package! uuidgen
+  :demand
+  :config
+  ;; Makes it so leader i u inserts a uuid
+  (map! :map doom-leader-insert-map
+      :desc "UUIDv4" "u" #'uuidgen
+      )
+  )

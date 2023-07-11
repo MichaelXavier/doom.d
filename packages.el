@@ -132,3 +132,4 @@
 (package! 1password :recipe (:host github :repo "MichaelXavier/1password.el" :branch "manual-signin" :files ("*.el")))
 (package! alert)
 (package! jiralib2)
+(package! uuidgen)
