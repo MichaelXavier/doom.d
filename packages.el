@@ -133,3 +133,5 @@
 (package! alert)
 (package! jiralib2)
 (package! uuidgen)
+;; system daemons management
+(package! daemons)

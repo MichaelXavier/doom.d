@@ -1038,3 +1038,11 @@ Specify a :gave-up function that will be called if the condition didn't come tru
 
 ;; TODO: is this a reasonable way to set up lsp for nix?
 (add-hook! 'nix-mode-hook #'lsp!)
+
+(use-package! daemons
+  ;; Lazily load when daemons command is run
+  :commands daemons
+  :config
+  ;; Only manage --user services for now
+  (setq daemons-systemd-is-user t)
+  )
