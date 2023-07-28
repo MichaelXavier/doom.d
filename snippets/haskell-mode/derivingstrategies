@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: derivingstrategies
+# key: lds
+# --
+{-# LANGUAGE DerivingStrategies #-}
