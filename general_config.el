@@ -10,7 +10,10 @@
  "C-/" #'undo-fu-only-undo
  "C-?" #'undo-fu-only-redo
  ;; unbind mail compose
- "C-x m" nil)
+ "C-x m" nil
+ ;; This allows me to use the same buffer switching command everywhere,
+ ;; including with EXWM and even in char mode
+ "s-b" #'switch-to-buffer)
 
 ;; aliases
 (defalias 'qrr 'query-replace-regexp)

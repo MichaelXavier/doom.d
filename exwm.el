@@ -96,7 +96,7 @@
 
   ;;TODO: how to get exwm to reload its global keys?
 
-  ;; Set keybindings
+  ;; Set keybindings that work everywhere, including in X windows in both line and char mode
   (setq exwm-input-global-keys
         `(
           ;; 's-r': Reset (to line-mode).
@@ -113,12 +113,17 @@
           (,(kbd "s-E") . exwm-move-window-to-right-monitor)
           ;; 's-p': Launch application.
           (,(kbd "s-p") . my/app-launcher)
+
           ;; Toggle between "line-mode" and "char mode"
           (,(kbd "s-i") . exwm-input-toggle-keyboard)
           (,(kbd "C-S-p") . edwina-select-previous-window)
           (,(kbd "C-S-n") . edwina-select-next-window)
 
           (,(kbd "s-t") . exwm-launch-terminal)
+
+          ;; I'd prefer to use C-x b to switch buffers but that's problematic to
+          ;; enable in char mode so I'm going to try to get used to using this
+          (,(kbd "s-b") . switch-to-buffer)
 
           ;; 's-N': Switch to a certain workspace.
           ,@(mapcar (lambda (i)
