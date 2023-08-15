@@ -908,6 +908,7 @@ so that the global ones don't get called at all."
   (setq pushover-user-key (1password-get-field "pushover" "User Key"))
   (setq lab-token (1password-get-field "well gitlab" "dev machine access token"))
   (setq jiralib2-token (1password-get-password "Well Jira Token"))
+  (setq gptel-api-key (1password-get-field "OpenAI API Key Emacs" "api key"))
   (message "Secrets refreshed"))
 
 (setq my/arbiter-project-id 12589740)
@@ -1049,3 +1050,6 @@ Specify a :gave-up function that will be called if the condition didn't come tru
   ;; Only manage --user services for now
   (setq daemons-systemd-is-user t)
   )
+
+(use-package! gptel)
+(use-package! gptel-extensions)

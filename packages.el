@@ -135,3 +135,8 @@
 (package! uuidgen)
 ;; system daemons management
 (package! daemons)
+;; OpenAPI
+(package! gptel)
+;;TODO: fork?
+(package! gptel-extensions
+  :recipe (:host github :repo "kamushadenes/gptel-extensions.el" :branch "main" :files ("*.el")))
