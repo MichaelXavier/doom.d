@@ -310,10 +310,20 @@
        ))
   (add-to-list '+lookup-provider-url-alist provider))
 
+(defun mx/well/jira-url (ticket-number)
+  "Returns a URL string for the given Jira ticket number"
+  (s-lex-format "https://wellco.atlassian.net/browse/${ticket-number}"))
+
 (defun mx/well/browse-jira-ticket (ticket-number)
-  "Open the JIRA ticket with the given ticket number"
+  "Open the Jira ticket with the given ticket number"
   (interactive "sTicket Number: ")
-  (browse-url (s-lex-format "https://wellco.atlassian.net/browse/${ticket-number}"))
+  (browse-url (mx/well/jira-url ticket-number))
+  )
+
+(defun mx/well/insert-jira-ticket-url (ticket-number)
+  "Given a Jira ticket number, insert the url to that ticket."
+  (interactive "sTicket Number: ")
+  (insert (mx/well/jira-url ticket-number))
   )
 
 (defun mx/well/memsource-project (project-id)
@@ -324,10 +334,16 @@
   (browse-url (s-lex-format "https://cloud.memsource.com/web/project2/show/${project-id}"))
   )
 
+;; Add some insert shortcuts
+(map! :leader
+      :desc "insert" :prefix ("i" . "insert")
+      :desc "Well Jira URL" "j" #'mx/well/insert-jira-ticket-url)
+
+;; Add some browse shortcuts
 (map! :leader
       :desc "browse" :prefix ("b" . "browse")
       :desc "Browse URL" "b" #'browse-url
-      :desc "Browse Well JIRA ticket" "j" #'mx/well/browse-jira-ticket
+      :desc "Browse Well Jira ticket" "j" #'mx/well/browse-jira-ticket
       :desc "Browse Memsource project" "m" #'mx/well/browse-memsource-project
       )
 
