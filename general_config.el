@@ -320,12 +320,6 @@
   (browse-url (mx/well/jira-url ticket-number))
   )
 
-(defun mx/well/insert-jira-ticket-url (ticket-number)
-  "Given a Jira ticket number, insert the url to that ticket."
-  (interactive "sTicket Number: ")
-  (insert (mx/well/jira-url ticket-number))
-  )
-
 (defun mx/well/memsource-project (project-id)
   "Open the Memsource project with the given project id"
   (interactive (list
@@ -334,18 +328,13 @@
   (browse-url (s-lex-format "https://cloud.memsource.com/web/project2/show/${project-id}"))
   )
 
-;; Add some insert shortcuts
-(map! :leader
-      :desc "insert" :prefix ("i" . "insert")
-      :desc "Well Jira URL" "j" #'mx/well/insert-jira-ticket-url)
-
 ;; Add some browse shortcuts
 (map! :leader
-      :desc "browse" :prefix ("b" . "browse")
+      (:desc "browse" :prefix ("b" . "browse")
       :desc "Browse URL" "b" #'browse-url
       :desc "Browse Well Jira ticket" "j" #'mx/well/browse-jira-ticket
       :desc "Browse Memsource project" "m" #'mx/well/browse-memsource-project
-      )
+      ))
 
 ;; Add a few modes that should auto-color hex color codes
 (defun mx/enable-rainbow-mode ()
@@ -373,9 +362,9 @@
           ("Europe/Berlin" "Germany")
           ))
   (map! :leader
-        :desc "time zones" :prefix ("z" . "time zones")
+        (:desc "time zones" :prefix ("z" . "time zones")
         :desc "World clock" "w" #'tzc-world-clock
-        )
+        ))
   )
 
 ;; Dired is a little too aggressive with hiding
@@ -1014,6 +1003,10 @@ Specify a :gave-up function that will be called if the condition didn't come tru
   "Return the status string for a Jira issue. This may be project specific."
   (my/alist-get-path (jiralib2-get-issue issue-key) '(fields status name)))
 
+(defun my/get-jira-issue-title (issue-key)
+  "Return the title of a Jira issue. This may be project specific."
+  (my/alist-get-path (jiralib2-get-issue issue-key) '(fields summary)))
+
 (defun my/jira-issue-approved-or-done-p (issue-key)
   "Returns t if the issue is in either the Approved or Done status."
   (let ((status (my/get-jira-issue-status issue-key)))
@@ -1069,3 +1062,22 @@ Specify a :gave-up function that will be called if the condition didn't come tru
 
 (use-package! gptel)
 (use-package! gptel-extensions)
+
+(defun mx/well/insert-jira-ticket-url (ticket-number)
+  "Given a Jira ticket number, insert the url to that ticket at point."
+  (interactive "sTicket Number: ")
+  (insert (mx/well/jira-url ticket-number))
+  )
+
+(defun mx/insert-jira-ticket-title (ticket-number)
+  "Given a Jira ticket number, fetch the title and insert it at point."
+  (interactive "sTicket Number: ")
+  (insert (my/get-jira-issue-title ticket-number))
+  )
+
+
+;; Add some insert shortcuts
+(map! :leader
+      (:prefix ("i j" . "jira")
+      :desc "Well Jira URL" "u" #'mx/well/insert-jira-ticket-url
+      :desc "Jira title" "t" #'mx/insert-jira-ticket-title))
