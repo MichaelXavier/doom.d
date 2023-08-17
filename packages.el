@@ -140,3 +140,5 @@
 ;;TODO: fork?
 (package! gptel-extensions
   :recipe (:host github :repo "kamushadenes/gptel-extensions.el" :branch "main" :files ("*.el")))
+;; Refactoring tool. Requires the comby utility to be installed.
+(package! comby)

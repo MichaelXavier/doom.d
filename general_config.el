@@ -1083,3 +1083,6 @@ Specify a :gave-up function that will be called if the condition didn't come tru
       (:prefix ("i j" . "jira")
       :desc "Well Jira URL" "u" #'mx/well/insert-jira-ticket-url
       :desc "Jira title" "t" #'mx/insert-jira-ticket-title))
+
+(use-package! comby
+  :commands comby)
