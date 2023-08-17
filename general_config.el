@@ -13,7 +13,9 @@
  "C-x m" nil
  ;; This allows me to use the same buffer switching command everywhere,
  ;; including with EXWM and even in char mode
- "s-b" #'switch-to-buffer)
+ "s-b" #'switch-to-buffer
+ ;; To make sure I get used to s-b, I'll unbind C-x b
+ "C-x b" nil)
 
 ;; aliases
 (defalias 'qrr 'query-replace-regexp)
