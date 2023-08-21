@@ -583,7 +583,6 @@
      '("P" . my/interactively-wrap-with-pair)
      ;; Normally this is set to meow-quit which just closes the buffer. I don't really need a super fast way to do that so i've set it to regex replace
      '("q" . meow-query-replace-regexp)
-     '("Q" . meow-goto-line)
      '("r" . meow-replace)
      '("R" . meow-swap-grab)
      '("s" . meow-kill)
