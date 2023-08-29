@@ -1,3 +1,4 @@
 ;;; r_config.el -*- lexical-binding: t; -*-
 
-(use-package! ess)
+(use-package! ess
+  :commands (R r-mode R-mode ess-mode))
