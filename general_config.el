@@ -15,7 +15,12 @@
  ;; including with EXWM and even in char mode
  "s-b" #'switch-to-buffer
  ;; To make sure I get used to s-b, I'll unbind C-x b
- "C-x b" nil)
+ "C-x b" nil
+ ;; To make sure I get used to C-c w x and C-c w y, unbind C-x 1, C-x 2, and C-x 3
+ "C-x 1" nil
+ "C-x 2" nil
+ "C-x 3" nil
+ )
 
 ;; aliases
 (defalias 'qrr 'query-replace-regexp)
@@ -851,6 +856,10 @@ so that the global ones don't get called at all."
         :desc "Delete selected window" "w k" #'edwina-delete-window
         :desc "Grow master window size" "w l" #'edwina-inc-mfact
         :desc "Grow master window size" "w h" #'edwina-dec-mfact
+        ;; These are not edwina functions but they can be used in a window with char mode on
+        :desc "Delete other windows except the focused one" "w 1" #'delete-other-windows
+        :desc "Horizontally split window to the right" "w x" #'split-window-right
+        :desc "Vertically split window to the bottom" "w y" #'split-window-below
         )
   (edwina-mode t)
   )
