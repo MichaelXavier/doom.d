@@ -855,14 +855,17 @@ so that the global ones don't get called at all."
         :desc "Clone selected window" "w c" #'edwina-clone-window
         :desc "Delete selected window" "w k" #'edwina-delete-window
         :desc "Grow master window size" "w l" #'edwina-inc-mfact
-        :desc "Grow master window size" "w h" #'edwina-dec-mfact
-        ;; These are not edwina functions but they can be used in a window with char mode on
-        :desc "Delete other windows except the focused one" "w 1" #'delete-other-windows
-        :desc "Horizontally split window to the right" "w x" #'split-window-right
-        :desc "Vertically split window to the bottom" "w y" #'split-window-below
-        )
+        :desc "Grow master window size" "w h" #'edwina-dec-mfact)
   (edwina-mode t)
   )
+
+;; Technically these aren't particular to edwina mode and should be bound
+;; regardless because I've unbound the alternative bindings
+(map! :leader
+      ;; These are not edwina functions but they can be used in a window with char mode on
+      :desc "Delete other windows except the focused one" "w 1" #'delete-other-windows
+      :desc "Horizontally split window to the right" "w x" #'split-window-right
+      :desc "Vertically split window to the bottom" "w y" #'split-window-below)
 
 (after! pdf-tools
   ;; https://github.com/Fuco1/smartparens/wiki/Example-configuration
