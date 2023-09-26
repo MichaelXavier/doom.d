@@ -14,7 +14,7 @@
              (setq haskell-auto-insert-module-format-string
                    "module %s\n    ( \n    ) where")
              (setq ormolu-extra-args
-                   '("--ghc-opt" "-XTypeApplications" "--ghc-opt" "-XBangPatterns" "--ghc-opt" "-XTemplateHaskell"))
+                   '("--ghc-opt" "-XTypeApplications" "--ghc-opt" "-XBangPatterns" "--ghc-opt" "-XTemplateHaskell" "--ghc-opt" "-XImportQualifiedPost"))
 
              ;;TODO: is this anything? i don't know why you'd do this or why cape-dabbrev doesn't fuckin work in haskell-mode
              ;; it kinda works but all the suggestions are downcased?
@@ -27,8 +27,8 @@
 ;; ;; So smartparens doesn't get confused at language pragmas
 (after! smartparens
   (sp-with-modes 'haskell-mode
-     (sp-local-pair "{-#" "#-}")
-     )
+    (sp-local-pair "{-#" "#-}")
+    )
   )
 
 ;;TODO: can this be turned off?
