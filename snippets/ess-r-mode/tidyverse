@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: tidyverse
+# key: tidyverse
+# --
+library(package = tidyverse, warn.conflicts = FALSE)
