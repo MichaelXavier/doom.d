@@ -39,7 +39,7 @@
        ;;deft              ; notational velocity for Emacs
        doom              ; what makes DOOM look the way it does
        doom-dashboard    ; a nifty splash screen for Emacs
-       ;; doom-quit         ; DOOM quit-message prompts when you quit Emacs
+       doom-quit         ; DOOM quit-message prompts when you quit Emacs
        (emoji +unicode)  ; 🙂
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        ;;hydra
@@ -51,10 +51,10 @@
        ;;neotree           ; a project drawer, like NERDTree for vim
        ophints           ; highlight the region an operation acts on
 
-       ; popups seems to cause issues with edwina. repro: split to 2+ windows
-       ; and then do C-c C-t in an org file. you'll get an error about splitting
-       ; a too-small window
-       ; (popup +defaults)   ; tame sudden yet inevitable temporary windows TODO: this seems to conflict with edwina.
+                                        ; popups seems to cause issues with edwina. repro: split to 2+ windows
+                                        ; and then do C-c C-t in an org file. you'll get an error about splitting
+                                        ; a too-small window
+                                        ; (popup +defaults)   ; tame sudden yet inevitable temporary windows TODO: this seems to conflict with edwina.
 
        ;;tabs              ; a tab bar for Emacs
        ;;treemacs          ; a project drawer, like neotree but cooler
