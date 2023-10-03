@@ -14,7 +14,7 @@
              (setq haskell-auto-insert-module-format-string
                    "module %s\n    ( \n    ) where")
              (setq ormolu-extra-args
-                   '("--ghc-opt" "-XTypeApplications" "--ghc-opt" "-XBangPatterns" "--ghc-opt" "-XTemplateHaskell" "--ghc-opt" "-XImportQualifiedPost"))
+                   '("--ghc-opt" "-XTypeApplications" "--ghc-opt" "-XBangPatterns" "--ghc-opt" "-XTemplateHaskell" "--ghc-opt" "-XImportQualifiedPost" "--ghc-opt" "-XOverloadedLabels"))
 
              ;;TODO: is this anything? i don't know why you'd do this or why cape-dabbrev doesn't fuckin work in haskell-mode
              ;; it kinda works but all the suggestions are downcased?
