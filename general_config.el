@@ -338,10 +338,10 @@
 ;; Add some browse shortcuts
 (map! :leader
       (:desc "browse" :prefix ("b" . "browse")
-      :desc "Browse URL" "b" #'browse-url
-      :desc "Browse Well Jira ticket" "j" #'mx/well/browse-jira-ticket
-      :desc "Browse Memsource project" "m" #'mx/well/browse-memsource-project
-      ))
+       :desc "Browse URL" "b" #'browse-url
+       :desc "Browse Well Jira ticket" "j" #'mx/well/browse-jira-ticket
+       :desc "Browse Memsource project" "m" #'mx/well/browse-memsource-project
+       ))
 
 ;; Add a few modes that should auto-color hex color codes
 (defun mx/enable-rainbow-mode ()
@@ -370,8 +370,8 @@
           ))
   (map! :leader
         (:desc "time zones" :prefix ("z" . "time zones")
-        :desc "World clock" "w" #'tzc-world-clock
-        ))
+         :desc "World clock" "w" #'tzc-world-clock
+         ))
   )
 
 ;; Dired is a little too aggressive with hiding
@@ -1051,8 +1051,8 @@ Specify a :gave-up function that will be called if the condition didn't come tru
   :config
   ;; Makes it so leader i u inserts a uuid
   (map! :map doom-leader-insert-map
-      :desc "UUIDv4" "u" #'uuidgen
-      )
+        :desc "UUIDv4" "u" #'uuidgen
+        )
   )
 
 (use-package! lsp-nix
@@ -1092,8 +1092,15 @@ Specify a :gave-up function that will be called if the condition didn't come tru
 ;; Add some insert shortcuts
 (map! :leader
       (:prefix ("i j" . "jira")
-      :desc "Well Jira URL" "u" #'mx/well/insert-jira-ticket-url
-      :desc "Jira title" "t" #'mx/insert-jira-ticket-title))
+       :desc "Well Jira URL" "u" #'mx/well/insert-jira-ticket-url
+       :desc "Jira title" "t" #'mx/insert-jira-ticket-title))
 
 (use-package! comby
   :commands comby)
+
+;; This seems to allow tramp to access the PATH on the remote system
+(add-to-list 'tramp-remote-path 'tramp-own-remote-path)
+
+;; Projectile runs FD to get files and it seems to get polluted with color
+;; control characters unless you add --color never
+(setq projectile-git-fd-args "-H -0 --color never -E .git -tf --strip-cwd-prefix")
