@@ -125,7 +125,8 @@
 ;; Gitlab support
 (package! lab)
 ;; notifications
-(package! pushover)
+;; i've only forked this because the repo is currently on somebody's flaky home server
+(package! pushover :recipe (:host github :repo "MichaelXavier/pushover.el" :branch "master" :files ("*.el")))
 ;; 1password auth source
 ;; https://dev.to/kamushadenes/1passwordel-integrating-1password-with-emacs-and-auth-source-4nkl
 ;; TODO: temporarily using my own fork with manual sign in
