@@ -1104,3 +1104,12 @@ Specify a :gave-up function that will be called if the condition didn't come tru
 ;; Projectile runs FD to get files and it seems to get polluted with color
 ;; control characters unless you add --color never
 (setq projectile-git-fd-args "-H -0 --color never -E .git -tf --strip-cwd-prefix")
+
+(defun my/insert-unix-timestamp ()
+  "Insert the current unix timestamp at point"
+  (interactive)
+  (insert (format-time-string "%s")))
+
+(map! :map doom-leader-insert-map
+      :desc "UNIX timestamp" "t" #'my/insert-unix-timestamp
+      )
