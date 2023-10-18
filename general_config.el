@@ -890,7 +890,10 @@ so that the global ones don't get called at all."
 (use-package! lab
   :config
   (setq lab-host "https://gitlab.com")
-  ;; TODO: lab-group and lab-token
+  (setq my/well-gitlab-group "4487284")
+  (setq my/soostone-gitlab-group "4206464")
+  ;; Default group operations to well
+  (setq lab-group my/well-gitlab-group)
   )
 
 (use-package! pushover
