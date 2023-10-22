@@ -868,6 +868,9 @@ so that the global ones don't get called at all."
       :desc "Vertically split window to the bottom" "w y" #'split-window-below)
 
 (after! pdf-tools
+  :init
+  ;; Build an epdfinfo executable needed by the progrma. Haven't figured out the nixy way to do this.
+  (pdf-tools-install)
   ;; https://github.com/Fuco1/smartparens/wiki/Example-configuration
   (map! :map pdf-view-mode-map
         ;; Meow bindings
