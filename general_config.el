@@ -1123,6 +1123,13 @@ Specify a :gave-up function that will be called if the condition didn't come tru
 (map! :map doom-leader-insert-map
       :desc "UNIX timestamp" "t" #'my/insert-unix-timestamp
       )
+
+(use-package! meow-vterm
+  :after meow
+  :config
+  (meow-vterm-enable)
+  )
+
 ;; Writing large files seems to go way way faster with scp. counsel-tramp will
 ;; use tramp-default-method to build the candidates from your ssh file. So if
 ;; tramp-default-method is set to ssh, it will open those hosts using ssh and
