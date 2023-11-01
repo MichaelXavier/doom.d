@@ -671,6 +671,9 @@
 ;; when there are no supported LSP clients
 (setq lsp-warn-no-matched-clients nil)
 
+;; Suppress annoying file watching prompt that comes up frequently
+(setq lsp-enable-file-watchers nil)
+
 ;; I very rarely if ever want a warning buffer to come up and steal focus. lsp
 ;; integrations seem to do this a ton.
 (setq warning-minimum-level :error)
