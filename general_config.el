@@ -624,6 +624,13 @@
   ;; trying to modify the text under cursor so the recommendations should go
   ;; away.
   (add-hook 'meow-insert-exit-hook 'corfu-quit)
+
+  ;; Define a dummy state. This will disable the space leader. Not sure if I want that
+  (meow-define-state disable "dummy state")
+
+  ;; Defult meow to insert in vterm. I think I'd probably like to totally
+  ;; disable meow mode in vterm but I don't know how yet.
+  (map-put! meow-mode-state-list 'vterm-mode 'insert)
   (meow-global-mode 1)
   )
 
@@ -1124,14 +1131,10 @@ Specify a :gave-up function that will be called if the condition didn't come tru
       :desc "UNIX timestamp" "t" #'my/insert-unix-timestamp
       )
 
-(use-package! meow-vterm
-  :after meow
-  :config
-  (meow-vterm-enable)
-  )
-
 ;; Writing large files seems to go way way faster with scp. counsel-tramp will
 ;; use tramp-default-method to build the candidates from your ssh file. So if
 ;; tramp-default-method is set to ssh, it will open those hosts using ssh and
 ;; then all file saves will use ssh
 (setq tramp-default-method "scp")
+
+(setq vterm-shell "fish")

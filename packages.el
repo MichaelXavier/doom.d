@@ -145,7 +145,3 @@
 (package! comby)
 ;; Emacs Speaks Statistics. Support for R.
 (package! ess)
-
-;; Improves meow's input with vterm
-(package! meow-vterm
-  :recipe (:host github :repo "accelbread/meow-vterm"))
