@@ -38,9 +38,9 @@
   :after (counsel)
   :init
   ;; We put a lot of stuff in init because exwm seems pretty sensitive about things like keybindings being configured before setup
-  (defvar exwm-terminal-command
-    "kitty"
-    "The command to run your preferred terminal via s-r")
+  ;; (defvar exwm-terminal-command
+  ;;   "kitty"
+  ;;   "The command to run your preferred terminal via s-r")
   (defun exwm-rename-buffer ()
     "Make the buffer name always refresh the class and title name of X windows. See https://github.com/ch11ng/exwm/issues/198#issuecomment-249723369"
     (interactive)
@@ -52,7 +52,9 @@
   (defun exwm-launch-terminal ()
     "Function used to launch a terminal from inside exwm"
     (interactive)
-    (call-process exwm-terminal-command nil 0 nil))
+    ;; (call-process exwm-terminal-command nil 0 nil)
+    (my/open-terminal)
+    )
 
   (defun exwm-focus-left-monitor ()
     "Focus on the left monitor, aka workspace 1"
@@ -180,7 +182,7 @@
   (setq exwm-layout-show-all-buffers t)
 
   :hook (
-           ;; Rename buffers when class/title renames
+         ;; Rename buffers when class/title renames
          (exwm-update-class . exwm-rename-buffer)
          (exwm-update-title . exwm-rename-buffer)
          )

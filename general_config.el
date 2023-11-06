@@ -1140,4 +1140,10 @@ Specify a :gave-up function that will be called if the condition didn't come tru
 ;; then all file saves will use ssh
 (setq tramp-default-method "scp")
 
-(setq vterm-shell "fish")
+
+(defun my/open-terminal ()
+  "Add a centralized function which opens a terminal in the current directory, regardless of if you're using EXWM."
+  (interactive)
+  (+vterm/here t))
+
+(map! "s-t" #'my/open-terminal)
