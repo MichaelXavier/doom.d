@@ -1150,3 +1150,7 @@ Specify a :gave-up function that will be called if the condition didn't come tru
 
 ;; Give reasonable buffer names for vterm so they can be distinguished
 (setq vterm-buffer-name-string "*vterm* %s")
+
+;; Doom by default turns off modeline for vterm but i find it helps me identify
+;; which vterm is focused
+(remove-hook! 'vterm-mode-hook #'hide-mode-line-mode)
