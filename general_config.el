@@ -1147,3 +1147,6 @@ Specify a :gave-up function that will be called if the condition didn't come tru
   (+vterm/here t))
 
 (map! "s-t" #'my/open-terminal)
+
+;; Give reasonable buffer names for vterm so they can be distinguished
+(setq vterm-buffer-name-string "*vterm* %s")
