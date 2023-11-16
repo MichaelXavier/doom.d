@@ -145,3 +145,6 @@
 (package! comby)
 ;; Emacs Speaks Statistics. Support for R.
 (package! ess)
+
+(package! copilot
+  :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))

@@ -1154,3 +1154,13 @@ Specify a :gave-up function that will be called if the condition didn't come tru
 ;; Doom by default turns off modeline for vterm but i find it helps me identify
 ;; which vterm is focused
 (remove-hook! 'vterm-mode-hook #'hide-mode-line-mode)
+
+;; accept completion from copilot and fallback to company
+(use-package! copilot
+  ;; This is probably a mistake
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("M-RET" . 'copilot-accept-completion)
+              ("M-n" . 'copilot-next-completion)
+              ("M-p" . 'copilot-previous-completion))
+  )
