@@ -30,6 +30,9 @@
 (defalias 'bu 'browse-url)
 (defalias 'ft 'find-tag)
 
+;; Something seems to need the embark map so we'll just force it to load
+(use-package! embark :demand t)
+
 (map! :map goto-map
       ;; This translates to M-g c
       :desc "Avy char" "c" #'avy-goto-char)
