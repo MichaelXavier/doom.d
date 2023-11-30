@@ -43,7 +43,7 @@
            ("localhost" "development")
            (otherwise env))
          ))
-    (f-read-text (s-lex-format "/ssh:well-macbook2:/Users/michael.xavier/${file-env}.jwt"))
+    (f-read-text (s-lex-format "/Users/michael.xavier/${file-env}.jwt"))
     )
   )
 
@@ -70,7 +70,7 @@
           (pcase env
             ("localhost" "development")
             (otherwise env)))
-         (raw-file (f-read-text (s-lex-format "/ssh:well-macbook2:/Users/michael.xavier/${file-env}_cognito.json")))
+         (raw-file (f-read-text (s-lex-format "/Users/michael.xavier/${file-env}_cognito.json")))
          )
     (json-parse-string raw-file)
     )
