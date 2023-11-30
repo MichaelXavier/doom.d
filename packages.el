@@ -149,3 +149,9 @@
 
 (package! copilot
   :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
+
+;; Even though I haven't set +crypt on org, it seems to be enabled.
+;; org-encrypt-entries runs on save and adds a lot of time to saving large org
+;; files.
+;; https://github.com/doomemacs/doomemacs/issues/6250
+(package! org-crypt :disable t)
