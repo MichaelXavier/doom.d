@@ -79,13 +79,13 @@
 (defun mx/well/get-cognito-authorization (env)
   "Get the .authenticationResult.idToken value for the Authorization header"
   (interactive "Menv: ")
-  (ht-get* (mx/well/parse-cognito-token-file env) "authenticationResult" "idToken")
+  (ht-get* (mx/well/parse-cognito-token-file env) "IdToken")
   )
 
 (defun mx/well/get-cognito-access-token (env)
   "Get the .authenticationResult.accessToken value for the AccessToken header"
   (interactive "Menv: ")
-  (ht-get* (mx/well/parse-cognito-token-file env) "authenticationResult" "accessToken")
+  (ht-get* (mx/well/parse-cognito-token-file env) "AccessToken")
   )
 
 ;; https://emacs.stackexchange.com/a/51734
