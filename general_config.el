@@ -1168,5 +1168,6 @@ Specify a :gave-up function that will be called if the condition didn't come tru
               ("M-p" . 'copilot-previous-completion))
   )
 
-;; novice.el disables upcase-region for some reason but I use it a lot
+;; novice.el disables upcase-region and downcase-region for some reason but I use it a lot
 (put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
