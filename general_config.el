@@ -700,13 +700,13 @@ so that the global ones don't get called at all."
     ;; I think we want to see all results from some one of these completions.
     ;; I've noticed that individually, one of the capes will start matching and
     ;; will suppress results from the others.
-    (my/register-capfs (list (cape-super-capf #'cape-dabbrev #'cape-keyword) #'cape-file))
+    (my/register-capfs (list (cape-capf-super #'cape-dabbrev #'cape-keyword) #'cape-file))
     )
 
   (my/register-default-capfs)
 
 
-  :hook ((emacs-lisp-mode . (lambda () (my/register-capfs (list (cape-super-capf #'cape-symbol #'cape-dabbrev #'cape-keyword) #'cape-file))))
+  :hook ((emacs-lisp-mode . (lambda () (my/register-capfs (list (cape-capf-super #'cape-symbol #'cape-dabbrev #'cape-keyword) #'cape-file))))
          (haskell-mode . my/register-default-capfs)
          (python-mode . my/register-default-capfs)
          )
