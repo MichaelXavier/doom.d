@@ -148,7 +148,11 @@
 (package! embark)
 
 (package! copilot
-  :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
+  :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist"))
+  ;; Temporarily revert until https://github.com/zerolfx/copilot.el/issues/181
+  ;; is resolved. In more recent versions, copilot will randomly stop suggesting
+  ;; in files until they're reopened.
+  :pin "b8a32ff6b9757a84320da003eeb672036d49d91e")
 
 ;; Even though I haven't set +crypt on org, it seems to be enabled.
 ;; org-encrypt-entries runs on save and adds a lot of time to saving large org
