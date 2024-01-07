@@ -1171,3 +1171,9 @@ Specify a :gave-up function that will be called if the condition didn't come tru
 ;; novice.el disables upcase-region and downcase-region for some reason but I use it a lot
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
+
+;; Configure agenix for editing secrets
+(use-package! agenix
+  ;; Set up direnv integration
+  :hook (agenix-pre-mode . envrc-mode)
+  )
