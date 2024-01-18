@@ -148,7 +148,8 @@
 (package! embark)
 
 (package! copilot
-  :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
+  :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el" "dist"))
+  )
 
 ;; Even though I haven't set +crypt on org, it seems to be enabled.
 ;; org-encrypt-entries runs on save and adds a lot of time to saving large org
