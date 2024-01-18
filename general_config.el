@@ -1160,7 +1160,9 @@ Specify a :gave-up function that will be called if the condition didn't come tru
 
 ;; accept completion from copilot and fallback to company
 (use-package! copilot
-  ;; This is probably a mistake
+  :init
+  ;; https://github.com/copilot-emacs/copilot.el/issues/181#issuecomment-1892168457
+  (setq copilot-max-char 30000)
   :hook (prog-mode . copilot-mode)
   :bind (:map copilot-completion-map
               ("M-RET" . 'copilot-accept-completion)
