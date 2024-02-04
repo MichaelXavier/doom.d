@@ -1179,3 +1179,6 @@ Specify a :gave-up function that will be called if the condition didn't come tru
   ;; Set up direnv integration
   :hook (agenix-pre-mode . envrc-mode)
   )
+
+(use-package! mermaid-mode)
+(use-package! ob-mermaid)

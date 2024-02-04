@@ -159,3 +159,7 @@
 
 ;; Editing ageni secrets in emacs
 (package! agenix)
+
+;; Diagram tool with org-babel support
+(package! mermaid-mode)
+(package! ob-mermaid)
