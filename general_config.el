@@ -151,20 +151,6 @@
 
 (map! "C-z" #'ignore)
 
-;; dumb-jump
-;; if you run C-u C-M-g (universal argument), it will run the prompt version of dumb-jump-go
-(defun custom-dumb-jump-go (&optional _)
-  "Delegates to dumb-jump-go. If given the universal argument, runs it with a prompt"
-  (interactive "P")
-  ;; If universal argument given, prompt
-  (if current-prefix-arg
-      (dumb-jump-go-prompt)
-    (dumb-jump-go)))
-
-(map!
- ;; Bind our customized dumb jump function
- "C-M-g" #'custom-dumb-jump-go)
-
 (map! :map dumb-jump-mode-map
       ;; unbind dumb-jump-back which i always accidentally hit
       "C-M-p" nil)
