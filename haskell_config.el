@@ -2,7 +2,10 @@
 (after! haskell-mode
   (map! :map haskell-mode-map
         "C-c C-f" #'haskell-mode-stylish-buffer
-        "C-c C-o" #'ormolu-format-buffer)
+        "C-c C-o" #'ormolu-format-buffer
+        ;; unmap haskell-mode-toggle-scc-at-point because i don't use it and accidentally hit it all the time
+        "C-c C-s" nil
+        )
   (add-hook! 'haskell-mode-hook
              ;; these checkers are dog slow. not sure if this is the right way
              (add-to-list 'flycheck-disabled-checkers 'haskell-ghc)
