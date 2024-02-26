@@ -151,6 +151,15 @@
 
 (map! "C-z" #'ignore)
 
+
+(after! dumb-jump
+  ;; the default is platform-dependent. ripgrep seems very reliable
+  (setq dumb-jump-force-searcher 'rg)
+  ;; Completing read lets you further filter wich helps deal with the really
+  ;; dumb and poorly ordered results that it returns
+  (setq dumb-jump-selector 'completing-read)
+  )
+
 (map! :map dumb-jump-mode-map
       ;; unbind dumb-jump-back which i always accidentally hit
       "C-M-p" nil)
