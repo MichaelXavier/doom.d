@@ -341,6 +341,12 @@
        :desc "Browse Memsource project" "m" #'mx/well/browse-memsource-project
        ))
 
+;; Add some toggle shortcuts
+(map! :leader
+      (:desc "toggle" :prefix ("t" . "toggle")
+       :desc "Auto-formatting" "a" #'apheleia-mode
+       ))
+
 ;; Add a few modes that should auto-color hex color codes
 (defun mx/enable-rainbow-mode ()
   (rainbow-mode 1))
