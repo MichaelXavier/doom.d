@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: nofieldselectors
+# key: lnfs
+# --
+{-# LANGUAGE NoFieldSelectors #-}
