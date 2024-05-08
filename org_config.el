@@ -56,6 +56,8 @@
       ("production-boa" production-boa)
       ("production-boa-admin" production-boa)
       ("development-platform-services" "https://nlb.arbiter.us-east-2.ps.dev.aws.wellit.io")
+      ("development-platform-services-sit" "https://nlb.arbiter.us-east-2.sit.ps.dev.aws.wellit.io")
+      ("production-sams" "https://nlb.arbiter.us-east-2.sam.ps.pro.aws.wellit.io")
       ("localhost" "http://localhost:8000")
       (otherwise (s-lex-format "https://arbiter.${env}.well.co"))
       )
