@@ -136,20 +136,11 @@
 (package! uuidgen)
 ;; system daemons management
 (package! daemons)
-;; OpenAPI
-(package! gptel)
-;;TODO: fork?
-(package! gptel-extensions
-  :recipe (:host github :repo "kamushadenes/gptel-extensions.el" :branch "main" :files ("*.el")))
 ;; Refactoring tool. Requires the comby utility to be installed.
 (package! comby)
 ;; Emacs Speaks Statistics. Support for R.
 (package! ess)
 (package! embark)
-
-(package! copilot
-  :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el" "dist"))
-  )
 
 ;; Even though I haven't set +crypt on org, it seems to be enabled.
 ;; org-encrypt-entries runs on save and adds a lot of time to saving large org

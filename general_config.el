@@ -950,7 +950,6 @@ so that the global ones don't get called at all."
   (setq pushover-user-key (1password-get-field "pushover" "User Key"))
   (setq lab-token (1password-get-field "well gitlab" "dev machine access token"))
   (setq jiralib2-token (1password-get-password "Well Jira Token"))
-  (setq gptel-api-key (1password-get-field "OpenAI API Key Emacs" "api key"))
   (message "Secrets refreshed"))
 
 (setq my/arbiter-project-id 12589740)
@@ -1097,9 +1096,6 @@ Specify a :gave-up function that will be called if the condition didn't come tru
   (setq daemons-systemd-is-user t)
   )
 
-(use-package! gptel)
-(use-package! gptel-extensions)
-
 (defun mx/well/insert-jira-ticket-url (ticket-number)
   "Given a Jira ticket number, insert the url to that ticket at point."
   (interactive "sTicket Number: ")
@@ -1158,18 +1154,6 @@ Specify a :gave-up function that will be called if the condition didn't come tru
 ;; Doom by default turns off modeline for vterm but i find it helps me identify
 ;; which vterm is focused
 (remove-hook! 'vterm-mode-hook #'hide-mode-line-mode)
-
-;; accept completion from copilot and fallback to company
-(use-package! copilot
-  :init
-  ;; https://github.com/copilot-emacs/copilot.el/issues/181#issuecomment-1892168457
-  (setq copilot-max-char 30000)
-  :hook (prog-mode . copilot-mode)
-  :bind (:map copilot-completion-map
-              ("M-RET" . 'copilot-accept-completion)
-              ("M-n" . 'copilot-next-completion)
-              ("M-p" . 'copilot-previous-completion))
-  )
 
 ;; novice.el disables upcase-region and downcase-region for some reason but I use it a lot
 (put 'upcase-region 'disabled nil)
