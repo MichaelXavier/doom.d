@@ -89,10 +89,6 @@
 ;; Provides tools for converting between time zones
 (package! tzc)
 
-;; Normally the recipe is on the release branch which seems quite old. This gets us haskell support
-(unpin! tree-sitter-langs)
-(unpin! tree-sitter)
-
 ;; Structural editing with tree-sitter. very much a WIP
 (package! tree-edit)
 
