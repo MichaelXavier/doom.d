@@ -31,9 +31,9 @@
        ;; https://github.com/doomemacs/doomemacs/pull/7002
        ;; https://medium.com/@icheko/use-a-subfolder-from-a-remote-repo-in-another-repo-using-git-subtree-98046f33ca40
        ;; +icons displays icons next to suggestions
-       ;; +tng uses tabs instead of C-SPC for completion
-       ;; TODO: i simply can't get this working consistently in various modes like haskell-mode
-       ;; (corfu +icons +tng)
+       ;; +dabbrev is a universal search fallback that searches open buffers for terms. 95% of the time in Haskell this is what i'm using
+       ;; +orderless allows us to search for multiple subsections of terms so you don't have to type out full sections of the terms for completion. M-SPC splits the term and lets you type another. Normal SPC should terminate completion as you'd expect.
+       (corfu +icons +dabbrev +orderless)
 
        :ui
        ;;deft              ; notational velocity for Emacs

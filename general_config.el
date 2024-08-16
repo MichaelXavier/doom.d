@@ -683,139 +683,91 @@
 (setq warning-minimum-level :error)
 
 ;; TODO: reenable cape-dabbrev-check-other-buffers?
-(use-package! cape
-  :init
-  (require 'dash)
-  (require 'cape-keyword)
-  (defun my/register-capfs (capfs)
-    "Register the given list of capfs in the current mode."
-    (-each-r capfs (lambda (capfs) (add-to-list 'completion-at-point-functions capfs)))
-    )
+;; TODO: is all of this still needed?
+;; (use-package! cape
+;;   :init
+;;   (require 'dash)
+;;   (require 'cape-keyword)
+;;   (defun my/register-capfs (capfs)
+;;     "Register the given list of capfs in the current mode."
+;;     (-each-r capfs (lambda (capfs) (add-to-list 'completion-at-point-functions capfs)))
+;;     )
 
-  ;; https://github.com/kenranunderscore/dotfiles/blob/main/home-manager-modules/emacs/emacs.d/config.org#more-completion-at-point-backends-via-cape
-  (defun my/register-default-capfs ()
-    "I use these caps everywhere as they are generally useful. This
-function needs to be called in certain mode hooks, as some modes
-fill the buffer-local capfs with exclusive completion functions,
-so that the global ones don't get called at all."
-    ;; I think we want to see all results from some one of these completions.
-    ;; I've noticed that individually, one of the capes will start matching and
-    ;; will suppress results from the others.
-    (my/register-capfs (list (cape-capf-super #'cape-dabbrev #'cape-keyword) #'cape-file))
-    )
+;;   ;; https://github.com/kenranunderscore/dotfiles/blob/main/home-manager-modules/emacs/emacs.d/config.org#more-completion-at-point-backends-via-cape
+;;   (defun my/register-default-capfs ()
+;;     "I use these caps everywhere as they are generally useful. This
+;; function needs to be called in certain mode hooks, as some modes
+;; fill the buffer-local capfs with exclusive completion functions,
+;; so that the global ones don't get called at all."
+;;     ;; I think we want to see all results from some one of these completions.
+;;     ;; I've noticed that individually, one of the capes will start matching and
+;;     ;; will suppress results from the others.
+;;     (my/register-capfs (list (cape-capf-super #'cape-dabbrev #'cape-keyword) #'cape-file))
+;;     )
 
-  (my/register-default-capfs)
-
-
-  :hook ((emacs-lisp-mode . (lambda () (my/register-capfs (list (cape-capf-super #'cape-symbol #'cape-dabbrev #'cape-keyword) #'cape-file))))
-         (haskell-mode . my/register-default-capfs)
-         (python-mode . my/register-default-capfs)
-         )
-
-  :config
-  ;;TODO: i'm not sure why but this length isn't for the overall completion but
-  ;;seems to be for the substring prefix before case switches, at least with
-  ;;haskell-mode's completion. Thus in all my testing when I used FooBar as a
-  ;;completion test, the default of 4 would fail because you get the 3 letters
-  ;;F-o-o before B acts as a cutoff. I noticed that anything at 3 or below was
-  ;;completing correctly. We can probably figure out what case setting is
-  ;;screwing this up eventually but setting this number lower at least works.
-  (setq cape-dabbrev-min-length 2)
-
-  ;; Add some keyword lists to cape keyword completion. I should probably add a
-  ;; PR but I don't want to deal with the contributor license.
-  (add-to-list 'cape-keyword-list '(haskell-mode
-                                    "as"
-                                    "case"
-                                    "class"
-                                    "data family"
-                                    "data instance"
-                                    "data"
-                                    "default"
-                                    "deriving instance"
-                                    "deriving"
-                                    "do"
-                                    "else"
-                                    "family"
-                                    "forall"
-                                    "foreign import"
-                                    "foreign"
-                                    "hiding"
-                                    "if"
-                                    "import qualified"
-                                    "import"
-                                    "in"
-                                    "infix"
-                                    "infixl"
-                                    "infixr"
-                                    "instance"
-                                    "let"
-                                    "mdo"
-                                    "module"
-                                    "newtype"
-                                    "of"
-                                    "proc"
-                                    "qualified"
-                                    "rec"
-                                    "signature"
-                                    "then"
-                                    "type family"
-                                    "type instance"
-                                    "type"
-                                    "where")
-               )
+;;   (my/register-default-capfs)
 
 
-  )
+;;   :hook ((emacs-lisp-mode . (lambda () (my/register-capfs (list (cape-capf-super #'cape-elisp-symbol #'cape-dabbrev #'cape-keyword) #'cape-file))))
+;;          (haskell-mode . my/register-default-capfs)
+;;          (python-mode . my/register-default-capfs)
+;;          )
 
-(use-package! corfu
-  :init
-  (global-corfu-mode)
-  :config
+;;   :config
+;;   ;;TODO: i'm not sure why but this length isn't for the overall completion but
+;;   ;;seems to be for the substring prefix before case switches, at least with
+;;   ;;haskell-mode's completion. Thus in all my testing when I used FooBar as a
+;;   ;;completion test, the default of 4 would fail because you get the 3 letters
+;;   ;;F-o-o before B acts as a cutoff. I noticed that anything at 3 or below was
+;;   ;;completing correctly. We can probably figure out what case setting is
+;;   ;;screwing this up eventually but setting this number lower at least works.
+;;   (setq cape-dabbrev-min-length 2)
 
-  ;; Corfu dialog should appear automatically without needing input to be summoned
-  (setq corfu-auto t)
-  ;; Slightly slow down the time before auto-completion starts to see if
-  ;; it is a little less distracting. The default is 0.1. I also think it tends
-  ;; to eat characters?
-  (setq corfu-auto-delay 0.2)
-  ;; You must type at least this many characters before auto corfu kicks in
-  (setq corfu-auto-prefix 3)
-  ;; Allows you to go back to the first completion when you're on the last
-  (setq corfu-cycle t)
-  ;; Preselect the first completion
-  ;; TODO: what does this actually do?
-  (setq corfu-preselect 'valid)
-  ;; Preview currently selected candidate
-  (setq corfu-preview-current 'insert)
-  ;; This seems to prevent a "No match" menu from coming up all the time and
-  ;; stealing focus. I might also want to fiddle with the corfu keybindings so
-  ;; that meow movement always works
-  (setq corfu-quit-no-match t)
-  (setq corfu-excluded-modes '(erc-mode
-                               circe-mode
-                               help-mode
-                               gud-mode
-                               vterm-mode))
+;;   ;; Add some keyword lists to cape keyword completion. I should probably add a
+;;   ;; PR but I don't want to deal with the contributor license.
+;;   (add-to-list 'cape-keyword-list '(haskell-mode
+;;                                     "as"
+;;                                     "case"
+;;                                     "class"
+;;                                     "data family"
+;;                                     "data instance"
+;;                                     "data"
+;;                                     "default"
+;;                                     "deriving instance"
+;;                                     "deriving"
+;;                                     "do"
+;;                                     "else"
+;;                                     "family"
+;;                                     "forall"
+;;                                     "foreign import"
+;;                                     "foreign"
+;;                                     "hiding"
+;;                                     "if"
+;;                                     "import qualified"
+;;                                     "import"
+;;                                     "in"
+;;                                     "infix"
+;;                                     "infixl"
+;;                                     "infixr"
+;;                                     "instance"
+;;                                     "let"
+;;                                     "mdo"
+;;                                     "module"
+;;                                     "newtype"
+;;                                     "of"
+;;                                     "proc"
+;;                                     "qualified"
+;;                                     "rec"
+;;                                     "signature"
+;;                                     "then"
+;;                                     "type family"
+;;                                     "type instance"
+;;                                     "type"
+;;                                     "where")
+;;                )
 
-  ;; Slightly slow down the time before auto-completion starts to see if it is a
-  ;; little less distracting. The default is 0.1. I also think it tends to eat
-  ;; characters?
-  (setq corfu-auto-delay 0.2)
-  )
 
-(use-package! corfu-popupinfo
-  :config
-  ;; Pop-up docs
-  (corfu-popupinfo-mode)
-  (setq corfu-popupinfo-delay 0.5)
-  ;; Clear out conflicting keybindings that the corfu-module adds to corfu-map.
-  ;; Use C-<up> and C-<down> instead.
-  ;; TODO: do we need this now that we're not using the doom module?
-  ;; TODO: use :map?
-  (unbind-key "C-S-n" corfu-map)
-  (unbind-key "C-S-p" corfu-map)
-  )
+;;   )
 
 ;; Edwina is a window manager in emacs and it becomes my tiling window manager
 ;; under EXWM.

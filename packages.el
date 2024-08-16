@@ -110,10 +110,6 @@
 (package! plantuml-mode)
 (package! flycheck-plantuml)
 
-;; TODO: rolling my own cape integration since the WIP one seems to give me trouble
-(package! corfu :recipe (:files ("*.el" "extensions/*.el")))
-(package! cape)
-(package! dabbrev)
 (package! kind-icon)
 (package! dired-rsync-transient)
 ;; Currently pinned one seems to be stuck on 2021 and the most recent change is December 2022
