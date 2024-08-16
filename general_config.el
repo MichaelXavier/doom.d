@@ -1119,3 +1119,8 @@ Specify a :gave-up function that will be called if the condition didn't come tru
 
 (use-package! mermaid-mode)
 (use-package! ob-mermaid)
+
+(use-package! corfu
+  :config
+  ;; preselect the first option in the menu so long as it's valid. saves a keystroke if you complete often
+  (setq corfu-preselect 'valid))
