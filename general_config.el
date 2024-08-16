@@ -1124,3 +1124,43 @@ Specify a :gave-up function that will be called if the condition didn't come tru
   :config
   ;; preselect the first option in the menu so long as it's valid. saves a keystroke if you complete often
   (setq corfu-preselect 'valid))
+
+(use-package! cape
+  :init
+  (require 'dash)
+  (require 'cape-keyword)
+  (defun my/register-capfs (capfs)
+    "Register the given list of capfs in the current mode."
+    (-each-r capfs (lambda (capfs) (add-to-list 'completion-at-point-functions capfs)))
+    )
+
+  ;; https://github.com/kenranunderscore/dotfiles/blob/main/home-manager-modules/emacs/emacs.d/config.org#more-completion-at-point-backends-via-cape
+  (defun my/register-default-capfs ()
+    "I use these caps everywhere as they are generally useful. This
+function needs to be called in certain mode hooks, as some modes
+fill the buffer-local capfs with exclusive completion functions,
+so that the global ones don't get called at all."
+    ;; I think we want to see all results from some one of these completions.
+    ;; I've noticed that individually, one of the capes will start matching and
+    ;; will suppress results from the others.
+    (my/register-capfs (list (cape-capf-super #'cape-dabbrev #'cape-keyword) #'cape-file))
+    )
+
+  (my/register-default-capfs)
+
+
+  ;; Haskell has shit completion that never works so we'll just fully override it
+  :hook ((haskell-mode . my/register-default-capfs)
+         (python-mode . my/register-default-capfs)
+         )
+
+  :config
+  ;;TODO: i'm not sure why but this length isn't for the overall completion but
+  ;;seems to be for the substring prefix before case switches, at least with
+  ;;haskell-mode's completion. Thus in all my testing when I used FooBar as a
+  ;;completion test, the default of 4 would fail because you get the 3 letters
+  ;;F-o-o before B acts as a cutoff. I noticed that anything at 3 or below was
+  ;;completing correctly. We can probably figure out what case setting is
+  ;;screwing this up eventually but setting this number lower at least works.
+  ;; (setq cape-dabbrev-min-length 2)
+  )
