@@ -1164,3 +1164,14 @@ so that the global ones don't get called at all."
   ;;screwing this up eventually but setting this number lower at least works.
   ;; (setq cape-dabbrev-min-length 2)
   )
+
+
+(use-package! avy
+  :config
+  ;; This allows avy jumps to search all visible windows. This might be slightly
+  ;; more taxing but it doesn't harm the default case of same-window search
+  ;; because you're not looking at the other windows. However, if you allow all
+  ;; windows you can do powerful stuff like yank stuff out of other buffers into
+  ;; your own
+  (setq avy-all-windows t)
+  )
