@@ -1116,14 +1116,44 @@ Specify a :gave-up function that will be called if the condition didn't come tru
   ;; Set up direnv integration
   :hook (agenix-pre-mode . envrc-mode)
   )
-
 (use-package! mermaid-mode)
 (use-package! ob-mermaid)
 
 (use-package! corfu
   :config
   ;; preselect the first option in the menu so long as it's valid. saves a keystroke if you complete often
-  (setq corfu-preselect 'valid))
+  (setq corfu-preselect 'valid)
+
+  ;; https://github.com/emacs-exwm/exwm/issues/31#issuecomment-2029704237
+  ;; TODO: this kind of works but the suggestions appear quite a bit below the cursor now unless you're near the bottom of the buffer and then they still cover
+  (defun get-focused-monitor-geometry ()
+    "Get the geometry of the monitor displaying the selected frame in EXWM."
+    (let* ((monitor-attrs (frame-monitor-attributes))
+           (workarea (assoc 'workarea monitor-attrs))
+           (geometry (cdr workarea)))
+      (list (nth 0 geometry) ; X
+            (nth 1 geometry) ; Y
+            (nth 2 geometry) ; Width
+            (nth 3 geometry) ; Height
+            )))
+
+  (defun advise-corfu-make-frame-with-monitor-awareness (orig-fun frame x y width height buffer)
+    "Advise `corfu--make-frame` to be monitor-aware, adjusting X and Y according to the focused monitor."
+
+    ;; Get the geometry of the currently focused monitor
+    (let* ((monitor-geometry (get-focused-monitor-geometry))
+           (monitor-x (nth 0 monitor-geometry))
+           (monitor-y (nth 1 monitor-geometry))
+           (selected-frame-position (frame-position))
+           (selected-frame-x (car selected-frame-position))
+           (selected-frame-y (cdr selected-frame-position))
+           (new-x (+ monitor-x selected-frame-x x))
+           (new-y (+ monitor-y selected-frame-y y)))
+
+      ;; Call the original function with potentially adjusted coordinates
+      (funcall orig-fun frame new-x new-y width height buffer)))
+
+  (advice-add 'corfu--make-frame :around #'advise-corfu-make-frame-with-monitor-awareness))
 
 (use-package! cape
   :init
@@ -1173,5 +1203,4 @@ so that the global ones don't get called at all."
   ;; because you're not looking at the other windows. However, if you allow all
   ;; windows you can do powerful stuff like yank stuff out of other buffers into
   ;; your own
-  (setq avy-all-windows t)
-  )
+  (setq avy-all-windows t))
