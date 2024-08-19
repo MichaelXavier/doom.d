@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: overloadedrecorddot
+# key: lord
+# --
+{-# LANGUAGE OverloadedRecordDot #-}
