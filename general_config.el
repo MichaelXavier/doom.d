@@ -814,6 +814,9 @@
   :hook (edwina-mode . my/edwina-remove-or-restore-buffer-behavior)
   :bind (("C-S-p" . edwina-select-previous-window)
          ("C-S-n" . edwina-select-next-window)
+         ;; Try to get closer to my window manager's bindings
+         ("C-S-j" . edwina-select-next-window)
+         ("C-S-k" . edwina-select-previous-window)
          )
   :config
   (map! :map edwina-mode-map
