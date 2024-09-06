@@ -146,3 +146,5 @@
 ;; Diagram tool with org-babel support
 (package! mermaid-mode)
 (package! ob-mermaid)
+
+(package! catppuccin-theme)
