@@ -80,6 +80,14 @@
 
 (add-to-list 'tree-sitter-major-mode-language-alist '(hell-mode . haskell))
 
+(define-auto-insert '(hell-mode . "Hell script skeleton")
+  '("Empty Hell script file"
+    "#!/usr/bin/env hell\n\n"
+    "main = do\n"
+    "  Text.putStrLn \"hello world\"\n"))
+
+(add-hook 'hell-mode-hook 'auto-insert-mode)
+
 (provide 'hell-mode)
 
 ;;; hell-mode.el ends here
