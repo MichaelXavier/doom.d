@@ -9,3 +9,10 @@
     (setq-local ansi-color-for-comint-mode nil))
   (add-hook 'inferior-ess-mode-hook #'my-inferior-ess-init)
   )
+
+(use-package! apheleia
+  :config
+  (push '(r-styler . ("Rscript" "-e" "input <- readLines(file(\"stdin\")); local({tempfile <- withr::local_tempfile(lines=input, fileext = \".R\"); withr::with_options(list(styler.quiet=TRUE),  {styler::style_file(tempfile)}); cat(readLines(tempfile), sep = \"\\n\")})"))
+        apheleia-formatters)
+  (push '(ess-r-mode . r-styler)
+        apheleia-mode-alist))
