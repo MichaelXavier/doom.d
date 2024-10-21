@@ -110,3 +110,6 @@
 
 ;; Disable org element cache because it seems to have frequent issues.
 (setq org-element-use-cache nil)
+
+;; Open files folded
+(setq org-startup-folded t)
