@@ -1174,3 +1174,6 @@ so that the global ones don't get called at all."
   ;; windows you can do powerful stuff like yank stuff out of other buffers into
   ;; your own
   (setq avy-all-windows t))
+
+;; Initialize empty files with auto-insert
+(auto-insert-mode t)
