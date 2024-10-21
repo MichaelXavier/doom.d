@@ -78,8 +78,6 @@
 (add-to-list 'flycheck-checkers 'hell)
 (add-hook 'hell-mode-hook 'flycheck-mode)
 
-(add-to-list 'tree-sitter-major-mode-language-alist '(hell-mode . haskell))
-
 (define-auto-insert '(hell-mode . "Hell script skeleton")
   '("Empty Hell script file"
     "#!/usr/bin/env hell\n\n"
