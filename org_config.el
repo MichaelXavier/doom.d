@@ -47,6 +47,28 @@
     )
   )
 
+(defun mx/well/get-well-api (env)
+  "Get a JSON hash using get-well-api for the given env"
+  (interactive "Menv: ")
+  (let* ((default-directory temporary-file-directory) ;; force a local path so the command always runs locally
+         (api-json (shell-command-to-string (s-lex-format "get-well-api ${env}"))))
+    (json-parse-string api-json)
+    )
+  )
+
+(defun mx/well/get-well-apig (env)
+  "Get beginning of URI to an APIG route"
+  (interactive "Menv: ")
+  (let* ((api-json (mx/well/get-well-api env))
+         (base-uri (gethash "baseURI" api-json))
+         (apig (gethash "apig" api-json))
+         )
+    (s-lex-format "${base-uri}/${apig}")
+    )
+  )
+
+
+;; TODO: deprecated
 (defun mx/well/get-arbiter-api (env)
   "Compute the base URL to use based on the environment"
   (interactive "Menv: ")
