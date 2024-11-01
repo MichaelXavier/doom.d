@@ -11,8 +11,6 @@
              (add-to-list 'flycheck-disabled-checkers 'haskell-ghc)
              (add-to-list 'flycheck-disabled-checkers 'haskell-stack-ghc)
              (add-to-list 'flycheck-disabled-checkers 'haskell-hlint)
-             ;; there is no +tree-sitter flag for the haskell doom-emacs lang module yet
-             (tree-sitter!)
 
              (setq haskell-auto-insert-module-format-string
                    "module %s\n    ( \n    ) where")
