@@ -7,7 +7,7 @@
         "C-c C-s" nil
         )
   (add-hook! 'haskell-mode-hook
-             ;; these checkers are dog slow. not sure if this is the right way
+             ;; these checkers suck and get confused easily
              (add-to-list 'flycheck-disabled-checkers 'haskell-ghc)
              (add-to-list 'flycheck-disabled-checkers 'haskell-stack-ghc)
              (add-to-list 'flycheck-disabled-checkers 'haskell-hlint)
@@ -40,4 +40,11 @@
 
 ;; TODO: is this helpful??
 ;; turn off lsp to avoid annoying error. might break LSP but i don't use it currently
-;; (remove-hook! 'haskell-mode-local-vars-hook #'lsp!)
+(after! haskell-mode
+  (remove-hook 'haskell-mode-local-vars-hook #'lsp!))
+
+;; configure LSP
+;; Do not check the entire project on load (should speed things up if turned off?)
+(setq lsp-haskell-check-project nil)
+;; Allows build tools to load multiple components at once. This seems important for monorepos
+(setq lsp-haskell-session-loading "multipleComponents")
