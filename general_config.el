@@ -363,7 +363,7 @@
   ;; tzc hardcodes this on linux and it's incorrect on nixos. This has to happen
   ;; before the package is loaded or it will eat shit.
   (let ((tzdir (getenv "TZDIR")))
-    (when (file-directory-p tzdir)
+    (when (and tzdir (file-directory-p tzdir))
       (setq tzc-main-dir (file-name-as-directory (getenv "TZDIR"))))
     )
 
