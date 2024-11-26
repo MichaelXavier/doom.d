@@ -634,7 +634,7 @@
 
   ;; Defult meow to insert in vterm. I think I'd probably like to totally
   ;; disable meow mode in vterm but I don't know how yet.
-  (map-put! meow-mode-state-list 'vterm-mode 'insert)
+  (add-to-list 'meow-mode-state-list '(vterm-mode . insert))
   (meow-global-mode 1)
   )
 
