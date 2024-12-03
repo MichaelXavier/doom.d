@@ -472,6 +472,8 @@
 
 ;; modal editing with meow. Can practice with meow-tutor
 (use-package! meow
+  :demand t
+  :after (catppuccin-theme hl-line)
   :init
   ;; meow wants C-k to be kill-region but we've overridden that to C-x C-k
   (setq meow--kbd-kill-region "C-x C-k")
@@ -508,6 +510,24 @@
       (meow--cancel-selection))
     (meow--execute-kbd-macro "C-?"))
 
+
+  (defun my-meow-base-color (&rest _)
+    "Determine a base color for the current meow mode"
+    (interactive)
+    (cond
+     ((meow-normal-mode-p) (catppuccin-color 'green))
+     ((meow-insert-mode-p) (catppuccin-color 'mauve))
+     ((meow-beacon-mode-p) (catppuccin-color 'yellow))
+     ((meow-keypad-mode-p) (catppuccin-color 'subtext1))
+     ((meow-motion-mode-p) (catppuccin-color 'surface0))
+     (t (catppuccin-color 'text)))
+    )
+
+  (defun my-meow-set-hl-color (&rest _)
+    "Set the hl-color backgroun based on the current meow mode"
+    (interactive)
+    (set-face-background 'hl-line (catppuccin-darken (my-meow-base-color) 75))
+    )
 
   ;; Taken from https://github.com/meow-edit/meow/blob/master/KEYBINDING_QWERTY.org
   (defun meow-setup ()
@@ -623,6 +643,15 @@
   (setq meow-expand-hint-remove-delay 3.0)
   ;; start git commits in insert mode
   (add-hook 'git-commit-mode-hook 'meow-insert-mode)
+
+  ;; Change the cursor line color based on the mode
+  (add-hook 'meow-switch-state-hook 'my-meow-set-hl-color)
+
+  ;; (let ((normal-color ((catppuccin-color 'green))))
+  ;;   (custom-set-faces '(meow-normal-cursor ((t (:background normal-color)))))
+  ;;   )
+
+  ;;
   ;; Completion candidates should really only be active when inserting. There
   ;; may be a better way to do this. When I exit insert mode, I'm no longer
   ;; trying to modify the text under cursor so the recommendations should go
