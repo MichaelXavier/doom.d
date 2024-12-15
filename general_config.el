@@ -1123,12 +1123,16 @@ Specify a :gave-up function that will be called if the condition didn't come tru
 (setq tramp-default-method "scp")
 
 
-(defun my/open-terminal ()
-  "Add a centralized function which opens a terminal in the current directory, regardless of if you're using EXWM."
-  (interactive)
-  (+vterm/here t))
-
-(map! "s-t" #'my/open-terminal)
+(use-package! eat
+  :init
+  (defun my/open-terminal ()
+    "Add a centralized function which opens a terminal in the current directory, regardless of if you're using EXWM."
+    (interactive)
+    ;;(+vterm/here t)
+    (eat))
+  :config
+  (map! "s-t" #'my/open-terminal)
+  )
 
 ;; Give reasonable buffer names for vterm so they can be distinguished
 (setq vterm-buffer-name-string "*vterm* %s")

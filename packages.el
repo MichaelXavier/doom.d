@@ -149,5 +149,8 @@
 
 (package! catppuccin-theme)
 
+;; Emulate A Terminal. vterm is 1.5x faster but eat is native elisp and purportedly smoother and better?
+(package! eat)
+
 ;; https://github.com/protesilaos/spacious-padding
 (package! spacious-padding)
