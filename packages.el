@@ -148,3 +148,6 @@
 (package! ob-mermaid)
 
 (package! catppuccin-theme)
+
+;; https://github.com/protesilaos/spacious-padding
+(package! spacious-padding)

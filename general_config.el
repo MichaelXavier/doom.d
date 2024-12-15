@@ -336,16 +336,16 @@
 ;; Add some browse shortcuts
 (map! :leader
       (:desc "browse" :prefix ("b" . "browse")
-             :desc "Browse URL" "b" #'browse-url
-             :desc "Browse Well Jira ticket" "j" #'mx/well/browse-jira-ticket
-             :desc "Browse Memsource project" "m" #'mx/well/browse-memsource-project
-             ))
+       :desc "Browse URL" "b" #'browse-url
+       :desc "Browse Well Jira ticket" "j" #'mx/well/browse-jira-ticket
+       :desc "Browse Memsource project" "m" #'mx/well/browse-memsource-project
+       ))
 
 ;; Add some toggle shortcuts
 (map! :leader
       (:desc "toggle" :prefix ("t" . "toggle")
-             :desc "Auto-formatting" "a" #'apheleia-mode
-             ))
+       :desc "Auto-formatting" "a" #'apheleia-mode
+       ))
 
 ;; Add a few modes that should auto-color hex color codes
 (defun mx/enable-rainbow-mode ()
@@ -378,8 +378,8 @@
           ))
   (map! :leader
         (:desc "time zones" :prefix ("z" . "time zones")
-               :desc "World clock" "w" #'tzc-world-clock
-               ))
+         :desc "World clock" "w" #'tzc-world-clock
+         ))
   )
 
 ;; Dired is a little too aggressive with hiding
@@ -1094,8 +1094,8 @@ Specify a :gave-up function that will be called if the condition didn't come tru
 ;; Add some insert shortcuts
 (map! :leader
       (:prefix ("i j" . "jira")
-               :desc "Well Jira URL" "u" #'mx/well/insert-jira-ticket-url
-               :desc "Jira title" "t" #'mx/insert-jira-ticket-title))
+       :desc "Well Jira URL" "u" #'mx/well/insert-jira-ticket-url
+       :desc "Jira title" "t" #'mx/insert-jira-ticket-title))
 
 (use-package! comby
   :commands comby)
@@ -1206,3 +1206,22 @@ so that the global ones don't get called at all."
 
 ;; Initialize empty files with auto-insert
 (auto-insert-mode t)
+
+;; https://protesilaos.com/emacs/spacious-padding
+(use-package! spacious-padding
+  :config
+  ;; Use the foreground of the underlying mode line face to determine
+  ;; the color of the overline (e.g. the inactive mode line has gray
+  ;; text, so render the overline in the same gray).
+  (setq spacious-padding-subtle-mode-line t)
+  ;; These are the default values, but I keep them here for visibility.
+  (setq spacious-padding-widths
+        '( :internal-border-width 15
+           :header-line-width 4
+           :mode-line-width 6
+           :tab-width 4
+           :right-divider-width 30
+           :scroll-bar-width 8
+           :fringe-width 8))
+  (spacious-padding-mode 1)
+  )
