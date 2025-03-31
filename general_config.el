@@ -1225,3 +1225,8 @@ so that the global ones don't get called at all."
            :fringe-width 8))
   (spacious-padding-mode 1)
   )
+
+;; For some reason as of 2025-03-31 the default hybrid method of finding files
+;; started failing at work. This immediately fixed it and so far doesn't seem
+;; that bad on a huge project.
+(setq projectile-indexing-method 'native)
