@@ -1225,3 +1225,8 @@ so that the global ones don't get called at all."
            :fringe-width 8))
   (spacious-padding-mode 1)
   )
+
+;; Show the project name, crucially, after the buffer name so it's out of the way
+(setq doom-modeline-project-name t)
+;; Seems to be the most compact way to display the filename in various projects
+(setq doom-modeline-buffer-file-name-style 'buffer-name)
