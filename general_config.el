@@ -1230,3 +1230,10 @@ so that the global ones don't get called at all."
 (setq doom-modeline-project-name t)
 ;; Seems to be the most compact way to display the filename in various projects
 (setq doom-modeline-buffer-file-name-style 'buffer-name)
+
+(use-package! apheleia
+  :config
+  ;; Run formattter locally when editing remote files. This seems like it would
+  ;; be the most reasonable so we don't have to install a bunch of editor
+  ;; support on servers. Some formatters won't work this way though.
+  (setq apheleia-remote-algorithm 'local))
