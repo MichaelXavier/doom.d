@@ -151,3 +151,7 @@
 
 ;; https://github.com/protesilaos/spacious-padding
 (package! spacious-padding)
+
+;; Aider AI assistant integration. The alternative is aider.el but this seems to
+;; be more fleshed out and idiomatic
+(package! aidermacs)
