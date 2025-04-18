@@ -1237,3 +1237,19 @@ so that the global ones don't get called at all."
   ;; be the most reasonable so we don't have to install a bunch of editor
   ;; support on servers. Some formatters won't work this way though.
   (setq apheleia-remote-algorithm 'local))
+
+(use-package! aidermacs
+  :config
+  (map! :map doom-leader-code-map
+        ;; C-c c h
+        :desc "Aider" "h" #'aidermacs-transient-menu)
+  (setq aidermacs-use-architect-mode t)
+  (setq aidermacs-auto-commits nil)
+  (setq aidermacs-auto-accept-architect nil)
+  ;; Use generically named models so they can be set up with the aider
+  ;; configuration as they're likely to vary by machine
+  (setq aidermacs-default-model "default")
+  (setq aidermacs-architect-model "default-architect")
+  (setq aidermacs-editor-model "default-editor")
+  (setq aidermacs-weak-model "default-weak")
+  )
