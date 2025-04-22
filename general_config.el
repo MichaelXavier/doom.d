@@ -704,6 +704,9 @@
 ;; when there are no supported LSP clients
 (setq lsp-warn-no-matched-clients nil)
 
+;; https://emacs-lsp.github.io/lsp-mode/page/performance/#use-plists-for-deserialization
+(setq lsp-use-plists t)
+
 ;; Suppress annoying file watching prompt that comes up frequently
 (setq lsp-enable-file-watchers nil)
 

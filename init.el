@@ -202,3 +202,5 @@
        :config
        ;;literate
        (default +bindings +smartparens))
+
+(setenv "LSP_USE_PLISTS" "true")
