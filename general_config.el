@@ -1119,11 +1119,10 @@ Specify a :gave-up function that will be called if the condition didn't come tru
       :desc "UNIX timestamp" "t" #'my/insert-unix-timestamp
       )
 
-;; Writing large files seems to go way way faster with scp. counsel-tramp will
-;; use tramp-default-method to build the candidates from your ssh file. So if
-;; tramp-default-method is set to ssh, it will open those hosts using ssh and
-;; then all file saves will use ssh
-(setq tramp-default-method "scp")
+;; I've spent hours fucking around with fish config to get the prompt to behave
+;; in a way that tramp understands. sshx seems to get around it. If you have to
+;; copy files, this will probably take a bit longer compared to scp. Oh well.
+(setq tramp-default-method "sshx")
 
 
 (defun my/open-terminal ()
