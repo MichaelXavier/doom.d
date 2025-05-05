@@ -1255,3 +1255,7 @@ so that the global ones don't get called at all."
   (setq aidermacs-editor-model "default-editor")
   (setq aidermacs-weak-model "default-weak")
   )
+
+;; Most of the time I want global word wrap.
+(+global-word-wrap-mode +1)
+(add-to-list '+word-wrap-disabled-modes 'csv-mode)
