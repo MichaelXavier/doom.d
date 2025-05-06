@@ -695,11 +695,6 @@
   ;; Register with babel so we can get execution as well
   )
 
-;; This is probably overly aggrssive but eldoc mode is usually insanely annoying
-;; when LSP is enabled but not in use. All eldoc is is a way to see the
-;; highlighted function's arguments in the minibuffer.
-(setq global-eldoc-mode nil)
-
 ;; Suppress an annoying warning that comes up on every file of a certain type
 ;; when there are no supported LSP clients
 (setq lsp-warn-no-matched-clients nil)

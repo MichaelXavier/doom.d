@@ -72,3 +72,7 @@
 
 
 (setq auto-save-default nil)
+
+;; GET THE FUCK OUT OF HERE
+(require 'eldoc)
+(global-eldoc-mode -1)
