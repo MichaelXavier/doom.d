@@ -1254,3 +1254,30 @@ so that the global ones don't get called at all."
 ;; Most of the time I want global word wrap.
 (+global-word-wrap-mode +1)
 (add-to-list '+word-wrap-disabled-modes 'csv-mode)
+
+(use-package! sideline
+  :hook (flycheck-mode . sideline-mode)
+  :config
+  (global-sideline-mode 1)
+  )
+
+(use-package sideline-flycheck
+  :hook (flycheck-mode . sideline-flycheck-setup))
+
+(use-package sideline-lsp
+  :init
+  (setq sideline-backends-right '(sideline-lsp)))
+
+(setq lsp-eldoc-enable-hover nil)
+(global-eldoc-mode -1)
+
+(after! lsp-mode
+  :hook (lsp-mode . sideline-mode)
+  )  ; enable it when lsp is on
+
+(after! lsp-ui
+  :init
+  (setq lsp-ui-sideline-enable nil) ; disable original sideline
+  (setq lsp-ui-sideline-show-diagnostics nil)
+  (setq lsp-ui-doc-enable nil) ;; Don't show documentation at point
+  )

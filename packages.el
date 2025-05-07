@@ -155,3 +155,9 @@
 ;; Aider AI assistant integration. The alternative is aider.el but this seems to
 ;; be more fleshed out and idiomatic
 (package! aidermacs)
+
+;; I think this eventually will show up in doom
+(package! sideline)
+;; (package! sideline-blame)
+(package! sideline-flycheck)
+(package! sideline-lsp)
