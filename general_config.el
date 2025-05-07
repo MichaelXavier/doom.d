@@ -1261,17 +1261,17 @@ so that the global ones don't get called at all."
   (global-sideline-mode 1)
   )
 
-(use-package sideline-flycheck
+(use-package! sideline-flycheck
   :hook (flycheck-mode . sideline-flycheck-setup))
 
-(use-package sideline-lsp
+(use-package! sideline-lsp
   :init
   (setq sideline-backends-right '(sideline-lsp)))
 
 (setq lsp-eldoc-enable-hover nil)
 (global-eldoc-mode -1)
 
-(after! lsp-mode
+(use-package! lsp-mode
   :hook (lsp-mode . sideline-mode)
   )  ; enable it when lsp is on
 
