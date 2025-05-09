@@ -287,6 +287,8 @@
   (setq consult--async-log "*consult-async*")
   ;; Slow down how quickly consult searches re-search.
   (setq consult-async-input-debounce 0.7)
+  ;; fontify slows down search on large-ish files it seems
+  (setq consult-fontify-max-size 10000)
   )
 
 (use-package! counsel-tramp
@@ -1255,29 +1257,13 @@ so that the global ones don't get called at all."
 (+global-word-wrap-mode +1)
 (add-to-list '+word-wrap-disabled-modes 'csv-mode)
 
-(use-package! sideline
-  :hook (flycheck-mode . sideline-mode)
-  :config
-  (global-sideline-mode 1)
-  )
-
-(use-package! sideline-flycheck
-  :hook (flycheck-mode . sideline-flycheck-setup))
-
-(use-package! sideline-lsp
-  :init
-  (setq sideline-backends-right '(sideline-lsp)))
 
 (setq lsp-eldoc-enable-hover nil)
 (global-eldoc-mode -1)
 
-(use-package! lsp-mode
-  :hook (lsp-mode . sideline-mode)
-  )  ; enable it when lsp is on
-
 (after! lsp-ui
   :init
-  (setq lsp-ui-sideline-enable nil) ; disable original sideline
+  (setq lsp-ui-sideline-enable nil)
   (setq lsp-ui-sideline-show-diagnostics nil)
   (setq lsp-ui-doc-enable nil) ;; Don't show documentation at point
   )
