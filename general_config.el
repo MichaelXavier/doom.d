@@ -1242,6 +1242,8 @@ so that the global ones don't get called at all."
   (map! :map doom-leader-code-map
         ;; C-c c h
         :desc "Aider" "h" #'aidermacs-transient-menu)
+  ;; the diffs are a little annoying
+  (setq aidermacs-show-diff-after-change nil)
   (setq aidermacs-use-architect-mode t)
   (setq aidermacs-auto-commits nil)
   (setq aidermacs-auto-accept-architect nil)
