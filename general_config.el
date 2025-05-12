@@ -676,6 +676,9 @@
 ;; Seems like the issue might be fixed as of 4/16/2023?
 (setq transient-show-popup t)
 
+;; single column seems to work more consistently for display
+(setq transient-force-single-column t)
+
 (use-package! plantuml-mode
   :mode "\\.plantuml\\'"
   :config
