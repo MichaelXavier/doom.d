@@ -152,6 +152,5 @@
 ;; https://github.com/protesilaos/spacious-padding
 (package! spacious-padding)
 
-;; Aider AI assistant integration. The alternative is aider.el but this seems to
-;; be more fleshed out and idiomatic
-(package! aidermacs)
+;; Trying out aider over aidermacs since aidermacs is being quasi-abandoned for emigo
+(package! aider :recipe (:host github :repo "tninja/aider.el" ))

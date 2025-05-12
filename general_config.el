@@ -1240,24 +1240,6 @@ so that the global ones don't get called at all."
   ;; support on servers. Some formatters won't work this way though.
   (setq apheleia-remote-algorithm 'local))
 
-(use-package! aidermacs
-  :config
-  (map! :map doom-leader-code-map
-        ;; C-c c h
-        :desc "Aider" "h" #'aidermacs-transient-menu)
-  ;; the diffs are a little annoying
-  (setq aidermacs-show-diff-after-change nil)
-  (setq aidermacs-use-architect-mode t)
-  (setq aidermacs-auto-commits nil)
-  (setq aidermacs-auto-accept-architect nil)
-  ;; Use generically named models so they can be set up with the aider
-  ;; configuration as they're likely to vary by machine
-  (setq aidermacs-default-model "default")
-  (setq aidermacs-architect-model "default-architect")
-  (setq aidermacs-editor-model "default-editor")
-  (setq aidermacs-weak-model "default-weak")
-  )
-
 ;; Most of the time I want global word wrap.
 (+global-word-wrap-mode +1)
 (add-to-list '+word-wrap-disabled-modes 'csv-mode)
@@ -1272,3 +1254,7 @@ so that the global ones don't get called at all."
   (setq lsp-ui-sideline-show-diagnostics nil)
   (setq lsp-ui-doc-enable nil) ;; Don't show documentation at point
   )
+
+(use-package! aider
+  :config
+  (require 'aider-doom))
