@@ -1256,15 +1256,8 @@ so that the global ones don't get called at all."
   )
 
 (use-package! aider
+  :demand t
   :config
   (require 'aider-doom)
-  ;; TODO: this doesn't seem to do anything
-  ;; (defadvice! my-fix-aider-process-env (orig-fun &rest args)
-  ;;   "Wraps a function that spawns an inferior shell and clears the PYTHONPATH env var which is frequently set by project nix shells and pisses off aider."
-  ;;   :around #'aider-run-aider
-  ;;   (let ((process-environment (copy-sequence process-environment)))
-  ;;     (setenv "PYTHONPATH" "")
-  ;;     (apply orig-fun args)
-  ;;     )
-  ;;   )
+  (setq aider-program "my-aider")
   )
