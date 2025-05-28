@@ -154,3 +154,6 @@
 
 ;; Trying out aider over aidermacs since aidermacs is being quasi-abandoned for emigo
 (package! aider :recipe (:host github :repo "tninja/aider.el" ))
+
+;; fuck-ass aider is depending on transient-define-group which is in v0.9.0 which is unreleased
+(unpin! transient)
