@@ -43,8 +43,14 @@
 (after! haskell-mode
   (remove-hook 'haskell-mode-local-vars-hook #'lsp!))
 
-;; configure LSP
-;; Do not check the entire project on load (should speed things up if turned off?)
-(setq lsp-haskell-check-project nil)
-;; Allows build tools to load multiple components at once. This seems important for monorepos
-(setq lsp-haskell-session-loading "multipleComponents")
+(after! lsp-haskell
+  ;; configure LSP
+  ;; Do not check the entire project on load (should speed things up if turned off?)
+  (setq lsp-haskell-check-project nil)
+  ;; Allows build tools to load multiple components at once. This seems important for monorepos
+  (setq lsp-haskell-session-loading "multipleComponents")
+
+  ;; hlint loves suggesting dumb shit
+  (setq lsp-haskell-plugin-hlint-diagnostics-on nil)
+  (setq lsp-haskell-plugin-hlint-code-actions-on nil)
+  )
