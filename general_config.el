@@ -1284,8 +1284,6 @@ so that the global ones don't get called at all."
 
 (after! lsp-ui
   :init
-  (setq lsp-ui-sideline-enable nil)
-  (setq lsp-ui-sideline-show-diagnostics nil)
   (setq lsp-ui-doc-enable nil) ;; Don't show documentation at point
   )
 
