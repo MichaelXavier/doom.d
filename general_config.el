@@ -321,9 +321,43 @@
   "Returns a URL string for the given Jira ticket number"
   (s-lex-format "https://wellco.atlassian.net/browse/${ticket-number}"))
 
+(defun mx/well/guess-jira-ticket-at-point ()
+  "Try to guess a Jira ticket number at point.
+A Jira ticket is expected to match the pattern [A-Z]+-[0-9]+"
+  (let ((val nil)
+        (jira-regex "[A-Z]+-[0-9]+"))
+    ;; First, try to get a symbol at point and check if it's a Jira ticket
+    (save-excursion
+      (let ((sym (thing-at-point 'symbol t))) ; t for no-properties
+        (when (and sym (string-match-p (concat "\\`" jira-regex "\\'") sym))
+          (setq val sym))))
+    ;; If not found via 'symbol, scan the current line for the pattern
+    (unless val
+      (save-excursion
+        (let* ((line-content (buffer-substring-no-properties (line-beginning-position) (line-end-position)))
+               (cursor-column (- (point) (line-beginning-position)))
+               (found-ticket nil))
+          ;; Search for all Jira-like patterns on the current line
+          (with-temp-buffer
+            (insert line-content)
+            (goto-char (point-min))
+            (while (and (not found-ticket) (re-search-forward jira-regex nil t))
+              ;; If the original cursor position falls within this match
+              (when (and (>= cursor-column (match-beginning 0))
+                         (< cursor-column (match-end 0)))
+                (setq found-ticket (match-string-no-properties 0))))
+            (setq val found-ticket)))))
+    val))
+
 (defun mx/well/browse-jira-ticket (ticket-number)
   "Open the Jira ticket with the given ticket number"
-  (interactive "sTicket Number: ")
+  (interactive
+   (let ((guessed-ticket (mx/well/guess-jira-ticket-at-point)))
+     (list
+      (read-string (if guessed-ticket
+                       (format "Ticket Number (%s): " guessed-ticket)
+                     "Ticket Number: ")
+                   nil nil guessed-ticket))))
   (browse-url (mx/well/jira-url ticket-number))
   )
 
