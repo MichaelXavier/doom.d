@@ -153,7 +153,9 @@
 (package! spacious-padding)
 
 ;; Trying out aider over aidermacs since aidermacs is being quasi-abandoned for emigo
-(package! aider :recipe (:host github :repo "tninja/aider.el" ))
+(package! aider :recipe (:host github :repo "tninja/aider.el")
+  ;; After this they switched to transient 0.9.0 which doesn't seem usable in doom yet because magit installs the old one first
+  ;; watch https://github.com/doomemacs/doomemacs/blob/master/modules/tools/magit/packages.el
+  :pin "b75bff43e53abe9b562da8bd056d2d3f2c133ffb")
 
-;; fuck-ass aider is depending on transient-define-group which is in v0.9.0 which is unreleased
 (unpin! transient)

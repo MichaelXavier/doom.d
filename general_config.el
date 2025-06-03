@@ -1289,11 +1289,13 @@ so that the global ones don't get called at all."
 
 (use-package! aider
   :demand t
+  ;; :bind (:map doom-leader-map
+  ;;             ("A" . #'aider-transient-menu))
   :config
   (require 'aider-doom)
+  ;; This is not well maintained but until doom upgrades to transient 0.9.0 there's nothing i can do
   (setq aider-program "my-aider")
   )
-
 
 (after! org-noter
   (setq org-noter-always-create-frame nil)
