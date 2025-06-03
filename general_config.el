@@ -1293,3 +1293,8 @@ so that the global ones don't get called at all."
   (require 'aider-doom)
   (setq aider-program "my-aider")
   )
+
+
+(after! org-noter
+  (setq org-noter-always-create-frame nil)
+  )
